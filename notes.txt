@@ -5,5 +5,15 @@ test gmail account
 test postman account using gmail  
 
 Heroku
-    dotly6528@gmail.com
-    Dotly123@
+    creds
+        dotly6528@gmail.com
+        Dotly123@
+    
+    deployment on dev
+        git checkout devbranch
+        git add . //for adding files
+        git commit -m "message" //commit changes
+        git push herokudev master
+        
+
+
