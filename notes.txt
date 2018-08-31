@@ -1,8 +1,12 @@
-test gmail account
+important links
+    devapi https://dotlyapidev.herokuapp.com/
+
+gmail account
     dotly6528@gmail.com
     Dotly123
 
-test postman account using gmail  
+postman account 
+    connect using gmail account
 
 Heroku
     creds
@@ -14,6 +18,6 @@ Heroku
         git add . //for adding files
         git commit -m "message" //commit changes
         git push herokudev master
-        
+
 
 
