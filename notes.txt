@@ -1,0 +1,9 @@
+test gmail account
+    dotly6528@gmail.com
+    Dotly123
+
+test postman account using gmail  
+
+Heroku
+    dotly6528@gmail.com
+    Dotly123@

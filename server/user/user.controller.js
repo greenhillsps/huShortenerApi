@@ -22,13 +22,20 @@ function get(req, res) {
 
 /**
  * Create new user
- * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
+ * @property {string} req.body.email - The email of user.
+ * @property {string} req.body.firstName 
+ * @property {string} req.body.lastName 
+ * @property {string} req.body.password
+ * @property {string} req.body.email
+ * @property {string} req.body.mobileNumber 
  * @returns {User}
  */
 function create(req, res, next) {
   const user = new User({
-    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    password: req.body.password,
+    email: req.body.email,
     mobileNumber: req.body.mobileNumber
   });
 
@@ -39,13 +46,20 @@ function create(req, res, next) {
 
 /**
  * Update existing user
- * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
+ * @property {string} req.body.email - The email of user.
+ * @property {string} req.body.firstName 
+ * @property {string} req.body.lastName 
+ * @property {string} req.body.password
+ * @property {string} req.body.email
+ * @property {string} req.body.mobileNumber 
  * @returns {User}
  */
 function update(req, res, next) {
   const user = req.user;
-  user.username = req.body.username;
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.password = req.body.password;
+  user.email = req.body.email;
   user.mobileNumber = req.body.mobileNumber;
 
   user.save()
