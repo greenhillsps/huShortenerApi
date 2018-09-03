@@ -8,12 +8,22 @@ gmail account
 postman account 
     connect using gmail account
 
+mlab account    
+    dotly
+    Dotly123
+
+    mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
+
 Heroku
     creds
         dotly6528@gmail.com
         Dotly123@
     
     deployment on dev
+        heroku login (one time)
+            username
+            password
+        
         git checkout devbranch
         git add . //for adding files
         git commit -m "message" //commit changes
