@@ -11,14 +11,23 @@ module.exports = {
 
 async function create(FeedbackParam) {
 
-    const feedback = new Feedback(FeedbackParam);
+    const feedback = new Feedback({
+        user : FeedbackParam.user,
+        name : FeedbackParam.name,
+        email : FeedbackParam.email,
+        message : FeedbackParam.message
+    });
 
     // save feedback
     await feedback.save();
 }
 
 async function getAll() {
-    return await Feedback.find().sort('-createdAt');
+    return await Feedback
+    .find()
+    .populate('user')
+    .select('name user')
+    // .sort('-createdAt');
 }
 
 async function getById(id) {

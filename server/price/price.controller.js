@@ -11,7 +11,15 @@ module.exports = {
 
 async function create(PriceParam) {
 
-    const price = new Price(PriceParam);
+    const price = new Price({
+        'customExpiryDate': PriceParam.customExpiryDate,
+        'urlRedirectto': PriceParam.urlRedirectto,
+        'enableToggle': PriceParam.enableToggle,
+        'blockIps': PriceParam.blockIps,
+        'customReports': PriceParam.customReports,
+        '404Management' : PriceParam.fourOfour,
+        'customShortUrl' : PriceParam.customShortUrl,
+    });
 
     // save feedback
     await price.save();

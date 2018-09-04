@@ -5,53 +5,53 @@ const Schema = mongoose.Schema;
  * Price Schema
  */
 const PriceSchema = new mongoose.Schema({
-  customExpiryDate: new Schema ({
+  'customExpiryDate': new Schema ({
     price: {
       type: Number,
       required: true,
     },
     activeFor: {
-      type: Date,
+      type: Number,
       required: true,
     }
   }),
-  UrlRedirectto: new Schema ({
+  'urlRedirectto': new Schema ({
     price: {
       type: Number,
       required: true,
     },
     activeFor: {
-      type: Date,
+      type: Number,
       required: true,
     }
   }),
-  enableToggle: new Schema ({
+  'enableToggle': new Schema ({
     price: {
       type: Number,
       required: true,
     },
     activeFor: {
-      type: Date,
-      required: true
-    }
-  }),
-  BlockIps: new Schema ({
-    price: {
       type: Number,
       required: true
-    },
-    activeFor: {
-      type: Date,
-      required: true
     }
   }),
-  CustomReports: new Schema ({
+  'blockIps': new Schema ({
     price: {
       type: Number,
       required: true
     },
     activeFor: {
-      type: Date,
+      type: Number,
+      required: true
+    }
+  }),
+  'customReports': new Schema ({
+    price: {
+      type: Number,
+      required: true
+    },
+    activeFor: {
+      type: Number,
       required: true,
     }
   }),
@@ -61,17 +61,17 @@ const PriceSchema = new mongoose.Schema({
       required: true
     },
     activeFor: {
-      type: Date,
+      type: Number,
       required: true
     }
   }),
-  customShortUrl: new Schema ({
+  'customShortUrl': new Schema ({
     price: {
       type: Number,
       required: true
     },
     activeFor: {
-      type: Date,
+      type: Number,
       required: true
     }
   })

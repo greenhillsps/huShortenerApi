@@ -17,7 +17,7 @@ const UrlSchema = new mongoose.Schema({
     required: true,
     default: Date.now
   },
-  User: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
@@ -27,19 +27,19 @@ const UrlSchema = new mongoose.Schema({
     browser: String,
     language: String,
     refferer: String,
-    countrie: String,
-    Regions: String,
+    country: String,
+    Region: String,
   },]
   ,
   features: {
     'locked': {
       type: Boolean,
-      default: false
+      default: true
     },
     'customExpiryDate': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
@@ -50,10 +50,10 @@ const UrlSchema = new mongoose.Schema({
       expiryDate: Date,
       customExpiryDate: Date,
     },
-    'UrlRedirectto': {
+    'urlRedirectto': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
@@ -67,7 +67,7 @@ const UrlSchema = new mongoose.Schema({
     'enableToggle': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
@@ -81,10 +81,10 @@ const UrlSchema = new mongoose.Schema({
         default: false
       },
     },
-    'BlockIps': {
+    'blockIps': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
@@ -95,10 +95,10 @@ const UrlSchema = new mongoose.Schema({
       expiryDate: Date,
       ips: ["192.168.1.1", "192.168.1.2"],
     },
-    'CustomReports': {
+    'customReports': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
@@ -107,12 +107,11 @@ const UrlSchema = new mongoose.Schema({
       },
       boughtPrice: Number,
       expiryDate: Date,
-      any: any,
     },
-    '404Management': {
+    'fourOfour': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
@@ -121,12 +120,12 @@ const UrlSchema = new mongoose.Schema({
       },
       boughtPrice: Number,
       expiryDate: Date,
-      any: any,
+      
     },
     'customShortUrl': {
       locked: {
         type: Boolean,
-        default: false
+        default: true
       },
       puchaseDate: Date,
       currentPrice: {
