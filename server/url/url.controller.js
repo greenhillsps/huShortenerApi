@@ -1,6 +1,6 @@
 const db = require('../../_helper/db');
 const Url = db.Url;
-
+var shortid = require('shortid');
 module.exports = {
     getAll,
     getById,
@@ -10,59 +10,15 @@ module.exports = {
 };
 
 async function create(UrlParam) {
-
+    
     const url = new Url({
 
         actualUrl: UrlParam.actualUrl,
-        shortUrl: "DemoShortString",
+        shortUrl: `http://localhost:4040/${shortid.generate()}`,
         user: UrlParam.user
-        // features: {
-        //     'customExpiryDate': {
-        //         puchaseDate: UrlParam.features.customExpiryDate.puchaseDate,
-        //         currentPrice: UrlParam.features.customExpiryDate.currentPrice,
-        //         boughtPrice: UrlParam.features.customExpiryDate.boughtPrice,
-        //         expiryDate: UrlParam.features.customExpiryDate.expiryDate
-        //     },
-        //     'urlRedirectto': {
-        //         puchaseDate: UrlParam.features.urlRedirectto.puchaseDate,
-        //         currentPrice: UrlParam.features.urlRedirectto.currentPrice,
-        //         boughtPrice: UrlParam.features.urlRedirectto.boughtPrice,
-        //         expiryDate: UrlParam.features.urlRedirectto.expiryDate
-        //     },
-        //     'enableToggle': {
-        //         puchaseDate: UrlParam.features.enableToggle.puchaseDate,
-        //         currentPrice: UrlParam.features.enableToggle.currentPrice,
-        //         boughtPrice: UrlParam.features.enableToggle.boughtPrice,
-        //         expiryDate: UrlParam.features.enableToggle.expiryDate
-        //     },
-        //     'blockIps': {
-        //         puchaseDate: UrlParam.features.blockIps.puchaseDate,
-        //         currentPrice: UrlParam.features.blockIps.currentPrice,
-        //         boughtPrice: UrlParam.features.blockIps.boughtPrice,
-        //         expiryDate: UrlParam.features.blockIps.expiryDate
-        //     },
-        //     'customReports': {
-        //         puchaseDate: UrlParam.features.customReports.puchaseDate,
-        //         currentPrice: UrlParam.features.customReports.currentPrice,
-        //         boughtPrice: UrlParam.features.customReports.boughtPrice,
-        //         expiryDate: UrlParam.features.customReports.expiryDate
-        //     },
-        //     'fourOfour': {
-        //         puchaseDate: UrlParam.features.fourOfour.puchaseDate,
-        //         currentPrice: UrlParam.features.fourOfour.currentPrice,
-        //         boughtPrice: UrlParam.features.fourOfour.boughtPrice,
-        //         expiryDate: UrlParam.features.fourOfour.expiryDate
-        //     },
-        //     'customShortUrl': {
-        //         puchaseDate: UrlParam.features.customShortUrl.puchaseDate,
-        //         currentPrice: UrlParam.features.customShortUrl.currentPrice,
-        //         boughtPrice: UrlParam.features.customShortUrl.boughtPrice,
-        //         expiryDate: UrlParam.features.customShortUrl.expiryDate
-        //     },
-        // },
+        
     });
 
-    // console.log(url)
     // save feedback
     await url.save();
 }

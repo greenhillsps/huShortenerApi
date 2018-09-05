@@ -19,7 +19,8 @@ const UrlSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    default: null
   },
   analytics: [{
     clickDate: String,
@@ -41,41 +42,77 @@ const UrlSchema = new mongoose.Schema({
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
-      customExpiryDate: Date,
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      customExpiryDate: {
+        type:Date,
+        default: null
+        },
     },
     'urlRedirectto': {
       locked: {
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
-      Url: String,
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      Url: {
+        type:String,
+        default: null
+      },
     },
     'enableToggle': {
       locked: {
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
       enable: {
         type: Boolean,
         default: false
@@ -86,13 +123,23 @@ const UrlSchema = new mongoose.Schema({
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
+      boughtPrice: {
+        type:Number,
+        default: null
+      },
+      expiryDate: { 
+        type:Date,
+        default: null
+      },
       ips: ["192.168.1.1", "192.168.1.2"],
     },
     'customReports': {
@@ -100,42 +147,78 @@ const UrlSchema = new mongoose.Schema({
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
+      boughtPrice: {
+        type:Number,
+        default: null
+      },
+      expiryDate: { 
+        type:Date,
+        default: null
+      },
     },
     'fourOfour': {
       locked: {
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
-      
+      boughtPrice: {
+        type:Number,
+        default: null
+      },
+      expiryDate: { 
+        type:Date,
+        default: null
+      },
+
     },
     'customShortUrl': {
       locked: {
         type: Boolean,
         default: true
       },
-      puchaseDate: Date,
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
       currentPrice: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Price'
+        ref: 'Price',
+        default: null
       },
-      boughtPrice: Number,
-      expiryDate: Date,
-      originalUrl: String,
-      shortUrl: String,
+      boughtPrice: {
+        type:Number,
+        default: null
+      },
+      expiryDate: { 
+        type:Date,
+        default: null
+      },
+      originalUrl: { 
+        type:String,
+        default: null
+      },
+      shortUrl: {
+        type:String,
+        default: null
+      },
     }
   }
 

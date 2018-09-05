@@ -7,6 +7,11 @@ router.post('/submit', submit);
 router.get('/', getAll);
 router.get('/:id', getById);
 router.put('/:id', update);
+// router.put('/analytics/:id', analytics);
+router.put('/:id', update);
+
+
+
 
 module.exports = router;
 
