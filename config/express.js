@@ -13,6 +13,7 @@ const winstonInstance = require('./winston');
 const routes = require('../index.route');
 const config = require('./config');
 const APIError = require('../server/helpers/APIError');
+// const urlRedirector = require ('../server/url/url.Redirector')
 
 const app = express();
 
@@ -48,6 +49,8 @@ if (config.env === 'development') {
 
 // mount all routes on /api path
 app.use('/api', routes);
+// mount all routes on /api path
+// app.use('/', urlRedirector);
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

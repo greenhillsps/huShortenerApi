@@ -1,5 +1,4 @@
 const User = require('./user.model');
-
 /**
  * Load user and append to req.
  */
@@ -30,18 +29,28 @@ function get(req, res) {
  * @property {string} req.body.mobileNumber 
  * @returns {User}
  */
-function create(req, res, next) {
-  const user = new User({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    password: req.body.password,
-    email: req.body.email,
-    mobileNumber: req.body.mobileNumber
-  });
+async function create(req, res, next) {
 
-  user.save()
-    .then(savedUser => res.json(savedUser))
-    .catch(e => next(e));
+  if (await User.findOne({ email: req.body.email })) {
+    res.status(403)
+      .json({
+        Status: '403',
+        message: ' email ' + req.body.email + ' is already taken'
+      })
+      .send()
+  } else {
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      password: req.body.password,
+      email: req.body.email,
+      mobileNumber: req.body.mobileNumber
+    });
+
+    await user.save()
+      .then(savedUser => res.json(savedUser))
+      .catch(e => next(e));
+  }
 }
 
 /**
