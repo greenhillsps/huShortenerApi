@@ -11,7 +11,7 @@ router.route('/login')
   .post(validate(paramValidation.login), authCtrl.login);
 
 router.route('/test')
-  .get((req,res)=>{res.send('working')});
+  .get((req,res)=>{res.send('working')}); 
 
 
 /** GET /api/auth/random-number - Protected route,
