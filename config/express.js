@@ -10,10 +10,11 @@ const expressWinston = require('express-winston');
 const expressValidation = require('express-validation');
 const helmet = require('helmet');
 const winstonInstance = require('./winston');
-const routes = require('../index.route');
 const config = require('./config');
 const APIError = require('../server/helpers/APIError');
-const urlRedirector = require ('../server/url/url.Redirector')
+const apiRoutes = require('../Routes/api.route');
+const indexRoutes = require('../Routes/index.route');
+
 
 const app = express();
 
@@ -48,14 +49,14 @@ if (config.env === 'development') {
   }));
 }
 
-// mount all routes on /api path
-app.use('/', routes);
-// mount all routes on /api path
-// app.use('/bla', urlRedirector);
+// mount all routes on /
+app.use('/',indexRoutes);
 
+// mount all routes on /api path
+app.use('/api', apiRoutes);
 
 // if error is not an instanceOf APIError, convert it.
-app.use((err, req, res, next) => {
+app.use((err, req, res, next) => { 
   if (err instanceof expressValidation.ValidationError) {
     // validation error contains errors which is an array of error each containing message[]
     const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ');
