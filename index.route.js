@@ -4,6 +4,8 @@ const authRoutes = require('./server/auth/auth.route');
 const urlRoutes = require('./server/url/url.route');
 const priceRoutes = require('./server/price/price.route');
 const feedbackRoutes = require('./server/feedback/feedback.route');
+const urlRedirector = require ('./server/url/url.Redirector')
+
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -15,18 +17,23 @@ router.get('/health-check', (req, res) =>
 );
 
 // mount user routes at /users
-router.use('/users', userRoutes);
+router.use('/api/users', userRoutes);
 
 // mount auth routes at /auth
-router.use('/auth', authRoutes);
+router.use('/api/auth', authRoutes);
 
 // mount url routes at /url
-router.use('/url', urlRoutes);
-
-// mount price routes at /price
-router.use('/price', priceRoutes);
+router.use('/api/url', urlRoutes);
 
 // mount feedback routes at /feedback
-router.use('/feedback', feedbackRoutes);
+// router.use('/aha', urlRedirector);
+
+// mount price routes at /price
+router.use('/api/price', priceRoutes);
+
+// mount feedback routes at /feedback
+router.use('/api/feedback', feedbackRoutes);
+
+
 
 module.exports = router;
