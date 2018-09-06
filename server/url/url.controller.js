@@ -10,13 +10,13 @@ module.exports = {
 };
 
 async function create(UrlParam) {
-    
+    let id =  shortid.generate();
     const url = new Url({
-
-        actualUrl: UrlParam.actualUrl,
-        shortUrl: `http://localhost:4040/${shortid.generate()}`,
-        user: UrlParam.user
         
+        actualUrl: UrlParam.actualUrl,
+        shortUrl: `http://localhost:4040/${id}`,
+        user: UrlParam.user,
+        queryKey: id,
     });
 
     // save feedback

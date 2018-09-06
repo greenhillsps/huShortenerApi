@@ -12,6 +12,10 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  queryKey: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     required: true,
@@ -23,14 +27,17 @@ const UrlSchema = new mongoose.Schema({
     default: null
   },
   analytics: [{
-    clickDate: String,
+    clickDate: {
+      type: String,
+      default: Date.now
+    },
     device: String,
     browser: String,
     language: String,
     refferer: String,
     country: String,
     Region: String,
-  },]
+  }]
   ,
   features: {
     'locked': {
@@ -60,9 +67,9 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       customExpiryDate: {
-        type:Date,
+        type: Date,
         default: null
-        },
+      },
     },
     'urlRedirectto': {
       locked: {
@@ -87,7 +94,7 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       Url: {
-        type:String,
+        type: String,
         default: null
       },
     },
@@ -133,11 +140,11 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       boughtPrice: {
-        type:Number,
+        type: Number,
         default: null
       },
-      expiryDate: { 
-        type:Date,
+      expiryDate: {
+        type: Date,
         default: null
       },
       ips: ["192.168.1.1", "192.168.1.2"],
@@ -157,11 +164,11 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       boughtPrice: {
-        type:Number,
+        type: Number,
         default: null
       },
-      expiryDate: { 
-        type:Date,
+      expiryDate: {
+        type: Date,
         default: null
       },
     },
@@ -180,11 +187,11 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       boughtPrice: {
-        type:Number,
+        type: Number,
         default: null
       },
-      expiryDate: { 
-        type:Date,
+      expiryDate: {
+        type: Date,
         default: null
       },
 
@@ -204,19 +211,19 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       boughtPrice: {
-        type:Number,
+        type: Number,
         default: null
       },
-      expiryDate: { 
-        type:Date,
+      expiryDate: {
+        type: Date,
         default: null
       },
-      originalUrl: { 
-        type:String,
+      originalUrl: {
+        type: String,
         default: null
       },
       shortUrl: {
-        type:String,
+        type: String,
         default: null
       },
     }

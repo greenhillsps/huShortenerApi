@@ -1,14 +1,15 @@
-const express = require('express');
+const db = require('../../_helper/db');
+const Url = db.Url;
 
+module.exports = {
+    getById,
+};
 
-const router = express.Router(); // eslint-disable-line new-cap
+async function getById(id) {
 
-// TODO: use glob to match *.route files
-
-/** GET /health-check - Check service health */
-router.get('/:id', (req, res) =>
-  res.send('OK')
-);
-
-
-module.exports = router;
+    if (await Url.findOne({ query: id })) {
+        let url = await Url.findOneAndUpdate({ queryKey: id }, {$push : {analytics: { browser: 'Chrome',language:'English', refferer: 'Facebook', country: 'Pakistan', Region: "SouthEast-Asia" }}});
+  
+        return await url.actualUrl
+    }
+}

@@ -33,7 +33,7 @@ async function create(req, res, next) {
 
   if (await User.findOne({ email: req.body.email })) {
     
-    res.status(412)
+    res.status(403)
       .json({
         Status: '403',
         message: ' email ' + req.body.email + ' is already taken'
