@@ -19,4 +19,4 @@ router.route('/test')
 router.route('/random-number')
   .get(expressJwt({ secret: config.jwtSecret }), authCtrl.getRandomNumber);
 
-module.exports = router;
+module.exports = router; 
