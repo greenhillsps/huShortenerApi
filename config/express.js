@@ -12,8 +12,10 @@ const helmet = require('helmet');
 const winstonInstance = require('./winston');
 const config = require('./config');
 const APIError = require('../server/helpers/APIError');
+const authRoutes = require('../Routes/authRoute');
 const apiRoutes = require('../Routes/api.route');
 const indexRoutes = require('../Routes/index.route');
+const VerifyToken = require('../_helper/VerifyToken');
 
 
 const app = express();
@@ -52,8 +54,11 @@ if (config.env === 'development') {
 // mount all routes on /
 app.use('/',indexRoutes);
 
+// mount all routes on /auth
+app.use('/auth', authRoutes);
+
 // mount all routes on /api path
-app.use('/api', apiRoutes);
+app.use('/api', [VerifyToken, apiRoutes]);
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => { 

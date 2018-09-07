@@ -2,14 +2,26 @@ const db = require('../../_helper/db');
 const Url = db.Url;
 
 module.exports = {
-    getById,
+    update,
 };
 
-async function getById(id) {
+async function update(id, param) {
 
-    if (await Url.findOne({ query: id })) {
-        let url = await Url.findOneAndUpdate({ queryKey: id }, {$push : {analytics: { browser: 'Chrome',language:'English', refferer: 'Facebook', country: 'Pakistan', Region: "SouthEast-Asia" }}});
-  
+    if (await Url.findOne({ queryKey: id })) {
+        let url = await Url.findOneAndUpdate({ queryKey: id },
+            {
+                $push: {
+                    analytics:
+                    {
+                        browser: param.analytics.browser,
+                        language: param.analytics.language,
+                        refferer: param.analytics.refferer,
+                        country: param.analytics.country,
+                        Region: param.analytics.Region
+                    }
+                }
+            });
+
         return await url.actualUrl
     }
 }

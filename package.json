@@ -20,7 +20,7 @@
     "test:coverage": "cross-env NODE_ENV=test ./node_modules/.bin/istanbul cover _mocha -- --ui bdd --reporter spec --colors server --recursive",
     "test:check-coverage": "yarn test:coverage && istanbul check-coverage",
     "report-coverage": "coveralls < ./coverage/lcov.info",
-    "pub:dev":"git add . && git commit -m 'autoComment' && git push herokudev devbranch:master"
+    "pub:dev": "git add . && git commit -m 'autoComment' && git push herokudev devbranch:master"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,8 @@
     "boilerplate"
   ],
   "dependencies": {
+    "bcrypt": "false3.0.0",
+    "bcryptjs": "false2.4.3",
     "bluebird": "3.5.1",
     "body-parser": "1.18.2",
     "compression": "1.7.2",

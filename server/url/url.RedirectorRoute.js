@@ -3,12 +3,12 @@ const router = express.Router();
 const redirectorController = require('./url.Redirector');
 
 // routes
-router.get('/:id', getById);
+router.put('/:id', update);
 
 module.exports = router;
 
-function getById(req, res, next) {
-  redirectorController.getById(req.params.id)
+function update(req, res, next) {
+  redirectorController.update(req.params.id, req.body)
     .then(url => url ? res.redirect(url) : res.sendStatus(404))
     // .then (console.log(req.headers.user-agent))
     .catch(err => next(err));

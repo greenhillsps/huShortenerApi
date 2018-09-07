@@ -1,4 +1,9 @@
 const User = require('./user.model');
+var bcrypt = require('bcryptjs'); // used to hash passwords
+const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+
+
+const config = require('../../config/config'); // get config file
 /**
  * Load user and append to req.
  */
@@ -40,16 +45,21 @@ async function create(req, res, next) {
       })
       .send()
   } else {
+    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
     const user = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: req.body.password,
+      password: hashedPassword,
       email: req.body.email,
       mobileNumber: req.body.mobileNumber
     });
 
+    var token = jwt.sign({ email: req.body.email }, config.jwtSecret, {
+      expiresIn: 86400 // expires in 24 hours
+    });
+
     await user.save()
-      .then(savedUser => res.json(savedUser))
+      .then(User => res.status(200).send({ auth: true, token: token, User}))
       .catch(e => next(e));
   }
 }
