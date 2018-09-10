@@ -17,7 +17,7 @@ module.exports = router;
 
 function submit(req, res, next) {
     urlController.create(req.body)
-        .then(url => res.send(url))
+        .then(url => url ? res.json({"url": url}).send(200) : res.json({'message':' the request was not processed'}).send(403))
         .catch(err => next(err));
 }
 

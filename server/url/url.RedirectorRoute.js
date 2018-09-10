@@ -3,7 +3,7 @@ const router = express.Router();
 const redirectorController = require('./url.Redirector');
 
 // routes
-router.put('/:id', update);
+router.get('/:id', update);
 
 module.exports = router;
 

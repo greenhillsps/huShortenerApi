@@ -1,4 +1,4 @@
-const db = require('../../_helper/db');
+const db = require('../../config/db');
 const Price = db.Price;
 
 module.exports = {
@@ -23,6 +23,7 @@ async function create(PriceParam) {
 
     // save feedback
     await price.save();
+    return price
 }
 
 async function getAll() {

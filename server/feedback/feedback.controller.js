@@ -1,4 +1,4 @@
-const db = require('../../_helper/db');
+const db = require('../../config/db');
 const Feedback = db.Feedback;
 
 module.exports = {
@@ -25,9 +25,9 @@ async function create(FeedbackParam) {
 async function getAll() {
     return await Feedback
     .find()
-    .populate('user')
-    .select('name user')
-    // .sort('-createdAt');
+    // .populate('user')
+    // .select('name user')
+    .sort('-createdAt');    
 }
 
 async function getById(id) {
@@ -41,4 +41,5 @@ async function update(id, FeedbackParam) {
     Object.assign(feedback, FeedbackParam);
 
     await feedback.save();
+    return feedback
 }

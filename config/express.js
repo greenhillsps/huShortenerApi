@@ -15,11 +15,24 @@ const APIError = require('../server/helpers/APIError');
 const authRoutes = require('../Routes/authRoute');
 const apiRoutes = require('../Routes/api.route');
 const indexRoutes = require('../Routes/index.route');
-const VerifyToken = require('../_helper/VerifyToken');
 
 
+
+//paypal
+// const sessionConfig = require('./sessionConfig');
+// const session = require('express-session');
+// const MongoDBStore = require('connect-mongodb-session')(session);
+
+// mongoose.Promise = Promise;
+// mongoose.connect(config.db.url, {
+//     useMongoClient: true
+// });
+
+// const Products = require('../server/PAypal/Products');
+// const Cart = require('../server/PAypal/Cart');
+// const Security = require('../server/PAypal/Security');
+//.. 
 const app = express();
-
 
 if (config.env === 'development') {
   app.use(logger('dev'));
@@ -54,11 +67,18 @@ if (config.env === 'development') {
 // mount all routes on /
 app.use('/',indexRoutes);
 
-// mount all routes on /auth
-app.use('/auth', authRoutes);
-
 // mount all routes on /api path
-app.use('/api', [VerifyToken, apiRoutes]);
+app.use('/api', [apiRoutes]);
+
+
+//paypal
+// app.disable('x-powered-by');
+
+// app.locals.paypal = config.paypal;
+// app.locals.locale = config.locale;
+
+
+
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => { 

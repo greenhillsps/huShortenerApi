@@ -12,7 +12,7 @@ module.exports = router;
 
 function submit(req, res, next) {
     priceController.create(req.body)
-        .then(price => res.send(price))
+        .then(url => url ? res.json(url).send(200) : res.json({ 'message': ' Request failed please try again' }).send(403))
         .catch(err => next(err));
 }
 
@@ -30,6 +30,6 @@ function getAll(req, res, next) {
 
 function update(req, res, next) {
     priceController.update(req.params.id, req.body)
-        .then(() => res.json({}))
+        .then(url => url ? res.json({"message": "The price has updated"}).send(200) : res.json({ 'message': ' Request failed please try again' }).send(403))
         .catch(err => next(err));
 }

@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
  */
 const FeedbackSchema = new mongoose.Schema({
 
-  User: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },

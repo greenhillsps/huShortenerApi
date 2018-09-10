@@ -34,35 +34,35 @@ function get(req, res) {
  * @property {string} req.body.mobileNumber 
  * @returns {User}
  */
-async function create(req, res, next) {
+// async function create(req, res, next) {
 
-  if (await User.findOne({ email: req.body.email })) {
-    
-    res.status(403)
-      .json({
-        Status: '403',
-        message: ' email ' + req.body.email + ' is already taken'
-      })
-      .send()
-  } else {
-    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      password: hashedPassword,
-      email: req.body.email,
-      mobileNumber: req.body.mobileNumber
-    });
+//   if (await User.findOne({ email: req.body.email })) {
 
-    var token = jwt.sign({ email: req.body.email }, config.jwtSecret, {
-      expiresIn: 86400 // expires in 24 hours
-    });
+//     res.status(403)
+//       .json({
+//         Status: '403',
+//         message: ' email ' + req.body.email + ' is already taken'
+//       })
+//       .send()
+//   } else {
+//     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+//     const user = new User({
+//       firstName: req.body.firstName,
+//       lastName: req.body.lastName,
+//       password: hashedPassword,
+//       email: req.body.email,
+//       mobileNumber: req.body.mobileNumber
+//     });
 
-    await user.save()
-      .then(User => res.status(200).send({ auth: true, token: token, User}))
-      .catch(e => next(e));
-  }
-}
+//     var token = jwt.sign({ email: req.body.email }, config.jwtSecret, {
+//       // expiresIn: 86400 // expires in 24 hours
+//     });
+
+//     await user.save()
+//       .then(User => res.status(200).send({ auth: true, token: token, User}))
+//       .catch(e => next(e));
+//   }
+// }
 
 /**
  * Update existing user
@@ -111,4 +111,4 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { load, get, create, update, list, remove };
+module.exports = { load, get, update, list, remove };

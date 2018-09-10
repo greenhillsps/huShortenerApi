@@ -1,4 +1,4 @@
-const db = require('../../_helper/db');
+const db = require('../../config/db');
 const Url = db.Url;
 var shortid = require('shortid');
 module.exports = {
@@ -10,17 +10,46 @@ module.exports = {
 };
 
 async function create(UrlParam) {
-    let id =  shortid.generate();
-    const url = new Url({
-        
-        actualUrl: UrlParam.actualUrl,
-        shortUrl: `http://localhost:4040/${id}`,
-        user: UrlParam.user,
-        queryKey: id,
-    });
 
-    // save feedback
-    await url.save();
+    let existing = await Url.findOne({ actualUrl: UrlParam.actualUrl });
+    let id;
+    let url
+    if (UrlParam.user) {
+
+        id = shortid.generate();
+        url = await new Url({
+            actualUrl: UrlParam.actualUrl,
+            shortUrl: `http://localhost:4040/${id}`,
+            user: UrlParam.user,
+            queryKey: id,
+        });
+        // save url
+        await url.save();
+
+    } else if (existing) {
+        url = {
+            shortUrl : null
+        }
+        id = await existing.queryKey;
+        url.shortUrl = existing.shortUrl
+    } else {
+
+        id = shortid.generate();
+        url = await new Url({
+            actualUrl: UrlParam.actualUrl,
+            shortUrl: `http://localhost:4040/${id}`,
+            user: UrlParam.user,
+            queryKey: id,
+        });
+        // save url
+        await url.save();
+    }
+
+
+
+
+
+    return url.shortUrl
 }
 
 async function getAll() {
@@ -35,7 +64,7 @@ async function getById(id) {
 async function update(id, UrlParam) {
     const url = await Url.findById(id);
 
-    // copy priceParam properties to price
+    // copy UrlParam properties to Url
     Object.assign(url, UrlParam);
 
     await url.save();

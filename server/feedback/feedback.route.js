@@ -14,7 +14,7 @@ module.exports = router;
 
 function submit(req, res, next) {
     feedbackService.create(req.body)
-        .then(feedback => res.send(feedback))
+        .then(feedback => res.json({"message":"Feedback submitted successfully"}).send(feedback))
         .catch(err => next(err));
 }
 
@@ -38,7 +38,7 @@ function getAll(req, res, next) {
 
 function update(req, res, next) {
     feedbackService.update(req.params.id, req.body)
-        .then(() => res.json({}))
+    .then(url => url ? res.json(url).send(200) : res.json({'message':' Request failed please try again'}).send(403))
         .catch(err => next(err));
 }
 

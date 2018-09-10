@@ -13,6 +13,7 @@ mlab account
     Dotly123
 
     mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
+    mongodb://localhost/Dotly
 
 Heroku
     creds
