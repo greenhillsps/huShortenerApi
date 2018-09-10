@@ -1,9 +1,10 @@
 const db = require('../../config/db');
+const User = require('../user/user.model');
 const Url = db.Url;
 var shortid = require('shortid');
 module.exports = {
     getAll,
-    getById,
+    getByUserId,
     create,
     update,
     // delete: _delete
@@ -28,7 +29,7 @@ async function create(UrlParam) {
 
     } else if (existing) {
         url = {
-            shortUrl : null
+            shortUrl: null
         }
         id = await existing.queryKey;
         url.shortUrl = existing.shortUrl
@@ -57,8 +58,17 @@ async function getAll() {
     // .sort('-createdAt');
 }
 
-async function getById(id) {
-    return await Url.findById(id);
+async function getByUserId(id) {
+
+    if (await User.findById(id)) {
+        console.log('user hae')
+        urls = await Url.find({ user: id });
+        return await urls
+    }
+    else {
+        return await null
+    }
+
 }
 
 async function update(id, UrlParam) {

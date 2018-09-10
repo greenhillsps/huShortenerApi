@@ -5,7 +5,7 @@ const urlController = require('./url.controller');
 // routes
 router.post('/submit', submit);
 router.get('/', getAll);
-router.get('/:id', getById);
+router.get('/:id', getByUserId);
 router.put('/:id', update);
 // router.put('/analytics/:id', analytics);
 router.put('/:id', update);
@@ -17,13 +17,13 @@ module.exports = router;
 
 function submit(req, res, next) {
     urlController.create(req.body)
-        .then(url => url ? res.json({"url": url}).send(200) : res.json({'message':' the request was not processed'}).send(403))
+        .then(url => url ? res.json({ "url": url }) : res.json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => next(err));
 }
 
-function getById(req, res, next) {
-    urlController.getById(req.params.id)
-        .then(url => url ? res.json(url) : res.sendStatus(404))
+function getByUserId(req, res, next) {
+    urlController.getByUserId(req.params.id)
+        .then(url => url = !null ? res.json(url) : res.json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => next(err));
 }
 
