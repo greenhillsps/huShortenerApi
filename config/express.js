@@ -65,10 +65,10 @@ if (config.env === 'development') {
 }
 
 // mount all routes on /
-app.use('/',indexRoutes);
+app.use('/', indexRoutes);
 
 // mount all routes on /api path
-app.use('/api', [apiRoutes]);
+app.use('/api', apiRoutes);
 
 
 //paypal
@@ -81,7 +81,7 @@ app.use('/api', [apiRoutes]);
 
 
 // if error is not an instanceOf APIError, convert it.
-app.use((err, req, res, next) => { 
+app.use((err, req, res, next) => {
   if (err instanceof expressValidation.ValidationError) {
     // validation error contains errors which is an array of error each containing message[]
     const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ');

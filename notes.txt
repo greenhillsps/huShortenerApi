@@ -27,7 +27,7 @@ Heroku
         
         git checkout devbranch
         git add . //for adding files
-        git commit -m "message" //commit changes
+        git commit -m "auto" //commit changes
         git push herokudev devbranch:master
 
 

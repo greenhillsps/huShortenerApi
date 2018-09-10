@@ -28,9 +28,9 @@ function login(req, res, next) {
 
     // if user is found and password is valid
     // create a token
-    var token = jwt.sign({ id: user._id }, config.jwtSecret, {
-      // expiresIn: 86400 // expires in 24 hours
-    });
+    var token = jwt.sign({ id: user._id }, config.jwtSecret,
+      // { expiresIn: 86400 // expires in 24 hours}
+    );
 
     // return the information including token as JSON
     res.status(200).send({ auth: true, token: token, email: user.email, id: user.id });
@@ -71,9 +71,9 @@ async function register(req, res, next) {
       mobileNumber: req.body.mobileNumber
     });
 
-    var token = jwt.sign({ email: req.body.email }, config.jwtSecret, {
-      // expiresIn: 86400 // expires in 24 hours
-    });
+    var token = jwt.sign({ email: req.body.email }, config.jwtSecret,
+      // { expiresIn: 86400 // expires in 24 hours}
+    );
 
     await user.save()
       .then(User => res.status(200).send({ auth: true, token: token, User }))

@@ -42,4 +42,5 @@ async function update(id, PriceParam) {
     Object.assign(price, PriceParam);
 
     await price.save();
+    return price
 }
