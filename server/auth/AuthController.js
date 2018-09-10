@@ -33,7 +33,7 @@ function login(req, res, next) {
     );
 
     // return the information including token as JSON
-    res.status(200).send({ auth: true, token: token, email: user.email, id: user.id });
+    res.status(200).send({ auth: true, token: token, user : user });
   });
   return next
 };
