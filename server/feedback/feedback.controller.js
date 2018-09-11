@@ -5,8 +5,7 @@ module.exports = {
     getAll,
     getById,
     create,
-    update,
-    // delete: _delete
+    update
 };
 
 async function create(FeedbackParam) {

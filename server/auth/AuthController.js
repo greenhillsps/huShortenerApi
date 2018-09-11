@@ -33,7 +33,7 @@ function login(req, res, next) {
     );
 
     // return the information including token as JSON
-    res.status(200).send({ auth: true, token: token, user : user });
+    res.status(200).send({ auth: true, token: token, user: user });
   });
   return next
 };
@@ -71,11 +71,16 @@ async function register(req, res, next) {
       mobileNumber: req.body.mobileNumber
     });
 
-    var token = jwt.sign({ email: req.body.email }, config.jwtSecret,
+    var token;
       // { expiresIn: 86400 // expires in 24 hours}
-    );
+   
 
     await user.save()
+      .then(User =>  {
+        token = jwt.sign({ id: User._id }, config.jwtSecret,
+          // { expiresIn: 86400 // expires in 24 hours}
+        );
+      })
       .then(User => res.status(200).send({ auth: true, token: token, User }))
       .catch(e => next(e));
   }
