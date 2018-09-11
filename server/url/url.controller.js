@@ -50,19 +50,20 @@ async function create(UrlParam) {
 
 
 
-    return url.shortUrl
+    return url
 }
 
-async function getAll() {
-    return await Url.find()
-    // .sort('-createdAt');
+async function getAll(req) {
+    const {  skip , limit} = req.query;
+    return await Url.find(null,null,{ skip: (parseInt(skip)), limit:(parseInt(limit)) })
+    //  .sort('-createdAt');
 }
 
 async function getByUserId(id) {
 
-    if (await User.findById(id)) {
-        console.log('user hae')
-        urls = await Url.find({ user: id });
+    if (await User.findById(id.params.id)) {
+        const {  skip , limit} = id.query;
+        urls = await Url.find({ user: id.params.id }, null,{ skip: (parseInt(skip)), limit:(parseInt(limit)) } );
         return await urls
     }
     else {

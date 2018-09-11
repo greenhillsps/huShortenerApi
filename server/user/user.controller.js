@@ -94,7 +94,7 @@ function update(req, res, next) {
  * @returns {User[]}
  */
 function list(req, res, next) {
-  const { limit = 50, skip = 0 } = req.query;
+  const { limit, skip } = req.query;
   User.list({ limit, skip })
     .then(users => res.json(users))
     .catch(e => next(e));

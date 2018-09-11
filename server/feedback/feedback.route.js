@@ -25,7 +25,7 @@ function getById(req, res, next) {
 }
 
 function getAll(req, res, next) {
-    feedbackService.getAll()
+    feedbackService.getAll(req, res)
         .then(feedback => res.json(feedback))
         .catch(err => next(err));
 }

@@ -22,12 +22,13 @@ async function create(FeedbackParam) {
     await feedback.save();
 }
 
-async function getAll() {
+async function getAll(req, res) {
+    const {  skip , limit} = req.query;
     return await Feedback
-    .find()
+    .find(null,null,{ skip: (parseInt(skip)), limit:(parseInt(limit)) })
     // .populate('user')
     // .select('name user')
-    .sort('-createdAt');    
+    .sort('-createdAt');
 }
 
 async function getById(id) {

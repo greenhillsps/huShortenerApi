@@ -22,13 +22,13 @@ function submit(req, res, next) {
 }
 
 function getByUserId(req, res, next) {
-    urlController.getByUserId(req.params.id)
+    urlController.getByUserId(req)
         .then(url => url = !null ? res.json(url) : res.json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => next(err));
 }
 
 function getAll(req, res, next) {
-    urlController.getAll()
+    urlController.getAll(req)
         .then(price => res.json(price))
         .catch(err => next(err));
 }
