@@ -1,0 +1,67 @@
+
+
+https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/formbasics/#auto-fill-forms-with-html-variables  
+
+https://developer.paypal.com/docs/checkout/how-to/server-integration/#how-a-server-integration-works
+
+https://www.sandbox.paypal.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+API Signatures from paypal techg acc
+
+Credential : Signature
+APIUsername : jawad_api1.business.com
+APIPassword : Y5YMDRB55U8GDWLF
+Signature : AZXrAH4PoVZ7ogQR8pJqtffjgabRA-2gOZZRbOYXnQ5.tJbNNEdnIc-B
+Request Date : September 10, 2018 at 5:18:26 AM PDT
+
+
+
+
+
+
+techg acc
+
+business :
+jawad@business.com
+paypal55
+
+personal:
+jawad@paypal.com
+paypal55
+
+

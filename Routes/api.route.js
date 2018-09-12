@@ -4,8 +4,8 @@ const authRoutes = require('../server/auth/auth.route');
 const urlRoutes = require('../server/url/url.route');
 const priceRoutes = require('../server/price/price.route');
 const feedbackRoutes = require('../server/feedback/feedback.route');
+const paypalRoutes = require('../server/Paypal/expressCheckout');
 const VerifyToken = require('../config/VerifyToken');
-
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -17,6 +17,9 @@ router.get('/health-check', (req, res) =>
 );
 // mount all routes on /auth
 router.use('/auth', authRoutes);
+
+// mount all routes on /paypal
+router.use('/paypal', paypalRoutes);
 
 // mount user routes at /users
 router.use('/users', [VerifyToken, userRoutes]);
