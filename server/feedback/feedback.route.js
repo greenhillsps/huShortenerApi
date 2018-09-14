@@ -6,9 +6,7 @@ const feedbackService = require('./feedback.controller');
 router.post('/submit', submit);
 router.get('/', getAll);
 router.get('/:id', getById);
-// router.get('/current', getCurrent);
 router.put('/:id', update);
-// router.delete('/:id', _delete);
 
 module.exports = router;
 
@@ -29,12 +27,6 @@ function getAll(req, res, next) {
         .then(feedback => res.json(feedback))
         .catch(err => next(err));
 }
-
-// function getCurrent(req, res, next) {
-//     feedbackService.getById(req.params.sub)
-//         .then(feedback => feedback ? res.json(feedback) : res.sendStatus(404))
-//         .catch(err => next(err));
-// }
 
 function update(req, res, next) {
     feedbackService.update(req.params.id, req.body)

@@ -31,6 +31,7 @@ const UrlSchema = new mongoose.Schema({
       type: String,
       default: Date.now
     },
+    ip: String,
     device: String,
     browser: String,
     language: String,

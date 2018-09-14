@@ -19,7 +19,7 @@ router.get('/health-check', (req, res) =>
 router.use('/auth', authRoutes);
 
 // mount all routes on /paypal
-router.use('/paypal', paypalRoutes);
+router.use('/paypal', [VerifyToken, paypalRoutes]);
 
 // mount user routes at /users
 router.use('/users', [VerifyToken, userRoutes]);
@@ -31,7 +31,7 @@ router.use('/url', [VerifyToken, urlRoutes]);
 router.use('/price', [VerifyToken, priceRoutes]);
 
 // mount feedback routes at /feedback
-router.use('/feedback', [VerifyToken,feedbackRoutes]);
+router.use('/feedback', [VerifyToken, feedbackRoutes]);
 
 
 

@@ -7,7 +7,7 @@ const APIError = require('../helpers/APIError');
  * User Schema
  */
 const UserSchema = new mongoose.Schema({
-   firstName: {
+  firstName: {
     type: String,
     required: true
   },
@@ -23,17 +23,23 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     match: [/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'The value of path {PATH} ({VALUE}) is not a valid email address.'],
-    unique:true
+    unique: true
   },
   mobileNumber: {
     type: String,
     required: true,
     match: [/([(+]*[0-9]+[()+. -]*)/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
   },
+  wallet: {
+    type: Number,
+    default: 0
+  },
+  transactionHistory: [{}],
   createdAt: {
     type: Date,
     default: Date.now
   }
+
 });
 
 /**

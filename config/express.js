@@ -15,23 +15,10 @@ const APIError = require('../server/helpers/APIError');
 const authRoutes = require('../Routes/authRoute');
 const apiRoutes = require('../Routes/api.route');
 const indexRoutes = require('../Routes/index.route');
+const requestIp = require('request-ip');
+var device = require('express-device');
 
 
-
-//paypal
-// const sessionConfig = require('./sessionConfig');
-// const session = require('express-session');
-// const MongoDBStore = require('connect-mongodb-session')(session);
-
-// mongoose.Promise = Promise;
-// mongoose.connect(config.db.url, {
-//     useMongoClient: true
-// });
-
-// const Products = require('../server/PAypal/Products');
-// const Cart = require('../server/PAypal/Cart');
-// const Security = require('../server/PAypal/Security');
-//.. 
 const app = express();
 
 if (config.env === 'development') {
@@ -51,6 +38,10 @@ app.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
+//append ip addresses to req object
+app.use(requestIp.mw())
+//append device to req object
+app.use(device.capture());
 
 // enable detailed API logging in dev env
 if (config.env === 'development') {
@@ -69,16 +60,6 @@ app.use('/', indexRoutes);
 
 // mount all routes on /api path
 app.use('/api', apiRoutes);
-
-
-//paypal
-// app.disable('x-powered-by');
-
-// app.locals.paypal = config.paypal;
-// app.locals.locale = config.locale;
-
-
-
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {

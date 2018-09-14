@@ -5,7 +5,7 @@ module.exports = {
     update,
 };
 
-async function update(id, param) {
+async function update(id, req) {
     console.log('touched redirector')
     if (await Url.findOne({ queryKey: id })) {
         let url = await Url.findOneAndUpdate({ queryKey: id },
@@ -15,8 +15,10 @@ async function update(id, param) {
                     {
                         // browser: param.analytics.browser,
                         // language: param.analytics.language,
-                        // refferer: param.analytics.refferer,
+                        refferer: req.header('Referer'),
+                        device: req.device.type,
                         // country: param.analytics.country,
+                        ip: req.clientIp,
                         Region: "Southeast Asia"
                     },
 

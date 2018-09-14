@@ -5,6 +5,8 @@ function verifyToken(req, res, next) {
   let token = req.headers.authorization;
   let feedback = new RegExp('/api/feedback/submit');
   let url = new RegExp('/api/url/submit');
+  // let url = new RegExp('/api/paypal/buy/');
+
 
   if (url.test(req.originalUrl) || feedback.test(req.originalUrl)) {
     jwt.verify(token, config.jwtSecret, function (err, decoded) {
@@ -21,7 +23,7 @@ function verifyToken(req, res, next) {
     if (!token) {
       return res.status(403).send({ auth: false, message: 'No token provided.' });
     }
-  if (token && !(url.test(req.originalUrl)) &&  !(feedback.test(req.originalUrl))) {
+  if (token && !(url.test(req.originalUrl)) && !(feedback.test(req.originalUrl))) {
     // verifies secret and checks exp
     jwt.verify(token, config.jwtSecret, function (err, decoded) {
       if (err)
