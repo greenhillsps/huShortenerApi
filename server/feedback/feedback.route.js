@@ -33,9 +33,3 @@ function update(req, res, next) {
         .then(url => url ? res.json(url).send(200) : res.json({ 'message': ' Request failed please try again' }).send(403))
         .catch(err => next(err));
 }
-
-// function _delete(req, res, next) {
-//     feedbackService.delete(req.params.id)
-//         .then(() => res.json({}))
-//         .catch(err => next(err));
-// }

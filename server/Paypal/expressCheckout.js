@@ -11,12 +11,12 @@ paypal.configure({
     'client_id': config.clientId, // client id
     'client_secret': config.clientSecret // client secret 
 });
-var profile_name = Math.random().toString(36).substring(7);
+
 let currentUser = null;
 let amount = null;
 // payment process 
 router.use('/buy', (req, res) => {
-
+    var profile_name = Math.random().toString(36).substring(7);
     const { a } = req.query
     finduser(req)
     async function finduser(req) {
@@ -74,7 +74,10 @@ router.use('/buy', (req, res) => {
                 //experience    
                 paypal.webProfile.create(create_web_profile_json, function (error, web_profile) {
                     if (error) {
-                        throw error;
+                        console.log("This is the webProfile Error: ", error)
+                        // res.send(422).json("paypal not working")
+                        // return null
+                        res.sendStatus(408);
                     } else {
                         //Set the id of the created payment experience in payment json
                         var experience_profile_id = web_profile.id;
@@ -138,7 +141,9 @@ router.use('/success', (req, res) => {
 // error page 
 router.use('/err', (req, res) => {
     console.log(req.query);
-    res.redirect('https://soundcloud.com/');
+    // res.redirect('https://soundcloud.com/');
+    res.send('payment failed');
+
 })
 
 // helper functions 

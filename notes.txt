@@ -4,6 +4,11 @@ important links
 gmail account
     dotly6528@gmail.com
     Dotly123
+ipstack 
+    dotly6528@gmail.com
+    Dotly123
+    firstname= dotly, lastname= api 
+    api key = 555ffad38e5faadd4df7aaa9b9db8141
 paypal 
     dotly6528@gmail.com
     Dotly123

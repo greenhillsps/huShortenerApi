@@ -12,12 +12,10 @@ const helmet = require('helmet');
 const winstonInstance = require('./winston');
 const config = require('./config');
 const APIError = require('../server/helpers/APIError');
-const authRoutes = require('../Routes/authRoute');
 const apiRoutes = require('../Routes/api.route');
 const indexRoutes = require('../Routes/index.route');
 const requestIp = require('request-ip');
-var device = require('express-device');
-
+const device = require('express-device');
 
 const app = express();
 
