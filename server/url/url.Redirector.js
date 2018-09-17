@@ -1,6 +1,6 @@
 const db = require('../../config/db');
 const Url = db.Url;
-var useragent = require('useragent');
+const useragent = require('useragent');
 const ipstack = require('ipstack')
 
 
@@ -35,8 +35,8 @@ function update(id, req) {
                             if (err) {
                                 console.log(err)
                                 reject(err)
-                            } else if (response.actualUrl == null || response.actualUrl==undefined||response.actualUrl === null || response.actualUrl===undefined) {
-                                reject(err)
+                            } else if (!response) {
+                                reject("errorrrr, actual url not found")
                             } else if (response.actualUrl) {
                                 console.log("this is the response url: ", response.actualUrl);
                                 resolve(response.actualUrl)

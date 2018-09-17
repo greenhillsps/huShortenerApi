@@ -25,7 +25,14 @@ function submit(req, res, next) {
 function getByUserId(req, res, next) {
     urlController.getByUserId(req)
         .then(url => url = !null ? res.json(url) : res.json({ 'message': ' the request was not processed' }).send(403))
-        .catch(err => next(err));
+        .catch(err => {
+            if (err == "errorrrr, URL not found") {
+                res.sendStatus(404)
+            }
+            else {
+                next(err)
+            }
+        });
 }
 function getById(req, res, next) {
     urlController.getById(req.params.id)

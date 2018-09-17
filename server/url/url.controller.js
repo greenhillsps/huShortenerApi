@@ -1,6 +1,8 @@
 const db = require('../../config/db');
 const User = require('../user/user.model');
 const Url = db.Url;
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 var shortid = require('shortid');
 module.exports = {
     getAll,
@@ -52,27 +54,59 @@ async function create(req) {
 }
 
 async function getAll(req) {
-    console.log("comin fro url controller getAll", req.userId)
+    console.log("coming from url controller getAll", req.userId)
     const { skip, limit } = req.query;
     let url = await Url.find(null, null, { skip: (parseInt(skip)), limit: (parseInt(limit)) })
-    return url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user }
+    return url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user, date: url.createdAt }
     //  .sort('-createdAt');
 }
 
 async function getByUserId(req) {
 
-    if (await User.findById(req.userId)) {
-        console.log("comin fro url controller getByUserId", req.userId)
-        const { skip, limit } = req.query;
-        urls = await Url.find({ user: req.userId }, { features: 0, analytics: 0, createdAt: 0, __v: 0 }, { skip: (parseInt(skip)), limit: (parseInt(limit)) });
-        return urls
-    }
-    else {
-        return await null
-    }
+    return new Promise((resolve, reject) => {
+        try {
+            console.log("coming from url controller getByUserId", req.userId)
+            const { page, limit } = req.query;
+            const perPage = (parseInt(limit));
+            const currentPage = (parseInt(page)) || 1;
+            Url.find({ user: req.userId }, { features: 0, analytics: 0, __v: 0 })
+                .skip((perPage * currentPage) - perPage)
+                .limit(perPage)
+                .exec(function (err, urls) {
+                    Url.count({ user: req.userId }).exec(function (err, count) {
+                        console.log(count)
+                        if (err) { reject("URL not found") }
+                        else if (!urls) {
+                            reject("errorrrr, URL not found")
+                        }
+                        else {
+                            resolve({
+                                URls: urls,
+                                current: currentPage,
+                                pages: Math.ceil(count / perPage),
+                                totalCount: count
+                            })
+                        }
+                    })
+                });
+        } catch (error) {
+            return null
+        }
+    })
 }
 async function getById(id) {
-    return await Url.findById(id);
+
+    var nums = Url
+        // .findById({ _id: id },{analytics: 1, _id:0});
+        .aggregate([
+            { $match: { _id: ObjectId(id) } },
+            { $unwind: "$analytics" }
+            // { $group :  { _id: "$analytics.browser", count: { $sum: 1 } }  }
+        ])
+    // .pretty();
+
+    return await nums
+    // Url.findById(id);
 
 }
 async function update(id, UrlParam) {
@@ -83,3 +117,6 @@ async function update(id, UrlParam) {
 
     await url.save();
 }
+
+
+// pagination tutorial = https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html
