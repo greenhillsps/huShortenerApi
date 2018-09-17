@@ -24,7 +24,7 @@ async function create(req) {
         id = shortid.generate();
         url = await new Url({
             actualUrl: req.body.actualUrl,
-            shortUrl: `http://localhost:4040/${id}`,
+            shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
             user: req.userId,
             queryKey: id,
         });
