@@ -2,6 +2,7 @@ const db = require('../../config/db');
 const User = require('../user/user.model');
 const Url = db.Url;
 const mongoose = require('mongoose');
+var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
 var shortid = require('shortid');
 module.exports = {
@@ -94,20 +95,134 @@ async function getByUserId(req) {
         }
     })
 }
-async function getById(id) {
+function getById(id) {
 
-    var nums = Url
-        // .findById({ _id: id },{analytics: 1, _id:0});
-        .aggregate([
-            { $match: { _id: ObjectId(id) } },
-            { $unwind: "$analytics" }
-            // { $group :  { _id: "$analytics.browser", count: { $sum: 1 } }  }
-        ])
-    // .pretty();
 
-    return await nums
-    // Url.findById(id);
+    return new Promise((resolve, reject) => {
+        let f;
+        let val;
+        Url.findById({ _id: id }, {}).lean().exec(function (err, val) {
+            f = val.analytics.length
+            val = val;
+            console.log(val.analytics.length);
 
+            async.parallel([
+                function (callback) {
+                    Url.aggregate([
+                        { $match: { _id: ObjectId(id) } },
+                        { $unwind: "$analytics" },
+                        { $group: { _id: "$analytics.Region", count: { $sum: 1 } } },
+                        { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                        { $sort: { _id: 1 } }
+                    ]).exec(function (err, value) {
+                        if (err) {
+                            callback(err)
+                        } else {
+                            callback(null, value)
+                        }
+                    })
+                },
+                function (callback) {
+                    Url
+                        .aggregate([
+                            { $match: { _id: ObjectId(id) } },
+                            { $unwind: "$analytics" },
+                            { $group: { _id: "$analytics.country", count: { $sum: 1 } } },
+                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                            { $sort: { _id: 1 } }
+                        ]).exec(function (err, value) {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                callback(null, value)
+                            }
+                        })
+                },
+                function (callback) {
+                    Url
+                        .aggregate([
+                            { $match: { _id: ObjectId(id) } },
+                            { $unwind: "$analytics" },
+                            { $group: { _id: "$analytics.device", count: { $sum: 1 } } },
+                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                            { $sort: { _id: 1 } }
+                        ]).exec(function (err, value) {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                callback(null, value)
+                            }
+                        })
+                },
+                function (callback) {
+                    Url
+                        .aggregate([
+                            { $match: { _id: ObjectId(id) } },
+                            { $unwind: "$analytics" },
+                            { $group: { _id: "$analytics.refferer", count: { $sum: 1 } } },
+                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                            { $sort: { _id: 1 } }
+                        ]).exec(function (err, value) {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                callback(null, value)
+                            }
+                        })
+                },
+                function (callback) {
+                    Url
+                        .aggregate([
+                            { $match: { _id: ObjectId(id) } },
+                            { $unwind: "$analytics" },
+                            { $group: { _id: "$analytics.language", count: { $sum: 1 } } },
+                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                            { $sort: { _id: 1 } }
+                        ]).exec(function (err, value) {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                callback(null, value)
+                            }
+                        })
+                },
+                function (callback) {
+                    Url
+                        .aggregate([
+                            { $match: { _id: ObjectId(id) } },
+                            { $unwind: "$analytics" },
+                            { $group: { _id: "$analytics.browser", count: { $sum: 1 } } },
+                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                            { $sort: { _id: 1 } }
+                        ]).exec(function (err, value) {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                callback(null, value)
+                            }
+                        })
+                }
+            ], function (err, result) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    resolve({
+                        TotalClicks: f,
+                        URL: val,
+                        Region: result[0],
+                        country: result[1],
+                        Device: result[2],
+                        Refferer: result[3],
+                        Language: result[4],
+                        Browser: result[5],
+
+                    })
+
+                }
+            });
+
+        })
+    });
 }
 async function update(id, UrlParam) {
     const url = await Url.findById(id);
@@ -120,3 +235,4 @@ async function update(id, UrlParam) {
 
 
 // pagination tutorial = https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html
+

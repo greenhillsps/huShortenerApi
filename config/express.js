@@ -54,10 +54,10 @@ if (config.env === 'development') {
 }
 
 // mount all routes on /
-app.use('/', indexRoutes);
+app.use('/', [indexRoutes]);
 
 // mount all routes on /api path
-app.use('/api', apiRoutes);
+app.use('/api', [apiRoutes]);
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {
