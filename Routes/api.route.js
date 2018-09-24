@@ -4,6 +4,7 @@ const authRoutes = require('../server/auth/auth.route');
 const urlRoutes = require('../server/url/url.route');
 const priceRoutes = require('../server/price/price.route');
 const feedbackRoutes = require('../server/feedback/feedback.route');
+const cartRoutes = require('../server/cart/cart.route');
 const paypalRoutes = require('../server/Paypal/expressCheckout');
 const VerifyToken = require('../config/VerifyToken');
 
@@ -32,6 +33,9 @@ router.use('/price', [VerifyToken, priceRoutes]);
 
 // mount feedback routes at /feedback
 router.use('/feedback', [VerifyToken, feedbackRoutes]);
+
+// mount feedback routes at /cart
+router.use('/cart', [VerifyToken, cartRoutes]);
 
 
 
