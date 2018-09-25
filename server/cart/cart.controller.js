@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const db = require('../../config/db');
 const Url = db.Url;
+const Price = db.Price;
 const User = require('../user/user.model');
 var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
@@ -10,140 +11,259 @@ module.exports = {
 };
 
 async function update(id, req) {
-    const user = await User.findById(req.userId);
-    console.log(id)
-    let customExpiryDate = false;
-    let urlRedirectto = false;
-    let enableToggle = false;
-    let blockIps = false;
-    let customReports = false;
-    let fourOfour = false;
-    let customShortUrl = false;
 
-    if (req.body.customExpiryDate == true) {
-        console.log("customExpiryDate");
-        customExpiryDate = true;
-        Url.findByIdAndUpdate(id, {
-            $set: { "features.locked": false },
-            $set: { "features.customExpiryDate.locked": false },
-        },
-            { new: true }
-        ).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    }
-    if (req.body.urlRedirectto == true) {
-        console.log("urlRedirectto");
-        urlRedirectto = true;
-        Url.findByIdAndUpdate({ _id: id }, {
-            '$set': { "features.locked": false },
-            // '$set': { "features.urlRedirectto.locked": false },
-        }, { new: true }).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    };
-    if (req.body.enableToggle == true) {
-        console.log("enableToggle");
-        enableToggle = true;
-        Url.update({ _id: id }, {
-            // '$set': { "features.locked": false },
-            '$set': { "features.enableToggle.locked": false },
-        }, { new: true }).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    };
-    if (req.body.blockIps == true) {
-        console.log("blockIps");
-        blockIps = true;
-        Url.update({ _id: id }, {
-            // '$set': { "features.locked": false },
-            '$set': { "features.blockIps.locked": false },
-        }, { new: true }).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    };
-    if (req.body.customReports == true) {
-        console.log("customReports");
-        customReports = true;
-        Url.update({ _id: id }, {
-            // '$set': { "features.locked": false },
-            '$set': { "features.customReports.locked": false },
-        }, { new: true }).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    };
-    if (req.body.fourOfour == true) {
-        console.log("fourOfour");
-        fourOfour = true;
-        Url.update({ _id: id }, {
-            // '$set': { "features.locked": false },
-            '$set': { "features.fourOfour.locked": false },
-        }, { new: true }).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    };
-    if (req.body.customShortUrl == true) {
-        console.log("customShortUrl");
-        customShortUrl = true;
-        Url.update({ _id: id }, {
-            // '$set': { "features.locked": false },
-            '$set': { "features.customShortUrl.locked": false },
-        }, { new: true }).lean().exec(function (err, lala) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("hogya")
-            }
-        })
-    };
+    try {
 
+        const user = await User.findById(req.userId);
+        console.log(user.wallet)
+        let customExpiryDate = false;
+        let urlRedirectto = false;
+        let enableToggle = false;
+        let blockIps = false;
+        let customReports = false;
+        let fourOfour = false;
+        let customShortUrl = false;
+        let total = 0;
+        if (req.body.customExpiryDate == true) {
+            let price;
+            await Price.findById('5b9a22f0c597034450c4c8de', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err)
+                } else
+                    if (await x.features.customExpiryDate.locked == true && await user.wallet > await price.price) {
+                        await console.log("Price list for ", price.name);
 
-    // const url = await Url.findById(id, {});
+                        customExpiryDate = true;
+                        x.features.locked = false;
+                        x.features.customExpiryDate.locked = false;
+                        await x.save();
 
-    // let consta;
-    // if (url.features.locked == true) {
-    //     consta = true;
-    // } else {
-    //     consta = false;
-    // 
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
+            })
+        }
+        if (req.body.urlRedirectto == true) {
+            let price;
+            await Price.findById('5b9a2306c597034450c4c8df', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err)
+                } else
+                    if (await x.features.urlRedirectto.locked == true && await user.wallet > await price.price) {
+                        console.log("Price list for ", price.name);
+                        urlRedirectto = true;
+                        x.features.locked = false;
+                        x.features.urlRedirectto.locked = false;
+                        await x.save();
 
-    // copy UrlParam properties to Url
-    // Object.assign(feature, Param);
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
 
-    // await feature.save();
+            })
+        };
+        if (req.body.enableToggle == true) {
+            let price;
+            await Price.findById('5b9a230fc597034450c4c8e0', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err)
+                } else
+                    if (await x.features.enableToggle.locked == true && await user.wallet > await price.price) {
+                        console.log("Price list for ", price.name);
+                        enableToggle = true;
+                        x.features.locked = false;
+                        x.features.enableToggle.locked = false;
+                        await x.save();
 
-    return {
-        "customExpiryDate": customExpiryDate,
-        "urlRedirectto": urlRedirectto,
-        "enableToggle": enableToggle,
-        "blockIps": blockIps,
-        "customReports": customReports,
-        "fourOfour": fourOfour,
-        "customShortUrl": customShortUrl
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
+            })
+        };
+        if (req.body.blockIps == true) {
+            let price;
+            await Price.findById('5b9a2316c597034450c4c8e1', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err)
+                } else
+                    if (await x.features.blockIps.locked == true && await user.wallet > await price.price) {
+                        console.log("Price list for ", price.name);
+                        blockIps = true;
+                        x.features.locked = false;
+                        x.features.blockIps.locked = false;
+                        await x.save();
+
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
+            })
+        };
+        if (req.body.customReports == true) {
+            let price;
+            await Price.findById('5b9a231cc597034450c4c8e2', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err)
+                } else
+                    if (await x.features.customReports.locked == true && await user.wallet > await price.price) {
+                        console.log("Price list for ", price.name);
+                        customReports = true;
+                        x.features.locked = false;
+                        x.features.customReports.locked = false;
+                        await x.save();
+
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
+            })
+        };
+        if (req.body.fourOfour == true) {
+            let price;
+            await Price.findById('5b9a2323c597034450c4c8e3', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err);
+                } else
+                    if (await x.features.fourOfour.locked == true && await user.wallet > await price.price) {
+                        console.log("Price list for ", price.name);
+                        fourOfour = true;
+                        x.features.locked = false;
+                        x.features.fourOfour.locked = false;
+                        await x.save();
+
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
+            })
+        };
+        if (req.body.customShortUrl == true) {
+            let price;
+            await Price.findById('5b9a238ec597034450c4c8e4', async function (err, doc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    price = doc;
+                    // console.log("internal price: ",price);
+                }
+            });
+            await Url.findById(id, async function (err, x) {
+                if (err) {
+                    console.log(err)
+                } else
+                    if (await x.features.customShortUrl.locked == true && await user.wallet > await price.price) {
+                        console.log("Price list for ", price.name);
+                        customShortUrl = true;
+                        x.features.locked = false;
+                        x.features.customShortUrl.locked = false;
+                        await x.save();
+
+                        user.wallet = await user.wallet - await price.price;
+                        await user.save().then(() => {
+                            console.log(price.price, "has been cut ");
+                            total += price.price;
+                        });
+                    }
+                    else {
+                        console.log("Feature is either already unlocked or you don't have sufficient amount in your wallet");
+                    }
+            })
+        };
+
+        return {
+            "totalAmountCut": await total,
+            "customExpiryDate": await customExpiryDate,
+            "urlRedirectto": await urlRedirectto,
+            "enableToggle": await enableToggle,
+            "blockIps": await blockIps,
+            "customReports": await customReports,
+            "fourOfour": await fourOfour,
+            "customShortUrl": await customShortUrl
+        }
+    } catch (error) {
+        console.log(error)
+        return error
     }
 }
 

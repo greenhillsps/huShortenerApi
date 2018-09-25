@@ -76,10 +76,10 @@ Urls = {
                 expiryDate: Date,
                 any: any,
             },
-            '404Management': {
+            'fourOfour': {
                 locked: Boolean,
                 puchaseDate: Date,
-                'pricelist.404Management': Foreignkey,
+                'pricelist.fourOfour': Foreignkey,
                 boughtPrice: Number,
                 expiryDate: Date,
                 any: any,
@@ -133,7 +133,7 @@ pricelist = {
         price: Number,
         activeFor: Date
     },
-    '404Management': {
+    'fourOfour': {
         price: Number,
         activeFor: Date
     },
