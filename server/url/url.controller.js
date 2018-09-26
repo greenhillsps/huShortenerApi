@@ -204,7 +204,7 @@ function getById(id) {
                 }
             ], function (err, result) {
                 if (err) {
-                    console.log(err)
+                    reject(err)
                 } else {
                     resolve({
                         TotalClicks: f,
@@ -215,13 +215,10 @@ function getById(id) {
                         Refferer: result[3],
                         Language: result[4],
                         Browser: result[5],
-
                     })
-
                 }
             });
-
-        })
+        });
     });
 }
 async function update(id, UrlParam) {
