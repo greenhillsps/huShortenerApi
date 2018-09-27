@@ -102,125 +102,146 @@ function getById(id) {
         let f;
         let val;
         Url.findById({ _id: id }, {}).lean().exec(function (err, val) {
-            f = val.analytics.length
-            val = val;
             console.log(val.analytics.length);
+            if (err) {
+                reject(err);
+            } else
+                if (val.analytics.length > 0) {
+                    f = val.analytics.length
+                    val = val;
+                    console.log(val.analytics.length);
 
-            async.parallel([
-                function (callback) {
-                    Url.aggregate([
-                        { $match: { _id: ObjectId(id) } },
-                        { $unwind: "$analytics" },
-                        { $group: { _id: "$analytics.Region", count: { $sum: 1 } } },
-                        { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                        { $sort: { _id: 1 } }
-                    ]).exec(function (err, value) {
-                        if (err) {
-                            callback(err)
-                        } else {
-                            callback(null, value)
+                    async.parallel([
+                        function (callback) {
+                            Url.aggregate([
+                                { $match: { _id: ObjectId(id) } },
+                                { $unwind: "$analytics" },
+                                { $group: { _id: "$analytics.Region", count: { $sum: 1 } } },
+                                { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                { $sort: { _id: 1 } }
+                            ]).exec(function (err, value) {
+                                if (err) {
+                                    callback(err)
+                                } else {
+                                    callback(null, value)
+                                }
+                            })
+                        },
+                        function (callback) {
+                            Url
+                                .aggregate([
+                                    { $match: { _id: ObjectId(id) } },
+                                    { $unwind: "$analytics" },
+                                    { $group: { _id: "$analytics.country", count: { $sum: 1 } } },
+                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                    { $sort: { _id: 1 } }
+                                ]).exec(function (err, value) {
+                                    if (err) {
+                                        callback(err)
+                                    } else {
+                                        callback(null, value)
+                                    }
+                                })
+                        },
+                        function (callback) {
+                            Url
+                                .aggregate([
+                                    { $match: { _id: ObjectId(id) } },
+                                    { $unwind: "$analytics" },
+                                    { $group: { _id: "$analytics.device", count: { $sum: 1 } } },
+                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                    { $sort: { _id: 1 } }
+                                ]).exec(function (err, value) {
+                                    if (err) {
+                                        callback(err)
+                                    } else {
+                                        callback(null, value)
+                                    }
+                                })
+                        },
+                        function (callback) {
+                            Url
+                                .aggregate([
+                                    { $match: { _id: ObjectId(id) } },
+                                    { $unwind: "$analytics" },
+                                    { $group: { _id: "$analytics.refferer", count: { $sum: 1 } } },
+                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                    { $sort: { _id: 1 } }
+                                ]).exec(function (err, value) {
+                                    if (err) {
+                                        callback(err)
+                                    } else {
+                                        callback(null, value)
+                                    }
+                                })
+                        },
+                        function (callback) {
+                            Url
+                                .aggregate([
+                                    { $match: { _id: ObjectId(id) } },
+                                    { $unwind: "$analytics" },
+                                    { $group: { _id: "$analytics.language", count: { $sum: 1 } } },
+                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                    { $sort: { _id: 1 } }
+                                ]).exec(function (err, value) {
+                                    if (err) {
+                                        callback(err)
+                                    } else {
+                                        callback(null, value)
+                                    }
+                                })
+                        },
+                        function (callback) {
+                            Url
+                                .aggregate([
+                                    { $match: { _id: ObjectId(id) } },
+                                    { $unwind: "$analytics" },
+                                    { $group: { _id: "$analytics.browser", count: { $sum: 1 } } },
+                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                    { $sort: { _id: 1 } }
+                                ]).exec(function (err, value) {
+                                    if (err) {
+                                        callback(err)
+                                    } else {
+                                        callback(null, value)
+                                    }
+                                })
                         }
-                    })
-                },
-                function (callback) {
-                    Url
-                        .aggregate([
-                            { $match: { _id: ObjectId(id) } },
-                            { $unwind: "$analytics" },
-                            { $group: { _id: "$analytics.country", count: { $sum: 1 } } },
-                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                            { $sort: { _id: 1 } }
-                        ]).exec(function (err, value) {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                callback(null, value)
-                            }
-                        })
-                },
-                function (callback) {
-                    Url
-                        .aggregate([
-                            { $match: { _id: ObjectId(id) } },
-                            { $unwind: "$analytics" },
-                            { $group: { _id: "$analytics.device", count: { $sum: 1 } } },
-                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                            { $sort: { _id: 1 } }
-                        ]).exec(function (err, value) {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                callback(null, value)
-                            }
-                        })
-                },
-                function (callback) {
-                    Url
-                        .aggregate([
-                            { $match: { _id: ObjectId(id) } },
-                            { $unwind: "$analytics" },
-                            { $group: { _id: "$analytics.refferer", count: { $sum: 1 } } },
-                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                            { $sort: { _id: 1 } }
-                        ]).exec(function (err, value) {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                callback(null, value)
-                            }
-                        })
-                },
-                function (callback) {
-                    Url
-                        .aggregate([
-                            { $match: { _id: ObjectId(id) } },
-                            { $unwind: "$analytics" },
-                            { $group: { _id: "$analytics.language", count: { $sum: 1 } } },
-                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                            { $sort: { _id: 1 } }
-                        ]).exec(function (err, value) {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                callback(null, value)
-                            }
-                        })
-                },
-                function (callback) {
-                    Url
-                        .aggregate([
-                            { $match: { _id: ObjectId(id) } },
-                            { $unwind: "$analytics" },
-                            { $group: { _id: "$analytics.browser", count: { $sum: 1 } } },
-                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                            { $sort: { _id: 1 } }
-                        ]).exec(function (err, value) {
-                            if (err) {
-                                callback(err)
-                            } else {
-                                callback(null, value)
-                            }
-                        })
+                    ], function (err, result) {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve({
+                                TotalClicks: f,
+                                URL: val,
+                                Region: result[0],
+                                country: result[1],
+                                Device: result[2],
+                                Refferer: result[3],
+                                Language: result[4],
+                                Browser: result[5],
+                            })
+                        }
+                    });
                 }
-            ], function (err, result) {
-                if (err) {
-                    reject(err)
-                } else {
+                else {
+                    f = val.analytics.length
+                    val = val;
+                    console.log(val.analytics.length);
                     resolve({
-                        TotalClicks: f,
+                        TotalClicks: 0,
                         URL: val,
-                        Region: result[0],
-                        country: result[1],
-                        Device: result[2],
-                        Refferer: result[3],
-                        Language: result[4],
-                        Browser: result[5],
+                        Region: null,
+                        country: null,
+                        Device: null,
+                        Refferer: null,
+                        Language: null,
+                        Browser: null,
                     })
-                }
-            });
+                };
         });
     });
-}
+};
 async function update(id, UrlParam) {
     const url = await Url.findById(id);
 

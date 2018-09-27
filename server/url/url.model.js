@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 /**
  * Url Schema
@@ -19,7 +20,7 @@ const UrlSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: Date.now
+    default: moment()
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -29,7 +30,7 @@ const UrlSchema = new mongoose.Schema({
   analytics: [{
     clickDate: {
       type: String,
-      default: Date.now
+      default: moment()
     },
     ip: String,
     device: String,
@@ -148,7 +149,7 @@ const UrlSchema = new mongoose.Schema({
         type: Date,
         default: null
       },
-      ips: ["192.168.1.1", "192.168.1.2"],
+      ips: [],
     },
     'customReports': {
       locked: {
