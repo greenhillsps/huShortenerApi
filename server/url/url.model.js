@@ -95,7 +95,7 @@ const UrlSchema = new mongoose.Schema({
         type: Date,
         default: null
       },
-      Url: {
+      url: {
         type: String,
         default: null
       },
@@ -173,6 +173,10 @@ const UrlSchema = new mongoose.Schema({
         type: Date,
         default: null
       },
+      type: {
+        type: String,
+        default: null
+      },
     },
     'fourOfour': {
       locked: {
@@ -196,7 +200,10 @@ const UrlSchema = new mongoose.Schema({
         type: Date,
         default: null
       },
-
+      url: {
+        type: String,
+        default: null
+      },
     },
     'customShortUrl': {
       locked: {

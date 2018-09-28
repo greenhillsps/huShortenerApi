@@ -14,7 +14,7 @@ function update(id, req) {
         try {
             User.findById(req.userId).lean().exec(function (err, user) {
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else if (user) {
                     console.log(user.wallet)
                     let total = 0;
@@ -26,11 +26,11 @@ function update(id, req) {
 
                                 Price.findOne({ name: 'customExpiryDate' }, function (err, price) {
                                     if (err) {
-                                        console.log(err);
-                                    } else {
+                                        reject(err);
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err)
+                                                reject(err);
                                             } else
                                                 if (x.features.customExpiryDate.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
@@ -50,6 +50,8 @@ function update(id, req) {
 
                                                 }
                                         })
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 
@@ -62,11 +64,11 @@ function update(id, req) {
 
                                 Price.findOne({ name: 'urlRedirectto' }, function (err, price) {
                                     if (err) {
-                                        console.log(err);
-                                    } else {
+                                        reject(err);
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err)
+                                                reject(err);
                                             } else
                                                 if (x.features.urlRedirectto.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
@@ -86,6 +88,8 @@ function update(id, req) {
                                                     callback(null, "urlRedirectto is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 
@@ -99,15 +103,15 @@ function update(id, req) {
                                 Price.findOne({ name: 'enableToggle' }, function (err, price) {
                                     if (err) {
                                         callback(err);
-                                    } else {
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err)
+                                                reject(err);
                                             } else
                                                 if (x.features.enableToggle.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
-                                                    // try {
+
                                                     enableToggle = true;
                                                     x.features.locked = false;
                                                     x.features.enableToggle.locked = false;
@@ -123,6 +127,8 @@ function update(id, req) {
                                                     callback(null, "enableToggle is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         });
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 
@@ -135,11 +141,11 @@ function update(id, req) {
 
                                 Price.findOne({ name: 'blockIps' }, function (err, price) {
                                     if (err) {
-                                        console.log(err);
-                                    } else {
+                                        reject(err);
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err)
+                                                reject(err);
                                             } else
                                                 if (x.features.blockIps.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
@@ -159,6 +165,8 @@ function update(id, req) {
                                                     callback(null, "blockIps is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 
@@ -171,11 +179,11 @@ function update(id, req) {
 
                                 Price.findOne({ name: 'customReports' }, function (err, price) {
                                     if (err) {
-                                        console.log(err);
-                                    } else {
+                                        reject(err);
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err)
+                                                reject(err);
                                             } else
                                                 if (x.features.customReports.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
@@ -195,6 +203,8 @@ function update(id, req) {
                                                     callback(null, "customReports is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 
@@ -207,11 +217,11 @@ function update(id, req) {
 
                                 Price.findOne({ name: 'fourOfour' }, function (err, price) {
                                     if (err) {
-                                        console.log(err);
-                                    } else {
+                                        reject(err);
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err);
+                                                reject(err);
                                             } else
                                                 if (x.features.fourOfour.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
@@ -231,6 +241,8 @@ function update(id, req) {
                                                     callback(null, "fourOfour is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 
@@ -243,11 +255,11 @@ function update(id, req) {
 
                                 Price.findOne({ name: 'customShortUrl' }, function (err, price) {
                                     if (err) {
-                                        console.log(err);
-                                    } else {
+                                        reject(err);
+                                    } else if (price) {
                                         Url.findById(id, function (err, x) {
                                             if (err) {
-                                                console.log(err)
+                                                reject(err);
                                             } else
                                                 if (x.features.customShortUrl.locked == true && user.wallet > price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
@@ -268,6 +280,8 @@ function update(id, req) {
                                                     callback(null, "customShortUrl is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
+                                    } else {
+                                        callback(null, "Price field not found")
                                     }
                                 });
 

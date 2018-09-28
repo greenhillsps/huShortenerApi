@@ -11,9 +11,7 @@ router.put('/:id', update);
 // router.put('/analytics/:id', analytics);
 router.put('/:id', update);
 
-
-
-
+ 
 module.exports = router;
 
 function submit(req, res, next) {

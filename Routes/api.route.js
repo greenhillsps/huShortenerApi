@@ -5,6 +5,7 @@ const urlRoutes = require('../server/url/url.route');
 const priceRoutes = require('../server/price/price.route');
 const feedbackRoutes = require('../server/feedback/feedback.route');
 const cartRoutes = require('../server/cart/cart.route');
+const featureRoutes = require('../server/feature/feature.route');
 const paypalRoutes = require('../server/Paypal/expressCheckout');
 const VerifyToken = require('../config/VerifyToken');
 
@@ -16,13 +17,13 @@ const router = express.Router(); // eslint-disable-line new-cap
 router.get('/health-check', (req, res) =>
   res.send('OK')
 );
-// mount all routes on /auth
+// mount auth routes on /auth
 router.use('/auth', authRoutes);
 
-// mount all routes on /paypal
+// mount paypal routes on /paypal
 router.use('/paypal', [VerifyToken, paypalRoutes]);
 
-// mount user routes at /users
+// mount users routes at /users
 router.use('/users', [VerifyToken, userRoutes]);
 
 // mount url routes at /url
@@ -34,9 +35,10 @@ router.use('/price', [VerifyToken, priceRoutes]);
 // mount feedback routes at /feedback
 router.use('/feedback', [VerifyToken, feedbackRoutes]);
 
-// mount feedback routes at /cart
+// mount cart routes at /cart
 router.use('/cart', [VerifyToken, cartRoutes]);
 
-
+// mount feature routes at /feature
+router.use('/feature', [VerifyToken, featureRoutes]);
 
 module.exports = router;

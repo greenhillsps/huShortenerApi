@@ -72,16 +72,19 @@ async function register(req, res, next) {
     });
 
     var token;
-      // { expiresIn: 86400 // expires in 24 hours}
-   
+    // { expiresIn: 86400 // expires in 24 hours}
+
 
     await user.save()
-      .then(User =>  {
+      .then(User => {
         token = jwt.sign({ id: User._id }, config.jwtSecret,
           // { expiresIn: 86400 // expires in 24 hours}
+          console.log(User)
+
         );
+        res.status(200).send({ auth: true, token: token, user: User })
       })
-      .then(User => res.status(200).send({ auth: true, token: token, User }))
+      // .then(User => res.status(200).send({ auth: true, token: token, user: User }))
       .catch(e => next(e));
   }
 }
