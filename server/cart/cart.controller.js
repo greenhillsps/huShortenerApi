@@ -15,7 +15,7 @@ function update(id, req) {
             User.findById(req.userId).lean().exec(function (err, user) {
                 if (err) {
                     reject(err)
-                } else {
+                } else if (user) {
                     console.log(user.wallet)
                     let total = 0;
 
@@ -310,7 +310,9 @@ function update(id, req) {
                             }
                         };
                     });
-                };
+                } else {
+                    resolve("No User Found");
+                }
             });
         } catch (error) {
             console.log(" Main catch block run ")
