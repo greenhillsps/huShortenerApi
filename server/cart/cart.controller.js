@@ -37,8 +37,11 @@ function update(id, req) {
                                                     customExpiryDate = true;
                                                     x.features.locked = false;
                                                     x.features.customExpiryDate.locked = false;
-                                                    x.features.customExpiryDate.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.customExpiryDate.expiryDate = moment().add(1, 'year');
+                                                    x.features.customExpiryDate.boughtPrice = price.price;
+                                                    x.features.customExpiryDate.currentPrice = price._id;
+                                                    x.features.customExpiryDate.puchaseDate = moment();
+                                                    x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
@@ -76,8 +79,11 @@ function update(id, req) {
                                                     urlRedirectto = true;
                                                     x.features.locked = false;
                                                     x.features.urlRedirectto.locked = false;
-                                                    x.features.urlRedirectto.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.urlRedirectto.expiryDate = moment().add(1, 'year');
+                                                    x.features.urlRedirectto.boughtPrice = price.price;
+                                                    x.features.urlRedirectto.currentPrice = price._id;
+                                                    x.features.urlRedirectto.puchaseDate = moment();
+                                                    x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
@@ -115,8 +121,11 @@ function update(id, req) {
                                                     enableToggle = true;
                                                     x.features.locked = false;
                                                     x.features.enableToggle.locked = false;
-                                                    x.features.enableToggle.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.enableToggle.expiryDate = moment().add(1, 'year');
+                                                    x.features.enableToggle.boughtPrice = price.price;
+                                                    x.features.enableToggle.currentPrice = price._id;
+                                                    x.features.enableToggle.puchaseDate = moment();
+                                                    x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
@@ -153,8 +162,11 @@ function update(id, req) {
                                                     blockIps = true;
                                                     x.features.locked = false;
                                                     x.features.blockIps.locked = false;
-                                                    x.features.blockIps.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.blockIps.expiryDate = moment().add(1, 'year');
+                                                    x.features.blockIps.boughtPrice = price.price;
+                                                    x.features.blockIps.currentPrice = price._id;
+                                                    x.features.blockIps.puchaseDate = moment();
+                                                    x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success");
@@ -191,8 +203,11 @@ function update(id, req) {
                                                     customReports = true;
                                                     x.features.locked = false;
                                                     x.features.customReports.locked = false;
-                                                    x.features.customReports.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.customReports.expiryDate = moment().add(1, 'year');
+                                                    x.features.customReports.boughtPrice = price.price;
+                                                    x.features.customReports.currentPrice = price._id;
+                                                    x.features.customReports.puchaseDate = moment();
+                                                    x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
@@ -229,8 +244,11 @@ function update(id, req) {
                                                     fourOfour = true;
                                                     x.features.locked = false;
                                                     x.features.fourOfour.locked = false;
-                                                    x.features.fourOfour.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.fourOfour.expiryDate = moment().add(1, 'year');
+                                                    x.features.fourOfour.boughtPrice = price.price;
+                                                    x.features.fourOfour.currentPrice = price._id;
+                                                    x.features.fourOfour.puchaseDate = moment();
+                                                    x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
@@ -267,8 +285,11 @@ function update(id, req) {
                                                     customShortUrl = true;
                                                     x.features.locked = false;
                                                     x.features.customShortUrl.locked = false;
-                                                    x.features.customShortUrl.expiryDate = moment().add(1, 'year')
-                                                    x.save().then(after => {
+                                                    x.features.customShortUrl.expiryDate = moment().add(1, 'year');
+                                                    x.features.customShortUrl.boughtPrice = price.price;
+                                                    x.features.customShortUrl.currentPrice = price._id;
+                                                    x.features.customShortUrl.puchaseDate = moment();
+                                                    x.save().then(() => {
 
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
