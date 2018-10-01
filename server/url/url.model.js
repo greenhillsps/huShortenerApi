@@ -29,7 +29,7 @@ const UrlSchema = new mongoose.Schema({
   },
   analytics: [{
     clickDate: {
-      type: String,
+      type: Date,
       default: moment()
     },
     ip: String,

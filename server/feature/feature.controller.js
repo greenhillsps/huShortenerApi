@@ -25,7 +25,7 @@ function update(id, req) {
 
                                 if (url.features.locked == false && url.features.customExpiryDate.locked == false) {
                                     console.log("customExpiryDate");
-                                    url.features.customExpiryDate.customExpiryDate = req.body.customExpiryDate.customExpiryDate;
+                                    url.features.customExpiryDate.customExpiryDate = moment(req.body.customExpiryDate.customExpiryDate);
                                     url.save().then(() => {
                                         console.log("customExpiryDate success");
                                         callback(null, "success");
@@ -67,7 +67,7 @@ function update(id, req) {
                                     url.save().then(() => {
                                         console.log("enableToggle success");
                                         callback(null, "success");
-                                    })
+                                    });
                                 }
                                 else {
                                     console.log(" ");
@@ -182,15 +182,4 @@ module.exports = {
 };
 
 
-// chart= ["11,feb,2018","13,march,2019"] 
 
-// [
-//     {
-//         month :'sep-2016',
-//         clicks:23
-//     },
-//     {
-//         month :'sep-2017',
-//         clicks:23
-//     }
-// ]

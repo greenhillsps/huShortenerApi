@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
 var shortid = require('shortid');
+const moment = require('moment');
 module.exports = {
     getAll,
     getByUserId,
@@ -102,11 +103,11 @@ function getById(id) {
         let f;
         let val;
         Url.findById({ _id: id }, {}).lean().exec(function (err, val) {
-            console.log(val.analytics.length);
+            // console.log(val.analytics.length);
             if (err) {
                 reject(err);
             } else
-                if (val.analytics.length > 0) {
+                if (val && val.analytics.length > 0) {
                     f = val.analytics.length
                     val = val;
                     console.log(val.analytics.length);
@@ -206,6 +207,22 @@ function getById(id) {
                                         callback(null, value)
                                     }
                                 })
+                        },
+                        function (callback) {
+
+                            let map = val.analytics.map(x => {
+                                let arr = {}
+                                let res;
+
+                                res = val.analytics.filter(y => moment(x.clickDate).isSame(y.clickDate, 'month'));
+                                let date = moment(res[0].clickDate).format('MMMM YYYY');
+                                let count = res.length;
+                                arr[date] = count;
+                                return arr;
+
+                            })
+                            
+                            callback(null, map);
                         }
                     ], function (err, result) {
                         if (err) {
@@ -220,23 +237,25 @@ function getById(id) {
                                 Refferer: result[3],
                                 Language: result[4],
                                 Browser: result[5],
+                                map: result[6]
                             })
                         }
                     });
                 }
                 else {
-                    f = val.analytics.length
-                    val = val;
-                    console.log(val.analytics.length);
+                    // f = val.analytics.length
+                    // val = val;
+                    // console.log(val.analytics.length);
                     resolve({
                         TotalClicks: 0,
-                        URL: val,
+                        URL: null,
                         Region: null,
                         country: null,
                         Device: null,
                         Refferer: null,
                         Language: null,
                         Browser: null,
+                        map: null
                     })
                 };
         });
@@ -254,3 +273,15 @@ async function update(id, UrlParam) {
 
 // pagination tutorial = https://evdokimovm.github.io/javascript/nodejs/mongodb/pagination/expressjs/ejs/bootstrap/2017/08/20/create-pagination-with-nodejs-mongodb-express-and-ejs-step-by-step-from-scratch.html
 
+// chart= ["11,feb,2018","13,march,2019"] 
+
+// [
+//     {
+//         month :'sep-2016',
+//         clicks:23
+//     },
+//     {
+//         month :'sep-2017',
+//         clicks:23
+//     }
+// ]
