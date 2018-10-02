@@ -223,12 +223,21 @@ function getById(id) {
                                 res = val.analytics.filter(y => moment(x.clickDate).isSame(y.clickDate, 'month'));
                                 let date = moment(res[0].clickDate).format('MMMM YYYY');
                                 let count = res.length;
-                                arr[date] = count;
+                                // arr[date] = count;
+                                arr = {
+                                    month: date,
+                                    count: count
+                                }
                                 return arr;
 
                             })
-
-                            callback(null, map);
+                            var result = map.reduce((unique, o) => {
+                                if (!unique.some(obj => obj.month === o.month)) {
+                                    unique.push(o);
+                                }
+                                return unique;
+                            }, []);
+                            callback(null, result);
                         }
                     ], function (err, result) {
                         if (err) {
