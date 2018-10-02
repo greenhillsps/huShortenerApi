@@ -267,7 +267,8 @@ function getById(id) {
                         Refferer: null,
                         Language: null,
                         Browser: null,
-                        map: null
+                        map: null,
+                        VisitGraph: null
                     })
                 };
         });
