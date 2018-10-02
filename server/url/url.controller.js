@@ -75,24 +75,30 @@ async function getByUserId(req) {
                 .skip((perPage * currentPage) - perPage)
                 .limit(perPage)
                 .exec(function (err, urls) {
-                    Url.count({ user: req.userId }).exec(function (err, count) {
-                        console.log(count)
-                        if (err) { reject("URL not found") }
-                        else if (!urls) {
-                            reject("errorrrr, URL not found")
-                        }
-                        else {
-                            resolve({
-                                URls: urls,
-                                current: currentPage,
-                                pages: Math.ceil(count / perPage),
-                                totalCount: count
-                            })
-                        }
-                    })
+                    if (err) {
+                        reject(err);
+                    } else {
+                        Url.count({ user: req.userId }).exec(function (err, count) {
+                            console.log(count)
+                            if (err) {
+                                reject(err)
+                            }
+                            else if (urls == null || urls == undefined) {
+                                resolve("errorrrr, URL not found")
+                            }
+                            else {
+                                resolve({
+                                    URls: urls,
+                                    current: currentPage,
+                                    pages: Math.ceil(count / perPage),
+                                    totalCount: count
+                                })
+                            }
+                        })
+                    }
                 });
         } catch (error) {
-            return null
+            reject(err)
         }
     })
 }
@@ -221,7 +227,7 @@ function getById(id) {
                                 return arr;
 
                             })
-                            
+
                             callback(null, map);
                         }
                     ], function (err, result) {
@@ -243,9 +249,6 @@ function getById(id) {
                     });
                 }
                 else {
-                    // f = val.analytics.length
-                    // val = val;
-                    // console.log(val.analytics.length);
                     resolve({
                         TotalClicks: 0,
                         URL: null,
