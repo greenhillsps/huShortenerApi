@@ -251,7 +251,7 @@ function getById(id) {
                 else {
                     resolve({
                         TotalClicks: 0,
-                        URL: null,
+                        URL: val,
                         Region: null,
                         country: null,
                         Device: null,
