@@ -252,7 +252,7 @@ function getById(id) {
                                 Refferer: result[3],
                                 Language: result[4],
                                 Browser: result[5],
-                                map: result[6]
+                                VisitGraph: result[6]
                             })
                         }
                     });
