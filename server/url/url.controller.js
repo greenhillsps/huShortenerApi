@@ -72,6 +72,7 @@ async function getByUserId(req) {
             const perPage = (parseInt(limit));
             const currentPage = (parseInt(page)) || 1;
             Url.find({ user: req.userId }, { features: 0, analytics: 0, __v: 0 })
+                .sort('-createdAt')
                 .skip((perPage * currentPage) - perPage)
                 .limit(perPage)
                 .exec(function (err, urls) {
