@@ -9,7 +9,13 @@ router.get('/:id', update);
 
 function update(req, res, next) {
   redirectorController.update(req.params.id, req)
-    .then(url => url ? res.redirect(url) : res.sendStatus(404))
+    .then(url => {
+      if (url == "errorrrr, actual url not found") {
+        res.sendStatus(404)
+      } else {
+        res.redirect(url)
+      }
+    })
     .catch(err => {
       if (err == "errorrrr, actual url not found") {
         res.sendStatus(404)
