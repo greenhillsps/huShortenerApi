@@ -55,7 +55,7 @@ function update(id, req) {
                             device: req.device.type ? req.device.type : "Unknown",
                             country: response.country_name ? response.country_name : "Unknown",
                             ip: req.clientIp ? req.clientIp : "Unknown",
-                            Region: response.region_name ? response.region_name : "Unknown"
+                            Region: response.continent_name ? response.continent_name : "Unknown"
                         }
                         Url.findOneAndUpdate({ queryKey: id }, {
                             $push: {
