@@ -2,6 +2,7 @@ const db = require('../../config/db');
 const Url = db.Url;
 const useragent = require('useragent');
 const ipstack = require('ipstack')
+const extractDomain = require('extract-domain');
 
 
 
@@ -9,6 +10,9 @@ function update(id, req) {
     return new Promise((resolve, reject) => {
         try {
             // Url.findOne({ queryKey: id }).lean().exec(function (err, url) {
+            //     if (err) {
+
+            //     }
             //     let stop = false;
             //     console.log(url.features.blockIps.ips.length)
             //     for (let i = 0; i < url.features.blockIps.ips.length; i++) {
@@ -46,12 +50,17 @@ function update(id, req) {
                 else
                     // if (url.features.locked === true) 
                     if (response) {
+                        let ref;
+                        if (req.header('Referer')) {
+                            ref = extractDomain(req.header('Referer'));
+                        } else {
+                            ref = null;
+                        }
                         let obj = {
                             browser: useragent.parse(req.headers['user-agent']).family ?
                                 useragent.parse(req.headers['user-agent']).family : "Unknown",
                             language: req.language ? req.language : "English",
-                            refferer: req.header('Referer') ?
-                                req.header('Referer') : "No Referrer",
+                            refferer: ref ? ref : "No Referrer",
                             device: req.device.type ? req.device.type : "Unknown",
                             country: response.country_name ? response.country_name : "Unknown",
                             ip: req.clientIp ? req.clientIp : "Unknown",
