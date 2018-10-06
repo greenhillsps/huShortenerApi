@@ -21,7 +21,7 @@ function update(id, req) {
                     async.parallel([
 
                         function (callback) {
-                            if (req.body.customExpiryDate !== null) {
+                            if (req.body.customExpiryDate !== null && req.body.customExpiryDate.customExpiryDate) {
 
                                 if (url.features.locked == false && url.features.customExpiryDate.locked == false) {
                                     console.log("customExpiryDate");
@@ -40,7 +40,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.urlRedirectto !== null) {
+                            if (req.body.urlRedirectto !== null && req.body.urlRedirectto.url) {
 
                                 if (url.features.locked == false && url.features.urlRedirectto.locked == false) {
                                     console.log("urlRedirectto");
@@ -59,7 +59,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.enableToggle !== null) {
+                            if (req.body.enableToggle !== null && req.body.enableToggle.enable == true || req.body.enableToggle.enable == false) {
 
                                 if (url.features.locked == false && url.features.enableToggle.locked == false) {
                                     console.log("enableToggle");
@@ -78,7 +78,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.blockIps !== null) {
+                            if (req.body.blockIps !== null && req.body.blockIps.ips) {
 
                                 if (url.features.locked == false && url.features.blockIps.locked == false) {
                                     console.log("blockIps");
@@ -97,7 +97,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.customReports !== null) {
+                            if (req.body.customReports !== null && req.body.customReports.type) {
 
                                 if (url.features.locked == false && url.features.customReports.locked == false) {
                                     console.log("customReports");
@@ -116,7 +116,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.fourOfour !== null) {
+                            if (req.body.fourOfour !== null && req.body.fourOfour.url) {
 
                                 if (url.features.locked == false && url.features.fourOfour.locked == false) {
                                     console.log("fourOfour");
@@ -135,7 +135,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.customShortUrl !== null) {
+                            if (req.body.customShortUrl !== null && req.body.customShortUrl.shortUrl) {
 
                                 if (url.features.locked == false && url.features.customShortUrl.locked == false) {
                                     console.log("customShortUrl");
