@@ -69,6 +69,7 @@
     "request-ip": "2.1.1",
     "shortid": "^2.2.13",
     "useragent": "2.3.0",
+    "validator": "false10.8.0",
     "winston": "2.4.1"
   },
   "devDependencies": {

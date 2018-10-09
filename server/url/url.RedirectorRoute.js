@@ -10,19 +10,24 @@ router.get('/:id', update);
 function update(req, res, next) {
   redirectorController.update(req.params.id, req)
     .then(url => {
-      if (url == "errorrrr, actual url not found") {
-        res.json(url).sendStatus(404)
+      if (url == "This URL is deactivated by the owner!") {
+        res.status(403).json(url)
       }
       else if (url == "You Shall Not PASS!") {
-        res.json(url).sendStatus(403)
+        res.status(403).json(url)
       }
       else if (url == "Error, URL not found") {
-        res.json(url).sendStatus(403)
+        res.status(403).json(url)
       }
       else if (url == "Error, No alternate url provided") {
-        res.json(url).sendStatus(403)
+        res.status(403).json(url)
+
+      }
+      else if (url == "You PASS!") {
+        res.status(403).json(url)
+
       } else {
-        res.redirect(url)
+        res.status(302).redirect(url)
       }
     })
     .catch(err => {
