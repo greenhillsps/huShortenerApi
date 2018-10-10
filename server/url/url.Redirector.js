@@ -116,7 +116,7 @@ function update(id, req) {
                         resolve("This URL is deactivated by the owner!");
                     }
                     else {
-                        ipstack("194.208.49.52", "555ffad38e5faadd4df7aaa9b9db8141", (err, ipresponse) => {
+                        ipstack(req.clientIp, "555ffad38e5faadd4df7aaa9b9db8141", (err, ipresponse) => {
                             if (err) {
                                 console.log(err);
                                 reject(err);
