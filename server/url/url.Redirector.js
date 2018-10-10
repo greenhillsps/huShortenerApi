@@ -84,10 +84,15 @@ function urlRedirectto(url) {
 function customExpiryDate(url) {
     if (url.features.locked === false &&
         url.features.customExpiryDate.locked === false &&
-        moment(url.features.customExpiryDate.expiryDate).isSameOrAfter(now) === false &&
+        moment(url.features.customExpiryDate.expiryDate).isSameOrAfter(now) === false) {
+        return true;
+    } else if (url.features.locked === false &&
+        url.features.customExpiryDate.locked === false &&
+        moment(url.features.customExpiryDate.expiryDate).isSameOrAfter(now) === true &&
         moment(url.features.customExpiryDate.customExpiryDate).isSameOrAfter(now) === false) {
         return false;
-    } else {
+    }
+    else {
         return true;
     }
 }

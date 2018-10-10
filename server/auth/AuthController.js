@@ -38,8 +38,9 @@ function login(req, res, next) {
   return next
 };
 
-function logout(req, res) {
+function logout(req, res, next) {
   res.status(200).send({ auth: false, token: null });
+  return next
 };
 /**
  * Create new user

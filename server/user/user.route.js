@@ -7,9 +7,11 @@ const config = require('../../config/config');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
+
+router.get('/user', userCtrl.user);
 router.route('/')
   /** GET /api/users - Get list of users */
-  .get(userCtrl.list)
+  .get(userCtrl.list);
 
 //   /** POST /api/users - Create new user */
 //   .post(validate(paramValidation.createUser), userCtrl.create);

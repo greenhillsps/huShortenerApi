@@ -24,6 +24,21 @@ function get(req, res) {
   return res.json(req.user);
 }
 
+function user(req, res, next) {
+
+  User.findById(req.userId, '-password').exec(function (err, user) {
+    console.log("user id from find user from users", req.userId)
+    if (err) {
+      res.status(403).json({ msg: "User not found", auth: false });
+    } else if (user) {
+      res.status(403).json({ auth: true, user: user });
+    } else {
+      res.status(403).json({ msg: "User not found", auth: false });
+    }
+  });
+  return next
+};
+
 /**
  * Create new user
  * @property {string} req.body.email - The email of user.
@@ -111,4 +126,4 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { load, get, update, list, remove };
+module.exports = { load, get, update, list, remove, user };

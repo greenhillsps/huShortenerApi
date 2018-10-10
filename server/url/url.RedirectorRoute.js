@@ -17,7 +17,7 @@ function update(req, res, next) {
         res.status(403).json(url)
       }
       else if (url == "Error, URL not found") {
-        res.status(403).json(url)
+        res.status(404).json(url)
       }
       else if (url == "Error, No alternate url provided") {
         res.status(403).json(url)
