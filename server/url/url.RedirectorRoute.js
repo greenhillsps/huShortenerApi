@@ -27,7 +27,11 @@ function update(req, res, next) {
         res.status(403).json(url)
 
       } else {
-        res.status(302).redirect(url)
+        if (req.headers.authorization) {
+          res.redirect(302, url)
+        } else {
+          res.redirect(301, url)
+        }
       }
     })
     .catch(err => {

@@ -31,7 +31,7 @@ function user(req, res, next) {
     if (err) {
       res.status(403).json({ msg: "User not found", auth: false });
     } else if (user) {
-      res.status(403).json({ auth: true, user: user });
+      res.status(200).json({ auth: true, user: user });
     } else {
       res.status(403).json({ msg: "User not found", auth: false });
     }

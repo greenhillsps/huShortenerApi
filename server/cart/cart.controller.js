@@ -32,7 +32,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.customExpiryDate.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.customExpiryDate.locked == true && 
+                                                    user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
                                                     customExpiryDate = true;
                                                     x.features.locked = false;
@@ -41,6 +43,8 @@ function update(id, req) {
                                                     x.features.customExpiryDate.boughtPrice = price.price;
                                                     x.features.customExpiryDate.currentPrice = price._id;
                                                     x.features.customExpiryDate.puchaseDate = moment();
+                                                    x.features.customExpiryDate.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
@@ -73,7 +77,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.urlRedirectto.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.urlRedirectto.locked == true && 
+                                                    user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
                                                     urlRedirectto = true;
@@ -83,6 +89,8 @@ function update(id, req) {
                                                     x.features.urlRedirectto.boughtPrice = price.price;
                                                     x.features.urlRedirectto.currentPrice = price._id;
                                                     x.features.urlRedirectto.puchaseDate = moment();
+                                                    x.features.urlRedirectto.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
@@ -114,7 +122,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.enableToggle.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.enableToggle.locked == true &&
+                                                     user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
 
@@ -125,6 +135,8 @@ function update(id, req) {
                                                     x.features.enableToggle.boughtPrice = price.price;
                                                     x.features.enableToggle.currentPrice = price._id;
                                                     x.features.enableToggle.puchaseDate = moment();
+                                                    x.features.enableToggle.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
@@ -156,7 +168,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.blockIps.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.blockIps.locked == true && 
+                                                    user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
                                                     blockIps = true;
@@ -166,6 +180,8 @@ function update(id, req) {
                                                     x.features.blockIps.boughtPrice = price.price;
                                                     x.features.blockIps.currentPrice = price._id;
                                                     x.features.blockIps.puchaseDate = moment();
+                                                    x.features.blockIps.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
@@ -197,7 +213,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.customReports.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.customReports.locked == true &&
+                                                     user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
                                                     customReports = true;
@@ -207,6 +225,8 @@ function update(id, req) {
                                                     x.features.customReports.boughtPrice = price.price;
                                                     x.features.customReports.currentPrice = price._id;
                                                     x.features.customReports.puchaseDate = moment();
+                                                    x.features.customReports.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
@@ -238,7 +258,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.fourOfour.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.fourOfour.locked == true &&
+                                                     user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
                                                     fourOfour = true;
@@ -248,6 +270,8 @@ function update(id, req) {
                                                     x.features.fourOfour.boughtPrice = price.price;
                                                     x.features.fourOfour.currentPrice = price._id;
                                                     x.features.fourOfour.puchaseDate = moment();
+                                                    x.features.fourOfour.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
                                                         console.log(price.price, "has been cut ");
                                                         total += price.price;
@@ -279,7 +303,9 @@ function update(id, req) {
                                             if (err) {
                                                 reject(err);
                                             } else
-                                                if (x.features.customShortUrl.locked == true && user.wallet >= price.price && user.wallet >= total) {
+                                                if (
+                                                    // x.features.customShortUrl.locked == true && 
+                                                    user.wallet >= price.price && user.wallet >= total) {
                                                     console.log("Price list for ", price.name);
 
                                                     customShortUrl = true;
@@ -289,6 +315,8 @@ function update(id, req) {
                                                     x.features.customShortUrl.boughtPrice = price.price;
                                                     x.features.customShortUrl.currentPrice = price._id;
                                                     x.features.customShortUrl.puchaseDate = moment();
+                                                    x.features.customShortUrl.totalSpent += price.price;
+                                                    // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
 
                                                         console.log(price.price, "has been cut ");
@@ -322,24 +350,33 @@ function update(id, req) {
                                 // console.log("final result", result)
                                 // user.wallet -= total;
                                 // console.log(user.wallet);
-                                User.findByIdAndUpdate(req.userId, { $inc: { wallet: -total } }, { new: true }).lean().exec(function (err, newuser) {
+                                User.findByIdAndUpdate(req.userId, { $inc: { wallet: -total, totalAmountSpent: total } }, { new: true }).lean().exec(function (err, newuser) {
                                     if (err) {
                                         reject(err)
                                     }
                                     else {
-                                        console.log("Final amouunt of user: ", newuser.wallet)
-                                        resolve({
-                                            "TotalAmountCut": total,
-                                            "OrignalAmountInWallet": user.wallet,
-                                            "RemainingAmountInWallet": newuser.wallet,
-                                            "CustomExpiryDate": result[0],
-                                            "UrlRedirectto": result[1],
-                                            "EnableToggle": result[2],
-                                            "BlockIps": result[3],
-                                            "CustomReports": result[4],
-                                            "FourOfour": result[5],
-                                            "CustomShortUrl": result[6]
-                                        });
+                                        Url.findByIdAndUpdate(id, { $inc: { totalAmountSpent: total } }, { new: true }, function (err, Uurl) {
+                                            if (err) {
+                                                reject(err)
+                                            }
+                                            else {
+                                                // Uurl.totalAmountSpent += total
+                                                console.log("Final amount of user: ", newuser.wallet)
+                                                resolve({
+                                                    "TotalAmountCut": total,
+                                                    "OrignalAmountInWallet": user.wallet,
+                                                    "RemainingAmountInWallet": newuser.wallet,
+                                                    "CustomExpiryDate": result[0],
+                                                    "UrlRedirectto": result[1],
+                                                    "EnableToggle": result[2],
+                                                    "BlockIps": result[3],
+                                                    "CustomReports": result[4],
+                                                    "FourOfour": result[5],
+                                                    "CustomShortUrl": result[6]
+                                                });
+                                            }
+                                        })
+
                                     };
                                 });
                             }

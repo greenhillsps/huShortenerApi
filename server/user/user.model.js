@@ -34,6 +34,14 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  totalAmountSpent: {
+    type: Number,
+    default: 0
+  },
+  totalURLS: {
+    type: Number,
+    default: 0
+  },
   transactionHistory: [{}],
   createdAt: {
     type: Date,

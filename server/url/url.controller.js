@@ -31,7 +31,14 @@ async function create(req) {
             queryKey: id,
         });
         // save url
-        await url.save();
+        await User.findByIdAndUpdate(req.userId, { $inc: { totalURLS: 1 } }).exec(async function (err, doc) {
+            if (err) {
+                return err
+            } else {
+                await url.save();
+            }
+        });
+
 
     } else if (existing && req.userId == null) {
         console.log("2nd cond run", req.userId)

@@ -27,6 +27,10 @@ const UrlSchema = new mongoose.Schema({
     ref: 'User',
     default: null
   },
+  totalAmountSpent: {
+    type: Number,
+    default: 0
+  },
   analytics: [{
     clickDate: {
       type: Date,
@@ -72,6 +76,10 @@ const UrlSchema = new mongoose.Schema({
         type: Date,
         default: null
       },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
     },
     'urlRedirectto': {
       locked: {
@@ -98,6 +106,10 @@ const UrlSchema = new mongoose.Schema({
       url: {
         type: String,
         default: null
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
       },
     },
     'enableToggle': {
@@ -126,6 +138,10 @@ const UrlSchema = new mongoose.Schema({
         type: Boolean,
         default: false
       },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
     },
     'blockIps': {
       locked: {
@@ -150,6 +166,10 @@ const UrlSchema = new mongoose.Schema({
         default: null
       },
       ips: [],
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
     },
     'customReports': {
       locked: {
@@ -177,6 +197,10 @@ const UrlSchema = new mongoose.Schema({
         type: String,
         default: null
       },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
     },
     'fourOfour': {
       locked: {
@@ -203,6 +227,10 @@ const UrlSchema = new mongoose.Schema({
       url: {
         type: String,
         default: null
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
       },
     },
     'customShortUrl': {
@@ -234,6 +262,10 @@ const UrlSchema = new mongoose.Schema({
       shortUrl: {
         type: String,
         default: null
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
       },
     }
   }
