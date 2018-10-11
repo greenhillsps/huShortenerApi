@@ -15,6 +15,8 @@ function update(req, res, next) {
         .then((feature) => {
             if (feature == "Insufficient funds") {
                 res.json(feature).send(403)
+            } else if (feature == "Already exist") {
+                res.json(feature).send(401)
             } else {
                 res.json(feature)
             }

@@ -79,7 +79,7 @@ async function getByUserId(req) {
             const perPage = (parseInt(limit));
             const currentPage = (parseInt(page)) || 1;
             Url.find({ user: req.userId }, { features: 0, analytics: 0, __v: 0 })
-                .sort('-createdAt')
+                .sort('-_id')
                 .skip((perPage * currentPage) - perPage)
                 .limit(perPage)
                 .exec(function (err, urls) {
@@ -133,7 +133,7 @@ function getById(id) {
                                 { $unwind: "$analytics" },
                                 { $group: { _id: "$analytics.Region", count: { $sum: 1 } } },
                                 { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                { $sort: { _id: 1 } }
+                                { $sort: { count: -1 } }
                             ]).exec(function (err, value) {
                                 if (err) {
                                     callback(err)
@@ -149,7 +149,7 @@ function getById(id) {
                                     { $unwind: "$analytics" },
                                     { $group: { _id: "$analytics.country", count: { $sum: 1 } } },
                                     { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { _id: 1 } }
+                                    { $sort: { count: -1 } }
                                 ]).exec(function (err, value) {
                                     if (err) {
                                         callback(err)
@@ -165,7 +165,7 @@ function getById(id) {
                                     { $unwind: "$analytics" },
                                     { $group: { _id: "$analytics.device", count: { $sum: 1 } } },
                                     { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { _id: 1 } }
+                                    { $sort: { count: -1 } }
                                 ]).exec(function (err, value) {
                                     if (err) {
                                         callback(err)
@@ -181,7 +181,7 @@ function getById(id) {
                                     { $unwind: "$analytics" },
                                     { $group: { _id: "$analytics.refferer", count: { $sum: 1 } } },
                                     { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { _id: 1 } }
+                                    { $sort: { count: -1 } }
                                 ]).exec(function (err, value) {
                                     if (err) {
                                         callback(err)
@@ -197,7 +197,7 @@ function getById(id) {
                                     { $unwind: "$analytics" },
                                     { $group: { _id: "$analytics.language", count: { $sum: 1 } } },
                                     { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { _id: 1 } }
+                                    { $sort: { count: -1 } }
                                 ]).exec(function (err, value) {
                                     if (err) {
                                         callback(err)
@@ -213,7 +213,7 @@ function getById(id) {
                                     { $unwind: "$analytics" },
                                     { $group: { _id: "$analytics.browser", count: { $sum: 1 } } },
                                     { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { _id: 1 } }
+                                    { $sort: { count: -1 } }
                                 ]).exec(function (err, value) {
                                     if (err) {
                                         callback(err)

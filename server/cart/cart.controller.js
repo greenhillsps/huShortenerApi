@@ -34,7 +34,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.customExpiryDate.locked == true && 
-                                                    user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
                                                     customExpiryDate = true;
                                                     x.features.locked = false;
@@ -79,7 +79,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.urlRedirectto.locked == true && 
-                                                    user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
 
                                                     urlRedirectto = true;
@@ -124,7 +124,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.enableToggle.locked == true &&
-                                                     user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
 
 
@@ -170,7 +170,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.blockIps.locked == true && 
-                                                    user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
 
                                                     blockIps = true;
@@ -215,7 +215,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.customReports.locked == true &&
-                                                     user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
 
                                                     customReports = true;
@@ -260,7 +260,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.fourOfour.locked == true &&
-                                                     user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
 
                                                     fourOfour = true;
@@ -305,7 +305,7 @@ function update(id, req) {
                                             } else
                                                 if (
                                                     // x.features.customShortUrl.locked == true && 
-                                                    user.wallet >= price.price && user.wallet >= total) {
+                                                    user.wallet >= price.price && user.wallet > total) {
                                                     console.log("Price list for ", price.name);
 
                                                     customShortUrl = true;

@@ -16,6 +16,8 @@ const UrlSchema = new mongoose.Schema({
   queryKey: {
     type: String,
     required: true,
+    minlength: 3,
+    maxlength: 50 
   },
   createdAt: {
     type: Date,

@@ -139,11 +139,22 @@ function update(id, req) {
 
                                 if (url.features.locked == false && url.features.customShortUrl.locked == false) {
                                     console.log("customShortUrl");
-                                    url.features.customShortUrl.shortUrl = req.body.customShortUrl.shortUrl;
-                                    url.save().then(() => {
-                                        console.log("customShortUrl success");
-                                        callback(null, "success");
-                                    })
+
+                                    Url.findOne({ queryKey: req.body.customShortUrl.shortUrl }).lean().exec(function (err, match) {
+                                        if (err) {
+                                            reject(err);
+                                        } else if (match) {
+                                            callback(null, "Already exist");
+                                        } else {
+                                            url.queryKey = req.body.customShortUrl.shortUrl;
+                                            url.save().then(() => {
+                                                console.log("customShortUrl success");
+                                                callback(null, "success");
+                                            });
+                                        }
+                                    });
+                                    // url.features.customShortUrl.shortUrl = req.body.customShortUrl.shortUrl;
+
                                 }
                                 else {
                                     console.log(" ");
@@ -156,7 +167,7 @@ function update(id, req) {
                     ], function (err, result) {
                         if (err) {
                             console.log(" The Async Error ", err)
-                            reject(err)
+                            reject(err);
                         } else {
                             if (!result) {
                                 resolve("Some Error")
