@@ -39,7 +39,7 @@ function update(id, req) {
                                                     customExpiryDate = true;
                                                     x.features.locked = false;
                                                     x.features.customExpiryDate.locked = false;
-                                                    x.features.customExpiryDate.expiryDate = moment().add(1, 'year');
+                                                    x.features.customExpiryDate.expiryDate = x.features.customExpiryDate.expiryDate ? moment(x.features.customExpiryDate.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.customExpiryDate.boughtPrice = price.price;
                                                     x.features.customExpiryDate.currentPrice = price._id;
                                                     x.features.customExpiryDate.puchaseDate = moment();
@@ -85,7 +85,7 @@ function update(id, req) {
                                                     urlRedirectto = true;
                                                     x.features.locked = false;
                                                     x.features.urlRedirectto.locked = false;
-                                                    x.features.urlRedirectto.expiryDate = moment().add(1, 'year');
+                                                    x.features.urlRedirectto.expiryDate = x.features.urlRedirectto.expiryDate ? moment(x.features.urlRedirectto.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.urlRedirectto.boughtPrice = price.price;
                                                     x.features.urlRedirectto.currentPrice = price._id;
                                                     x.features.urlRedirectto.puchaseDate = moment();
@@ -131,7 +131,7 @@ function update(id, req) {
                                                     enableToggle = true;
                                                     x.features.locked = false;
                                                     x.features.enableToggle.locked = false;
-                                                    x.features.enableToggle.expiryDate = moment().add(1, 'year');
+                                                    x.features.enableToggle.expiryDate = x.features.enableToggle.expiryDate ? moment(x.features.enableToggle.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.enableToggle.boughtPrice = price.price;
                                                     x.features.enableToggle.currentPrice = price._id;
                                                     x.features.enableToggle.puchaseDate = moment();
@@ -176,7 +176,7 @@ function update(id, req) {
                                                     blockIps = true;
                                                     x.features.locked = false;
                                                     x.features.blockIps.locked = false;
-                                                    x.features.blockIps.expiryDate = moment().add(1, 'year');
+                                                    x.features.blockIps.expiryDate =x.features.blockIps.expiryDate ? moment(x.features.blockIps.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.blockIps.boughtPrice = price.price;
                                                     x.features.blockIps.currentPrice = price._id;
                                                     x.features.blockIps.puchaseDate = moment();
@@ -221,7 +221,7 @@ function update(id, req) {
                                                     customReports = true;
                                                     x.features.locked = false;
                                                     x.features.customReports.locked = false;
-                                                    x.features.customReports.expiryDate = moment().add(1, 'year');
+                                                    x.features.customReports.expiryDate =x.features.customReports.expiryDate ? moment(x.features.customReports.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.customReports.boughtPrice = price.price;
                                                     x.features.customReports.currentPrice = price._id;
                                                     x.features.customReports.puchaseDate = moment();
@@ -266,7 +266,7 @@ function update(id, req) {
                                                     fourOfour = true;
                                                     x.features.locked = false;
                                                     x.features.fourOfour.locked = false;
-                                                    x.features.fourOfour.expiryDate = moment().add(1, 'year');
+                                                    x.features.fourOfour.expiryDate = x.features.fourOfour.expiryDate ? moment(x.features.fourOfour.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.fourOfour.boughtPrice = price.price;
                                                     x.features.fourOfour.currentPrice = price._id;
                                                     x.features.fourOfour.puchaseDate = moment();
@@ -311,7 +311,7 @@ function update(id, req) {
                                                     customShortUrl = true;
                                                     x.features.locked = false;
                                                     x.features.customShortUrl.locked = false;
-                                                    x.features.customShortUrl.expiryDate = moment().add(1, 'year');
+                                                    x.features.customShortUrl.expiryDate = x.features.customShortUrl.expiryDate ? moment(x.features.customShortUrl.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.customShortUrl.boughtPrice = price.price;
                                                     x.features.customShortUrl.currentPrice = price._id;
                                                     x.features.customShortUrl.puchaseDate = moment();

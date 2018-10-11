@@ -125,7 +125,6 @@ function getById(id) {
                     f = val.analytics.length
                     val = val;
                     console.log(val.analytics.length);
-
                     async.parallel([
                         function (callback) {
                             Url.aggregate([
