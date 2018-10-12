@@ -120,17 +120,34 @@ function getById(id) {
             // console.log(val.analytics.length);
             if (err) {
                 reject(err);
-            } else
-                if (val && val.analytics.length > 0) {
-                    f = val.analytics.length
-                    val = val;
-                    console.log(val.analytics.length);
-                    async.parallel([
-                        function (callback) {
-                            Url.aggregate([
+            } else if (val == null || val == undefined) {
+                resolve("Url not found");
+            } else if (val && val.analytics.length > 0) {
+                f = val.analytics.length
+                val = val;
+                console.log(val.analytics.length);
+                async.parallel([
+                    function (callback) {
+                        Url.aggregate([
+                            { $match: { _id: ObjectId(id) } },
+                            { $unwind: "$analytics" },
+                            { $group: { _id: "$analytics.Region", count: { $sum: 1 } } },
+                            { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                            { $sort: { count: -1 } }
+                        ]).exec(function (err, value) {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                callback(null, value)
+                            }
+                        })
+                    },
+                    function (callback) {
+                        Url
+                            .aggregate([
                                 { $match: { _id: ObjectId(id) } },
                                 { $unwind: "$analytics" },
-                                { $group: { _id: "$analytics.Region", count: { $sum: 1 } } },
+                                { $group: { _id: "$analytics.country", count: { $sum: 1 } } },
                                 { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
                                 { $sort: { count: -1 } }
                             ]).exec(function (err, value) {
@@ -140,144 +157,128 @@ function getById(id) {
                                     callback(null, value)
                                 }
                             })
-                        },
-                        function (callback) {
-                            Url
-                                .aggregate([
-                                    { $match: { _id: ObjectId(id) } },
-                                    { $unwind: "$analytics" },
-                                    { $group: { _id: "$analytics.country", count: { $sum: 1 } } },
-                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { count: -1 } }
-                                ]).exec(function (err, value) {
-                                    if (err) {
-                                        callback(err)
-                                    } else {
-                                        callback(null, value)
-                                    }
-                                })
-                        },
-                        function (callback) {
-                            Url
-                                .aggregate([
-                                    { $match: { _id: ObjectId(id) } },
-                                    { $unwind: "$analytics" },
-                                    { $group: { _id: "$analytics.device", count: { $sum: 1 } } },
-                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { count: -1 } }
-                                ]).exec(function (err, value) {
-                                    if (err) {
-                                        callback(err)
-                                    } else {
-                                        callback(null, value)
-                                    }
-                                })
-                        },
-                        function (callback) {
-                            Url
-                                .aggregate([
-                                    { $match: { _id: ObjectId(id) } },
-                                    { $unwind: "$analytics" },
-                                    { $group: { _id: "$analytics.refferer", count: { $sum: 1 } } },
-                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { count: -1 } }
-                                ]).exec(function (err, value) {
-                                    if (err) {
-                                        callback(err)
-                                    } else {
-                                        callback(null, value)
-                                    }
-                                })
-                        },
-                        function (callback) {
-                            Url
-                                .aggregate([
-                                    { $match: { _id: ObjectId(id) } },
-                                    { $unwind: "$analytics" },
-                                    { $group: { _id: "$analytics.language", count: { $sum: 1 } } },
-                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { count: -1 } }
-                                ]).exec(function (err, value) {
-                                    if (err) {
-                                        callback(err)
-                                    } else {
-                                        callback(null, value)
-                                    }
-                                })
-                        },
-                        function (callback) {
-                            Url
-                                .aggregate([
-                                    { $match: { _id: ObjectId(id) } },
-                                    { $unwind: "$analytics" },
-                                    { $group: { _id: "$analytics.browser", count: { $sum: 1 } } },
-                                    { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
-                                    { $sort: { count: -1 } }
-                                ]).exec(function (err, value) {
-                                    if (err) {
-                                        callback(err)
-                                    } else {
-                                        callback(null, value)
-                                    }
-                                })
-                        },
-                        function (callback) {
-
-                            let map = val.analytics.map(x => {
-                                let arr = {}
-                                let res;
-
-                                res = val.analytics.filter(y => moment(x.clickDate).isSame(y.clickDate, 'month'));
-                                let date = moment(res[0].clickDate).format('MMMM YYYY');
-                                let count = res.length;
-                                // arr[date] = count;
-                                arr = {
-                                    month: date,
-                                    count: count
+                    },
+                    function (callback) {
+                        Url
+                            .aggregate([
+                                { $match: { _id: ObjectId(id) } },
+                                { $unwind: "$analytics" },
+                                { $group: { _id: "$analytics.device", count: { $sum: 1 } } },
+                                { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                { $sort: { count: -1 } }
+                            ]).exec(function (err, value) {
+                                if (err) {
+                                    callback(err)
+                                } else {
+                                    callback(null, value)
                                 }
-                                return arr;
-
                             })
-                            var result = map.reduce((unique, o) => {
-                                if (!unique.some(obj => obj.month === o.month)) {
-                                    unique.push(o);
+                    },
+                    function (callback) {
+                        Url
+                            .aggregate([
+                                { $match: { _id: ObjectId(id) } },
+                                { $unwind: "$analytics" },
+                                { $group: { _id: "$analytics.refferer", count: { $sum: 1 } } },
+                                { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                { $sort: { count: -1 } }
+                            ]).exec(function (err, value) {
+                                if (err) {
+                                    callback(err)
+                                } else {
+                                    callback(null, value)
                                 }
-                                return unique;
-                            }, []);
-                            callback(null, result);
-                        }
-                    ], function (err, result) {
-                        if (err) {
-                            reject(err)
-                        } else {
-                            resolve({
-                                TotalClicks: f,
-                                URL: val,
-                                Region: result[0],
-                                country: result[1],
-                                Device: result[2],
-                                Refferer: result[3],
-                                Language: result[4],
-                                Browser: result[5],
-                                VisitGraph: result[6]
                             })
-                        }
-                    });
-                }
-                else {
-                    resolve({
-                        TotalClicks: 0,
-                        URL: val,
-                        Region: null,
-                        country: null,
-                        Device: null,
-                        Refferer: null,
-                        Language: null,
-                        Browser: null,
-                        map: null,
-                        VisitGraph: null
-                    })
-                };
+                    },
+                    function (callback) {
+                        Url
+                            .aggregate([
+                                { $match: { _id: ObjectId(id) } },
+                                { $unwind: "$analytics" },
+                                { $group: { _id: "$analytics.language", count: { $sum: 1 } } },
+                                { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                { $sort: { count: -1 } }
+                            ]).exec(function (err, value) {
+                                if (err) {
+                                    callback(err)
+                                } else {
+                                    callback(null, value)
+                                }
+                            })
+                    },
+                    function (callback) {
+                        Url
+                            .aggregate([
+                                { $match: { _id: ObjectId(id) } },
+                                { $unwind: "$analytics" },
+                                { $group: { _id: "$analytics.browser", count: { $sum: 1 } } },
+                                { $project: { count: 1, percentage: { "$multiply": [{ "$divide": [100, f] }, "$count"] } } },
+                                { $sort: { count: -1 } }
+                            ]).exec(function (err, value) {
+                                if (err) {
+                                    callback(err)
+                                } else {
+                                    callback(null, value)
+                                }
+                            })
+                    },
+                    function (callback) {
+
+                        let map = val.analytics.map(x => {
+                            let arr = {}
+                            let res;
+
+                            res = val.analytics.filter(y => moment(x.clickDate).isSame(y.clickDate, 'month'));
+                            let date = moment(res[0].clickDate).format('MMMM YYYY');
+                            let count = res.length;
+                            // arr[date] = count;
+                            arr = {
+                                month: date,
+                                count: count
+                            }
+                            return arr;
+
+                        })
+                        var result = map.reduce((unique, o) => {
+                            if (!unique.some(obj => obj.month === o.month)) {
+                                unique.push(o);
+                            }
+                            return unique;
+                        }, []);
+                        callback(null, result);
+                    }
+                ], function (err, result) {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve({
+                            TotalClicks: f,
+                            URL: val,
+                            Region: result[0],
+                            country: result[1],
+                            Device: result[2],
+                            Refferer: result[3],
+                            Language: result[4],
+                            Browser: result[5],
+                            VisitGraph: result[6]
+                        })
+                    }
+                });
+            }
+            else {
+                resolve({
+                    TotalClicks: 0,
+                    URL: val,
+                    Region: null,
+                    country: null,
+                    Device: null,
+                    Refferer: null,
+                    Language: null,
+                    Browser: null,
+                    map: null,
+                    VisitGraph: null
+                })
+            };
         });
     });
 };

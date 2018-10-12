@@ -11,7 +11,7 @@ router.put('/:id', update);
 // router.put('/analytics/:id', analytics);
 router.put('/:id', update);
 
- 
+
 module.exports = router;
 
 function submit(req, res, next) {
@@ -34,7 +34,14 @@ function getByUserId(req, res, next) {
 }
 function getById(req, res, next) {
     urlController.getById(req.params.id)
-        .then(price => price ? res.json(price) : res.sendStatus(404))
+        .then(url => {
+            if (url == "Url not found") {
+                res.status(404).send(url);
+            } else {
+                url ? res.json(url) : res.sendStatus(404)
+            }
+
+        })
         .catch(err => next(err));
 }
 function getAll(req, res, next) {
