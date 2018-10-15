@@ -7,14 +7,13 @@ const ObjectId = mongoose.Types.ObjectId;
 var shortid = require('shortid');
 const moment = require('moment');
 module.exports = {
-    getAll,
+    search,
     getByUserId,
     create,
     update,
     getById
     // delete: _delete
 };
-
 async function create(req) {
 
     let existing = await Url.findOne({ actualUrl: req.body.actualUrl });
@@ -62,12 +61,30 @@ async function create(req) {
     return url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user }
 }
 
-async function getAll(req) {
-    console.log("coming from url controller getAll", req.userId)
-    const { skip, limit } = req.query;
-    let url = await Url.find(null, null, { skip: (parseInt(skip)), limit: (parseInt(limit)) })
-    return url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user, date: url.createdAt }
-    //  .sort('-createdAt');
+async function search(req) {
+    console.log("Aaaaaaaaaa!", req.query.a)
+    // var query = { "$text": { "$search": "google", "$language": 'en' } };
+    Url.find({ actualUrl: req.query.a }, function (err, arr) {
+        if (err) {
+            console.log("Errrrrror", err);
+            return err
+        } else if (arr.length > 0) {
+            console.log("Arrayy", arr)
+            return arr
+        } else {
+            Url.find({ shortUrl: req.query.a }, function (err, arr) {
+                if (err) {
+                    console.log("Errrrrror 2", err);
+                    return err
+                } else if (arr) {
+                    console.log("Arrayy 2", arr)
+                    return arr
+                } else {
+                    return "No results found"
+                }
+            });
+        }
+    });
 }
 
 async function getByUserId(req) {
@@ -92,7 +109,7 @@ async function getByUserId(req) {
                                 reject(err)
                             }
                             else if (urls == null || urls == undefined) {
-                                resolve("errorrrr, URL not found")
+                                resolve("Error, URL not found")
                             }
                             else {
                                 resolve({
@@ -289,6 +306,7 @@ async function update(id, UrlParam) {
     Object.assign(url, UrlParam);
 
     await url.save();
+    return url
 }
 
 

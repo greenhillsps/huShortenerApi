@@ -41,4 +41,7 @@ router.use('/cart', [VerifyToken, cartRoutes]);
 // mount feature routes at /feature
 router.use('/feature', [VerifyToken, featureRoutes]);
 
+router.use('/redirect', (req, res) => {
+  res.redirect('https://www.google.com.pk');
+})
 module.exports = router;

@@ -24,6 +24,10 @@ const UrlSchema = new mongoose.Schema({
     required: true,
     default: moment()
   },
+  show: {
+    type: Boolean,
+    default: true
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

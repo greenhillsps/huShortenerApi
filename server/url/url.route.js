@@ -4,7 +4,7 @@ const urlController = require('./url.controller');
 
 // routes
 router.post('/submit', submit);
-// router.get('/', getAll);
+router.get('/search/', search);
 router.get('/', getByUserId);
 router.get('/:id', getById);
 router.put('/:id', update);
@@ -16,15 +16,15 @@ module.exports = router;
 
 function submit(req, res, next) {
     urlController.create(req)
-        .then(url => url ? res.json({ "url": url }) : res.json({ 'message': ' the request was not processed' }).send(403))
+        .then(url => url ? res.json({ "url": url }) : res.status(403).json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => next(err));
 }
 
 function getByUserId(req, res, next) {
     urlController.getByUserId(req)
-        .then(url => url = !null ? res.json(url) : res.json({ 'message': ' the request was not processed' }).send(403))
+        .then(url => url = !null ? res.json(url) : res.status(403).json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => {
-            if (err == "errorrrr, URL not found") {
+            if (err == "Error, URL not found") {
                 res.sendStatus(404)
             }
             else {
@@ -44,8 +44,8 @@ function getById(req, res, next) {
         })
         .catch(err => next(err));
 }
-function getAll(req, res, next) {
-    urlController.getAll(req)
+function search(req, res, next) {
+    urlController.search(req)
         // .then(console.log(" userId from geturl", req.userId))
         .then(url => res.json(url))
         .catch(err => next(err));
@@ -53,6 +53,6 @@ function getAll(req, res, next) {
 
 function update(req, res, next) {
     urlController.update(req.params.id, req.body)
-        .then(() => res.json({}))
+        .then((url) => res.json(url))
         .catch(err => next(err));
 }
