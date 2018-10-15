@@ -147,6 +147,8 @@ function update(id, req) {
                                             callback(null, "Already exist");
                                         } else {
                                             url.queryKey = req.body.customShortUrl.shortUrl;
+                                            url.shortUrl = `https://dotlyapidev.herokuapp.com/${req.body.customShortUrl.shortUrl}`;
+
                                             url.save().then(() => {
                                                 console.log("customShortUrl success");
                                                 callback(null, "success");
