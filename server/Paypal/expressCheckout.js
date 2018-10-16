@@ -90,6 +90,7 @@ router.use('/buy', (req, res) => {
                                 var counter = links.length;
                                 while (counter--) {
                                     if (links[counter].method == 'REDIRECT') {
+                                        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",transaction)
                                         // redirecting to paypal where user approves the transaction 
                                         return res.redirect(links[counter].href)
                                     }
@@ -168,3 +169,4 @@ module.exports = router;
 
 // Tutorial link: https://www.nodejsera.com/paypal-payment-integration-using-nodejs-part2.html
 // Create user experience profile : https://github.com/paypal/PayPal-node-SDK/blob/master/samples/payment_experience/web_profile/create_payment_with_customized_experience.js#L25
+// paypal tutorial https://developer.paypal.com/docs/checkout/how-to/server-integration/#1-set-up-your-client-to-call-your-server
