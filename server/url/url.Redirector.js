@@ -14,7 +14,7 @@ function customShortUrl(url) {
         url.features.customShortUrl.locked === false &&
         moment(url.features.customShortUrl.expiryDate).isSameOrAfter(now) === false
         //  || validator.isURL(url.features.customShortUrl.shortUrl) === false
-        ) {
+    ) {
         return false;
     } else {
         return true;
@@ -26,7 +26,7 @@ function fourOfour(url) {
         url.features.fourOfour.locked === false &&
         moment(url.features.fourOfour.expiryDate).isSameOrAfter(now) === false
         //  ||  validator.isURL(url.features.fourOfour.url) === false
-        ) {
+    ) {
         return false;
     } else {
         return true;
@@ -76,9 +76,9 @@ function enableToggle(url) {
 function urlRedirectto(url) {
     if (url.features.locked === false &&
         url.features.urlRedirectto.locked === false &&
-        moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false 
+        moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false
         // || validator.isURL(url.features.urlRedirectto.url) === false
-        ) {
+    ) {
         return false;
     } else {
         return true;
@@ -155,28 +155,29 @@ function update(id, req) {
                                         } else if (!response) {
                                             resolve("Error, URL not found");
                                         } else if (response) {
+                                            // if (response.features.locked === false &&
+                                            //     response.features.customShortUrl.locked === false &&
+                                            //     customShortUrl(url)) {
+                                            //     console.log("this is the custom url: ", response.features.customShortUrl.shortUrl);
+                                            //     request.get(response.features.customShortUrl.shortUrl, function (error, requestResponse, body) {
+                                            //         if (error) {
+                                            //             console.log("REQUEST error", error);
+                                            //             reject(error);
+                                            //         } else if (response.features.locked === false &&
+                                            //             response.features.customExpiryDate.locked === false &&
+                                            //             customExpiryDate(url) == false) {
+                                            //             resolve("This URL is deactivated by the owner!");
+                                            //         }
+                                            //         else if (requestResponse.statusCode == 404 && fourOfour(url)) {
+                                            //             console.log("REQUEST response", requestResponse.statusCode);
+                                            //             resolve(response.features.fourOfour.url);
+                                            //         } else {
+                                            //             console.log("REQUEST response", requestResponse.statusCode);
+                                            //             resolve(response.features.customShortUrl.shortUrl);
+                                            //         }
+                                            //     });
+                                            // } else 
                                             if (response.features.locked === false &&
-                                                response.features.customShortUrl.locked === false &&
-                                                customShortUrl(url)) {
-                                                console.log("this is the custom url: ", response.features.customShortUrl.shortUrl);
-                                                request.get(response.features.customShortUrl.shortUrl, function (error, requestResponse, body) {
-                                                    if (error) {
-                                                        console.log("REQUEST error", error);
-                                                        reject(error);
-                                                    } else if (response.features.locked === false &&
-                                                        response.features.customExpiryDate.locked === false &&
-                                                        customExpiryDate(url) == false) {
-                                                        resolve("This URL is deactivated by the owner!");
-                                                    }
-                                                    else if (requestResponse.statusCode == 404 && fourOfour(url)) {
-                                                        console.log("REQUEST response", requestResponse.statusCode);
-                                                        resolve(response.features.fourOfour.url);
-                                                    } else {
-                                                        console.log("REQUEST response", requestResponse.statusCode);
-                                                        resolve(response.features.customShortUrl.shortUrl);
-                                                    }
-                                                });
-                                            } else if (response.features.locked === false &&
                                                 response.features.fourOfour.locked === false &&
                                                 fourOfour(url)) {
                                                 request(response.actualUrl, function (error, requestResponse, body) {
