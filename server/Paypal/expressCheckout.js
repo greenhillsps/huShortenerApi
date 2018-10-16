@@ -25,7 +25,7 @@ router.use('/buy', (req, res) => {
         User.findById(req.userId, function (err, user) {
             if (err) {
                 console.log(err)
-            } else {
+            } else if (user) {
                 console.log(user.firstName, a)
                 currentUser = user;
                 amount = a;
@@ -101,6 +101,8 @@ router.use('/buy', (req, res) => {
                             });
                     }
                 });
+            } else {
+                res.send("Invalid user credential, please log in again")
             }
         })
     }
