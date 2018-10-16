@@ -9,7 +9,7 @@ router.get('/:id', update);
 
 function update(req, res, next) {
   redirectorController.update(req.params.id, req)
-    .then(url => {
+    .then((url) => {
       if (url == "This URL is deactivated by the owner!") {
         res.status(403).json(url)
       }
@@ -27,11 +27,12 @@ function update(req, res, next) {
         res.status(403).json(url)
 
       } else {
-        if (req.headers.authorization) {
-          res.redirect(302, url)
-        } else {
-          res.redirect(301, url)
-        }
+        console.log("This is the responseeeeeeeeeeeeeeeeeeeeeeeeeeee ", res, "AANNDD this is X", url.stat)
+        // if (req.headers.authorization) {
+        res.redirect(url.stat, url.rer)
+        // } else {
+        // res.redirect(301, url)
+        // }
       }
     })
     .catch(err => {

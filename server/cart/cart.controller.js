@@ -131,6 +131,7 @@ function update(id, req) {
                                                     enableToggle = true;
                                                     x.features.locked = false;
                                                     x.features.enableToggle.locked = false;
+                                                    x.features.enableToggle.enable = true;
                                                     x.features.enableToggle.expiryDate = x.features.enableToggle.expiryDate ? moment(x.features.enableToggle.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.enableToggle.boughtPrice = price.price;
                                                     x.features.enableToggle.currentPrice = price._id;
@@ -176,7 +177,7 @@ function update(id, req) {
                                                     blockIps = true;
                                                     x.features.locked = false;
                                                     x.features.blockIps.locked = false;
-                                                    x.features.blockIps.expiryDate =x.features.blockIps.expiryDate ? moment(x.features.blockIps.expiryDate).add(1, 'year') : moment().add(1, 'year');
+                                                    x.features.blockIps.expiryDate = x.features.blockIps.expiryDate ? moment(x.features.blockIps.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.blockIps.boughtPrice = price.price;
                                                     x.features.blockIps.currentPrice = price._id;
                                                     x.features.blockIps.puchaseDate = moment();
@@ -221,7 +222,7 @@ function update(id, req) {
                                                     customReports = true;
                                                     x.features.locked = false;
                                                     x.features.customReports.locked = false;
-                                                    x.features.customReports.expiryDate =x.features.customReports.expiryDate ? moment(x.features.customReports.expiryDate).add(1, 'year') : moment().add(1, 'year');
+                                                    x.features.customReports.expiryDate = x.features.customReports.expiryDate ? moment(x.features.customReports.expiryDate).add(1, 'year') : moment().add(1, 'year');
                                                     x.features.customReports.boughtPrice = price.price;
                                                     x.features.customReports.currentPrice = price._id;
                                                     x.features.customReports.puchaseDate = moment();

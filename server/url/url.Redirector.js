@@ -6,7 +6,7 @@ const extractDomain = require('extract-domain');
 const request = require('request');
 const moment = require('moment');
 const validator = require('validator');
-now = moment()
+now = moment();
 
 function customShortUrl(url) {
     //Yahan false pe masla khara hojata hae or error ana chaiye
@@ -124,6 +124,7 @@ function update(id, req) {
                                 console.log(err);
                                 reject(err);
                             } else if (ipresponse) {
+                                let perm = url.user ? true : false;
                                 let ref;
                                 if (req.header('Referer')) {
                                     ref = extractDomain(req.header('Referer'));
@@ -155,6 +156,8 @@ function update(id, req) {
                                         } else if (!response) {
                                             resolve("Error, URL not found");
                                         } else if (response) {
+                                            response.stat = perm ? 302 : 301
+                                            response.rer = null
                                             // if (response.features.locked === false &&
                                             //     response.features.customShortUrl.locked === false &&
                                             //     customShortUrl(url)) {
@@ -194,10 +197,23 @@ function update(id, req) {
                                                     } else if (response.features.locked === false &&
                                                         response.features.urlRedirectto.locked === false &&
                                                         urlRedirectto(url)) {
-                                                        resolve(response.features.urlRedirectto.url);
+                                                        if (perm) {
+                                                            response.rer = response.features.urlRedirectto.url
+                                                            resolve(response);
+                                                        } else {
+                                                            response.rer = response.features.urlRedirectto.url
+                                                            resolve(response);
+                                                        }
                                                     }
                                                     else {
-                                                        resolve(response.actualUrl);
+                                                        if (perm) {
+                                                            response.rer = response.actualUrl
+                                                            resolve(response);
+                                                        } else {
+                                                            response.rer = response.actualUrl
+                                                            resolve(response);
+                                                        }
+                                                        // resolve(response.actualUrl);
                                                     }
                                                 });
                                             } else if (response.features.locked === false &&
@@ -215,10 +231,24 @@ function update(id, req) {
                                                     }
                                                     else if (requestResponse.statusCode == 404 && fourOfour(url)) {
                                                         console.log("REQUEST response", requestResponse.statusCode);
-                                                        resolve(response.features.fourOfour.url);
+                                                        // resolve(response.features.fourOfour.url);
+                                                        if (perm) {
+                                                            response.rer = response.features.fourOfour.url
+                                                            resolve(response);
+                                                        } else {
+                                                            response.rer = response.features.fourOfour.url
+                                                            resolve(response);
+                                                        }
                                                     } else {
                                                         console.log("REQUEST response", requestResponse.statusCode);
-                                                        resolve(response.features.urlRedirectto.url);
+                                                        // resolve(response.features.urlRedirectto.url, 302);
+                                                        if (perm) {
+                                                            response.rer = response.features.urlRedirectto.url
+                                                            resolve(response);
+                                                        } else {
+                                                            response.rer = response.features.urlRedirectto.url
+                                                            resolve(response);
+                                                        }
                                                     }
                                                 });
                                             }
@@ -230,7 +260,14 @@ function update(id, req) {
                                                     customExpiryDate(url) == false) {
                                                     resolve("This URL is deactivated by the owner!");
                                                 } else {
-                                                    resolve(response.actualUrl);
+                                                    if (perm) {
+                                                        response.rer = response.actualUrl
+                                                        resolve(response);
+                                                    } else {
+                                                        response.rer = response.actualUrl
+                                                        resolve(response);
+                                                    }
+                                                    // resolve(response.actualUrl);
                                                 }
                                             }
                                         } else {
