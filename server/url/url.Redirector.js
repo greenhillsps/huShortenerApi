@@ -12,8 +12,9 @@ function customShortUrl(url) {
     //Yahan false pe masla khara hojata hae or error ana chaiye
     if (url.features.locked === false &&
         url.features.customShortUrl.locked === false &&
-        moment(url.features.customShortUrl.expiryDate).isSameOrAfter(now) === false ||
-        validator.isURL(url.features.customShortUrl.shortUrl) === false) {
+        moment(url.features.customShortUrl.expiryDate).isSameOrAfter(now) === false
+        //  || validator.isURL(url.features.customShortUrl.shortUrl) === false
+        ) {
         return false;
     } else {
         return true;
@@ -23,8 +24,9 @@ function fourOfour(url) {
     //Yahan false pe masla khara hojata hae or error ana chaiye
     if (url.features.locked === false &&
         url.features.fourOfour.locked === false &&
-        moment(url.features.fourOfour.expiryDate).isSameOrAfter(now) === false ||
-        validator.isURL(url.features.fourOfour.url) === false) {
+        moment(url.features.fourOfour.expiryDate).isSameOrAfter(now) === false
+        //  ||  validator.isURL(url.features.fourOfour.url) === false
+        ) {
         return false;
     } else {
         return true;
@@ -74,8 +76,9 @@ function enableToggle(url) {
 function urlRedirectto(url) {
     if (url.features.locked === false &&
         url.features.urlRedirectto.locked === false &&
-        moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false ||
-        validator.isURL(url.features.urlRedirectto.url) === false) {
+        moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false 
+        // || validator.isURL(url.features.urlRedirectto.url) === false
+        ) {
         return false;
     } else {
         return true;
