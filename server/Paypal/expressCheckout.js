@@ -88,6 +88,8 @@ router.use('/buy', (req, res) => {
                                 var id = transaction.id;
                                 var links = transaction.links;
                                 var counter = links.length;
+                                user.paymentId.push(id)
+
                                 while (counter--) {
                                     if (links[counter].method == 'REDIRECT') {
                                         console.log("PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaY", links[counter].href, "AAANNNNDDDDD this is the IDEEEE", id)
@@ -99,7 +101,7 @@ router.use('/buy', (req, res) => {
                             })
                             .catch((err) => {
                                 console.log(err);
-                                res.redirect('/err');
+                                res.send('https://socialmediaweek.org/blog/2016/01/most-embarrasing-social-media-fails-2015/');
                             });
                     }
                 });
@@ -114,7 +116,7 @@ router.use('/buy', (req, res) => {
 router.use('/success', (req, res) => {
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
-    console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", paymentId)
+    console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr total amount paid: ", payment.transactions[0].amount.total)
 
     // calling the final payment execute method
     paypal.payment.execute(paymentId, payerId, function (error, payment) {
@@ -123,8 +125,10 @@ router.use('/success', (req, res) => {
         } else {
             if (payment.state === 'approved') {
                 res.redirect('https://soundcloud.com/');
-                User.findByIdAndUpdate(currentUser._id, {
-                    $inc: { 'wallet': amount },
+                User.update({ paymentId: paymentId }, {
+                    $inc: {
+                        'wallet': payment.transactions[0].amount.total
+                    },
                     $push: {
                         transactionHistory: payment
                     }
@@ -147,7 +151,7 @@ router.use('/success', (req, res) => {
 router.use('/err', (req, res) => {
     console.log(req.query);
     // res.redirect('https://soundcloud.com/');
-    res.send('payment failed');
+    res.redirect('https://socialmediaweek.org/blog/2016/01/most-embarrasing-social-media-fails-2015/');
 })
 
 // helper functions 
