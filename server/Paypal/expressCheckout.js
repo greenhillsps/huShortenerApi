@@ -90,11 +90,12 @@ router.use('/buy', (req, res) => {
                                 var counter = links.length;
                                 while (counter--) {
                                     if (links[counter].method == 'REDIRECT') {
-                                        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",transaction)
+                                        console.log("PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaY", links[counter].href, "AAANNNNDDDDD this is the IDEEEE", id)
                                         // redirecting to paypal where user approves the transaction 
-                                        return res.redirect(links[counter].href)
+                                        return res.send(links[counter].href)
                                     }
                                 }
+                                // console.log("saasasasasasasasasasasasasasassasasasasasasasasasasasasas",id);
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -111,16 +112,17 @@ router.use('/buy', (req, res) => {
 
 // success page 
 router.use('/success', (req, res) => {
-
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
+    console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",paymentId)
+
     // calling the final payment execute method
     paypal.payment.execute(paymentId, payerId, function (error, payment) {
         if (error) {
             console.error(error);
         } else {
             if (payment.state === 'approved') {
-                res.send('payment completed successfully');
+                res.redirect('https://soundcloud.com/');
                 User.findByIdAndUpdate(currentUser._id, {
                     $inc: { 'wallet': amount },
                     $push: {
@@ -135,7 +137,7 @@ router.use('/success', (req, res) => {
                     }
                 })
             } else {
-                res.send('payment not successful');
+                res.redirect('https://soundcloud.com/');
             }
         }
     });
