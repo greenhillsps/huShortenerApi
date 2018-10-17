@@ -51,8 +51,8 @@ router.use('/buy', (req, res) => {
                         "payment_method": "paypal"
                     },
                     "redirect_urls": {
-                        "return_url": "http://localhost:4040/api/paypal/success",
-                        "cancel_url": "http://localhost:4040/api/paypal/err"
+                        "return_url": "https://dotlyapidev.herokuapp.com/api/paypal/success",
+                        "cancel_url": "https://dotlyapidev.herokuapp.com/api/paypal/err"
                     },
                     "transactions": [{
                         "item_list": {
@@ -114,7 +114,7 @@ router.use('/buy', (req, res) => {
 router.use('/success', (req, res) => {
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
-    console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",paymentId)
+    console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", paymentId)
 
     // calling the final payment execute method
     paypal.payment.execute(paymentId, payerId, function (error, payment) {
@@ -148,7 +148,6 @@ router.use('/err', (req, res) => {
     console.log(req.query);
     // res.redirect('https://soundcloud.com/');
     res.send('payment failed');
-
 })
 
 // helper functions 
