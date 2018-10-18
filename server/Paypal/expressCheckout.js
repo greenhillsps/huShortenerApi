@@ -130,7 +130,7 @@ router.use('/success', (req, res) => {
             console.error(error);
         } else {
             if (payment.state === 'approved') {
-                res.send('payment completed successfully');
+                res.redirect('http://dotlydev.herokuapp.com/success');
                 User.find({ paymentId: { $all: [paymentId] } }, function (err, user) {
                     if (err) {
                         console.log("User could not be updated in payment execution", err)
@@ -144,7 +144,7 @@ router.use('/success', (req, res) => {
                     }
                 })
             } else {
-                res.send('payment not successful');
+                res.redirect('http://dotlydev.herokuapp.com/failure');
             }
         }
     });
@@ -154,7 +154,7 @@ router.use('/success', (req, res) => {
 router.use('/err', (req, res) => {
     console.log(req.query);
     // res.redirect('https://soundcloud.com/');
-    res.send('payment failed');
+    res.redirect('http://dotlydev.herokuapp.com/failure');
 
 })
 
