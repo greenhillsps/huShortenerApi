@@ -80,29 +80,35 @@ router.use('/buy', (req, res) => {
                         res.sendStatus(408);
                     } else {
                         //Set the id of the created payment experience in payment json
-                        var experience_profile_id = web_profile.id;
+                        let experience_profile_id = web_profile.id;
+                        let id
                         payment.experience_profile_id = experience_profile_id;
                         // calling the create Pay method 
                         createPay(payment)
                             .then((transaction) => {
-                                var id = transaction.id;
-                                var links = transaction.links;
-                                var counter = links.length;
-                                user.paymentId.push(id)
-
+                                id = transaction.id;
+                                let links = transaction.links;
+                                let counter = links.length;
+                                User.findByIdAndUpdate(req.userId, { $push: { paymentId: transaction.id } }, { new: true }, function (err, user) {
+                                    if (err) {
+                                        reject(err)
+                                    }
+                                    else { }
+                                })
                                 while (counter--) {
                                     if (links[counter].method == 'REDIRECT') {
-                                        console.log("PaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaY", links[counter].href, "AAANNNNDDDDD this is the IDEEEE", id)
+                                        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", transaction)
                                         // redirecting to paypal where user approves the transaction 
                                         return res.send(links[counter].href)
                                     }
                                 }
-                                // console.log("saasasasasasasasasasasasasasassasasasasasasasasasasasasas",id);
+
                             })
                             .catch((err) => {
                                 console.log(err);
-                                res.send('https://socialmediaweek.org/blog/2016/01/most-embarrasing-social-media-fails-2015/');
+                                res.redirect('/err');
                             });
+
                     }
                 });
             } else {
@@ -114,34 +120,31 @@ router.use('/buy', (req, res) => {
 
 // success page 
 router.use('/success', (req, res) => {
+
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
-    console.log("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr total amount paid: ", payment.transactions[0].amount.total)
-
+    console.log("This is the payment iddddddddddddddddddddddddddddddddddddddddddddd", paymentId)
     // calling the final payment execute method
     paypal.payment.execute(paymentId, payerId, function (error, payment) {
         if (error) {
             console.error(error);
         } else {
             if (payment.state === 'approved') {
-                res.redirect('https://soundcloud.com/');
-                User.update({ paymentId: paymentId }, {
-                    $inc: {
-                        'wallet': payment.transactions[0].amount.total
-                    },
-                    $push: {
-                        transactionHistory: payment
-                    }
-                }, { new: true }, function (err, newuser) {
+                res.send('payment completed successfully');
+                User.find({ paymentId: { $all: [paymentId] } }, function (err, user) {
                     if (err) {
-                        console.log("User could not be updated in payment execution")
+                        console.log("User could not be updated in payment execution", err)
                     } else {
-                        console.log("This is the current wallet of  user: ", newuser.wallet);
-                        console.log("This is the payment status: ", payment);
+                        console.log("This is the payment amount: ", payment.transactions[0].amount.total);
+                        user[0].wallet += parseInt(payment.transactions[0].amount.total);
+                        console.log("This is the current wallet of  user: ", user);
+                        user[0].save(function (err, updatedUser) {
+                            if (err) return handleError(err);
+                        });
                     }
                 })
             } else {
-                res.redirect('https://soundcloud.com/');
+                res.send('payment not successful');
             }
         }
     });
@@ -151,7 +154,8 @@ router.use('/success', (req, res) => {
 router.use('/err', (req, res) => {
     console.log(req.query);
     // res.redirect('https://soundcloud.com/');
-    res.redirect('https://socialmediaweek.org/blog/2016/01/most-embarrasing-social-media-fails-2015/');
+    res.send('payment failed');
+
 })
 
 // helper functions 
