@@ -17,6 +17,7 @@ router.use('/success', (req, res) => {
             console.error(error);
         } else {
             if (payment.state === 'approved') {
+                console.log(payment)
                 res.redirect('http://dotlydev.herokuapp.com/success');
                 User.find({ paymentId: { $all: [paymentId] } }, function (err, user) {
                     if (err) {
@@ -24,6 +25,7 @@ router.use('/success', (req, res) => {
                     } else {
                         console.log("This is the payment amount: ", payment.transactions[0].amount.total);
                         user[0].wallet += parseInt(payment.transactions[0].amount.total);
+                        user[0].transactionHistory.push(payment)
                         console.log("This is the current wallet of  user: ", user);
                         user[0].save(function (err, updatedUser) {
                             if (err) return handleError(err);
