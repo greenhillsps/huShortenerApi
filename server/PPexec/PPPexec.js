@@ -21,6 +21,7 @@ router.use('/success', (req, res) => {
                 res.redirect('http://dotlydev.herokuapp.com/success');
                 User.findOne({ paymentId: { $all: [paymentId] } }, function (err, user) {
                     if (err) {
+                        res.redirect('http://dotlydev.herokuapp.com/failure');
                         console.log("User could not be updated in payment execution", err)
                     } else {
                         console.log("This is the payment amount: ", payment.transactions[0].amount.total);
@@ -35,6 +36,7 @@ router.use('/success', (req, res) => {
                             }
                         }, { new: true }, function (err, newuser) {
                             if (err) {
+                                res.redirect('http://dotlydev.herokuapp.com/failure');
                                 console.log("User could not be updated in payment execution")
                             } else {
                                 console.log("This is the current wallet of  user: ", newuser.wallet);
