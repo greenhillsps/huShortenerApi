@@ -19,17 +19,28 @@ router.use('/success', (req, res) => {
             if (payment.state === 'approved') {
                 console.log(payment)
                 res.redirect('http://dotlydev.herokuapp.com/success');
-                User.find({ paymentId: { $all: [paymentId] } }, function (err, user) {
+                User.findOne({ paymentId: { $all: [paymentId] } }, function (err, user) {
                     if (err) {
                         console.log("User could not be updated in payment execution", err)
                     } else {
                         console.log("This is the payment amount: ", payment.transactions[0].amount.total);
-                        user[0].wallet += parseInt(payment.transactions[0].amount.total);
-                        user[0].transactionHistory.push(payment)
-                        console.log("This is the current wallet of  user: ", user);
-                        user[0].save(function (err, updatedUser) {
-                            if (err) return handleError(err);
-                        });
+                        // user.wallet += parseInt(payment.transactions[0].amount.total);
+                        // user.transactionHistory.push(payment)
+                        // console.log("This is the current user: ", user);
+                        // console.log("This is the payment object: ", payment);
+                        User.findByIdAndUpdate(user._id, {
+                            $inc: { 'wallet': parseInt(payment.transactions[0].amount.total) },
+                            $push: {
+                                transactionHistory: payment
+                            }
+                        }, { new: true }, function (err, newuser) {
+                            if (err) {
+                                console.log("User could not be updated in payment execution")
+                            } else {
+                                console.log("This is the current wallet of  user: ", newuser.wallet);
+                                console.log("This is the payment status: ", payment);
+                            }
+                        })
                     }
                 })
             } else {
