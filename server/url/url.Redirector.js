@@ -25,6 +25,7 @@ function fourOfour(url) {
     if (url.features.locked === false &&
         url.features.fourOfour.locked === false &&
         moment(url.features.fourOfour.expiryDate).isSameOrAfter(now) === false
+        || url.features.urlRedirectto.url === null
         //  ||  validator.isURL(url.features.fourOfour.url) === false
     ) {
         return false;
@@ -74,9 +75,11 @@ function enableToggle(url) {
     }
 }
 function urlRedirectto(url) {
+    // yaha false pe masla hae
     if (url.features.locked === false &&
         url.features.urlRedirectto.locked === false &&
         moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false
+        || url.features.urlRedirectto.url === null
         // || validator.isURL(url.features.urlRedirectto.url) === false
     ) {
         return false;
@@ -85,9 +88,11 @@ function urlRedirectto(url) {
     }
 }
 function customExpiryDate(url) {
+    //yahan true pe masla hae
     if (url.features.locked === false &&
         url.features.customExpiryDate.locked === false &&
-        moment(url.features.customExpiryDate.expiryDate).isSameOrAfter(now) === false) {
+        moment(url.features.customExpiryDate.expiryDate).isSameOrAfter(now) === false ||
+        url.features.customExpiryDate.customExpiryDate === null) {
         return true;
     } else if (url.features.locked === false &&
         url.features.customExpiryDate.locked === false &&
