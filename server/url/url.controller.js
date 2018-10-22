@@ -6,6 +6,8 @@ var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
 var shortid = require('shortid');
 const moment = require('moment');
+const extract = require('meta-extractor');
+
 module.exports = {
     search,
     getByUserId,
@@ -14,51 +16,61 @@ module.exports = {
     getById
     // delete: _delete
 };
-async function create(req) {
-
-    let existing = await Url.findOne({ actualUrl: req.body.actualUrl });
-    let id;
-    let url;
-    console.log((req.userId))
-    if (req.userId) {
-        console.log("1st cond run", req.userId)
-        id = shortid.generate();
-        url = await new Url({
-            actualUrl: req.body.actualUrl,
-            shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
-            user: req.userId,
-            queryKey: id,
-        });
-        // save url
-        await User.findByIdAndUpdate(req.userId, { $inc: { totalURLS: 1 } }).exec(async function (err, doc) {
+function create(req) {
+    return new Promise((resolve, reject) => {
+        let existing = Url.findOne({ actualUrl: req.body.actualUrl });
+        let id;
+        let url;
+        let title;
+        let description;
+        extract({ uri: req.body.actualUrl }, (err, res) => {
             if (err) {
-                return err
+                console.log(err, res);
+                reject(err);
             } else {
-                await url.save();
+                console.log((req.userId))
+                if (req.userId) {
+                    console.log("1st cond run", req.userId)
+                    id = shortid.generate();
+                    url = new Url({
+                        actualUrl: req.body.actualUrl,
+                        shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
+                        user: req.userId,
+                        queryKey: id,
+                        title: res.title ? res.title : "No title found",
+                        description: res.description ? res.description : "No description found"
+
+                    });
+                    // save url
+                    url.save();
+                    User.findByIdAndUpdate(req.userId, { $inc: { totalURLS: 1 } }).exec();
+
+
+                } else if (existing && req.userId == null) {
+                    console.log("2nd cond run", req.userId)
+                    url = {
+                        shortUrl: null
+                    }
+                    id = existing.queryKey;
+                    url.shortUrl = existing.shortUrl
+                } else {
+                    console.log("3rd cond run", req.userId)
+                    id = shortid.generate();
+                    url = new Url({
+                        actualUrl: req.body.actualUrl,
+                        shortUrl: `http://localhost:4040/${id}`,
+                        user: !req.userId ? req.userId : null,
+                        queryKey: id,
+                        title: res.title ? res.title : "No title found",
+                        description: res.description ? res.description : "No description found"
+                    });
+                    // save url
+                    url.save();
+                }
+                resolve(url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user })
             }
         });
-
-
-    } else if (existing && req.userId == null) {
-        console.log("2nd cond run", req.userId)
-        url = {
-            shortUrl: null
-        }
-        id = await existing.queryKey;
-        url.shortUrl = existing.shortUrl
-    } else {
-        console.log("3rd cond run", req.userId)
-        id = shortid.generate();
-        url = await new Url({
-            actualUrl: req.body.actualUrl,
-            shortUrl: `http://localhost:4040/${id}`,
-            user: !req.userId ? req.userId : null,
-            queryKey: id,
-        });
-        // save url
-        await url.save();
-    }
-    return url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user }
+    })
 }
 
 async function search(req) {

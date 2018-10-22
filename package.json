@@ -60,6 +60,7 @@
     "ipstack": "0.1.1",
     "joi": "10.6.0",
     "jsonwebtoken": "7.1.9",
+    "meta-extractor": "false1.4.0",
     "method-override": "^2.3.10",
     "moment": "2.22.2",
     "mongoose": "4.13.15",

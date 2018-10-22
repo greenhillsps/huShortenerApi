@@ -13,6 +13,14 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
   queryKey: {
     type: String,
     required: true,
@@ -24,7 +32,7 @@ const UrlSchema = new mongoose.Schema({
     required: true,
     default: moment()
   },
-  show: {
+  isActive: {
     type: Boolean,
     default: true
   },

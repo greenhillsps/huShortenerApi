@@ -22,7 +22,7 @@ function submit(req, res, next) {
 
 function getByUserId(req, res, next) {
     urlController.getByUserId(req)
-        .then(url => url = !null ? res.json(url) : res.status(403).json({ 'message': ' the request was not processed' }).send(403))
+        .then(url => url = !null ? res.json(url) : res.sendStatus(403).json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => {
             if (err == "Error, URL not found") {
                 res.sendStatus(404)
