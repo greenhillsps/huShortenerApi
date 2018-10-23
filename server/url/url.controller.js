@@ -318,14 +318,16 @@ function getById(id) {
         });
     });
 };
-async function update(id, UrlParam) {
-    const url = await Url.find({ _id: id, isActive: true });
-
-    // copy UrlParam properties to Url
-    Object.assign(url, UrlParam);
-
-    await url.save();
-    return url
+function update(id) {
+    return new Promise((resolve, reject) => {
+        Url.findOneAndUpdate({ _id: id, "isActive": true }, { $set: { isActive: false } }, { new: true }, function (err, doc) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(doc)
+            }
+        })
+    });
 }
 
 

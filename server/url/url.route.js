@@ -46,13 +46,12 @@ function getById(req, res, next) {
 }
 function search(req, res, next) {
     urlController.search(req)
-        // .then(console.log(" userId from geturl", req.userId))
         .then(url => res.json(url))
         .catch(err => next(err));
 }
 
 function update(req, res, next) {
-    urlController.update(req.params.id, req.body)
+    urlController.update(req.params.id)
         .then((url) => res.json(url))
         .catch(err => next(err));
 }
