@@ -44,11 +44,15 @@ function update(id, req) {
 
                                 if (url.features.locked == false && url.features.urlRedirectto.locked == false) {
                                     // console.log("urlRedirectto");
-                                    url.features.urlRedirectto.url = req.body.urlRedirectto.url;
-                                    url.save().then(() => {
-                                        // console.log("urlRedirectto success");
-                                        callback(null, "success");
-                                    })
+                                    if (req.body.urlRedirectto.url == url.shortUrl) {
+                                        callback(null, "null");
+                                    } else {
+                                        url.features.urlRedirectto.url = req.body.urlRedirectto.url;
+                                        url.save().then(() => {
+                                            // console.log("urlRedirectto success");
+                                            callback(null, "success");
+                                        })
+                                    }
                                 }
                                 else {
                                     // console.log(" ");
