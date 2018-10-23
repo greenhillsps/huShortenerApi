@@ -27,7 +27,7 @@ function update(req, res, next) {
         res.status(403).json(url)
 
       } else {
-        console.log("This is the responseeeeeeeeeeeeeeeeeeeeeeeeeeee ", res, "AANNDD this is X", url.stat)
+        // console.log("This is the responseeeeeeeeeeeeeeeeeeeeeeeeeeee ", res, "AANNDD this is X", url.stat)
         // if (req.headers.authorization) {
         res.redirect(url.stat, url.rer)
         // } else {

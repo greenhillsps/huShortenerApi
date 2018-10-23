@@ -108,7 +108,7 @@ function customExpiryDate(url) {
 function update(id, req) {
     return new Promise((resolve, reject) => {
         try {
-            Url.findOne({ queryKey: id }).lean().exec(function (err, url) {
+            Url.findOne({ queryKey: id, isActive: true }).lean().exec(function (err, url) {
                 if (err) {
                     console.log("blockip checker ", err);
                     reject(err);

@@ -18,78 +18,85 @@ module.exports = {
 };
 function create(req) {
     return new Promise((resolve, reject) => {
-        let existing = Url.findOne({ actualUrl: req.body.actualUrl });
-        let id;
-        let url;
-        let title;
-        let description;
-        extract({ uri: req.body.actualUrl }, (err, res) => {
+        Url.findOne({ actualUrl: req.body.actualUrl }, function (err, existing) {
             if (err) {
-                console.log(err, res);
                 reject(err);
             } else {
-                console.log((req.userId))
-                if (req.userId) {
-                    console.log("1st cond run", req.userId)
-                    id = shortid.generate();
-                    url = new Url({
-                        actualUrl: req.body.actualUrl,
-                        shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
-                        user: req.userId,
-                        queryKey: id,
-                        title: res.title ? res.title : "No title found",
-                        description: res.description ? res.description : "No description found"
+                // console.log("This is the existing url xxxxxxxxxxxxxxxxxxxxxxxxxxx", existing)
+                let id;
+                let url;
+                let title;
+                let description;
+                extract({ uri: req.body.actualUrl }, (err, res) => {
+                    if (err) {
+                        console.log("Meta Extraction Error", err);
+                        reject(err);
+                    } else {
+                        console.log(("User ID: ", req.userId))
+                        if (req.userId) {
+                            // console.log("1st cond run", req.userId)
+                            id = shortid.generate();
+                            url = new Url({
+                                actualUrl: req.body.actualUrl,
+                                shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
+                                user: req.userId,
+                                queryKey: id,
+                                title: res.title ? res.title : "No title found",
+                                description: res.description ? res.description : "No description found"
 
-                    });
-                    // save url
-                    url.save();
-                    User.findByIdAndUpdate(req.userId, { $inc: { totalURLS: 1 } }).exec();
+                            });
+                            // save url
+                            url.save();
+                            User.findByIdAndUpdate(req.userId, { $inc: { totalURLS: 1 } }).exec();
 
+                        } else if (existing && req.userId == null) {
+                            // console.log("2nd cond run", req.userId)
+                            url = {
+                                shortUrl: null
+                            }
+                            id = existing.queryKey;
+                            url.shortUrl = existing.shortUrl
 
-                } else if (existing && req.userId == null) {
-                    console.log("2nd cond run", req.userId)
-                    url = {
-                        shortUrl: null
+                        } else {
+                            // console.log("3rd cond run", req.userId)
+                            id = shortid.generate();
+                            url = new Url({
+                                actualUrl: req.body.actualUrl,
+                                shortUrl: `http://localhost:4040/${id}`,
+                                user: !req.userId ? req.userId : null,
+                                queryKey: id,
+                                title: res.title ? res.title : "No title found",
+                                description: res.description ? res.description : "No description found"
+                            });
+                            // save url
+                            url.save();
+                        }
+                        resolve(url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user })
                     }
-                    id = existing.queryKey;
-                    url.shortUrl = existing.shortUrl
-                } else {
-                    console.log("3rd cond run", req.userId)
-                    id = shortid.generate();
-                    url = new Url({
-                        actualUrl: req.body.actualUrl,
-                        shortUrl: `http://localhost:4040/${id}`,
-                        user: !req.userId ? req.userId : null,
-                        queryKey: id,
-                        title: res.title ? res.title : "No title found",
-                        description: res.description ? res.description : "No description found"
-                    });
-                    // save url
-                    url.save();
-                }
-                resolve(url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user })
+                });
             }
         });
+
     })
 }
 
 async function search(req) {
-    console.log("Aaaaaaaaaa!", req.query.a)
+    // console.log("Aaaaaaaaaa!", req.query.a)
     // var query = { "$text": { "$search": "google", "$language": 'en' } };
-    Url.find({ actualUrl: req.query.a }, function (err, arr) {
+    Url.findOne({ actualUrl: req.query.a, isActive: true }, function (err, arr) {
         if (err) {
             console.log("Errrrrror", err);
             return err
         } else if (arr.length > 0) {
-            console.log("Arrayy", arr)
+            // console.log("Arrayy", arr)
             return arr
         } else {
-            Url.find({ shortUrl: req.query.a }, function (err, arr) {
+            Url.find({ shortUrl: req.query.a, isActive: true }, function (err, arr) {
                 if (err) {
                     console.log("Errrrrror 2", err);
                     return err
                 } else if (arr) {
-                    console.log("Arrayy 2", arr)
+                    // console.log("Arrayy 2", arr)
                     return arr
                 } else {
                     return "No results found"
@@ -107,7 +114,7 @@ async function getByUserId(req) {
             const { page, limit } = req.query;
             const perPage = (parseInt(limit));
             const currentPage = (parseInt(page)) || 1;
-            Url.find({ user: req.userId }, { features: 0, analytics: 0, __v: 0 })
+            Url.findOne({ user: req.userId, isActive: true }, { features: 0, analytics: 0, __v: 0 })
                 .sort('-_id')
                 .skip((perPage * currentPage) - perPage)
                 .limit(perPage)
@@ -145,7 +152,7 @@ function getById(id) {
     return new Promise((resolve, reject) => {
         let f;
         let val;
-        Url.findById({ _id: id }, {}).lean().exec(function (err, val) {
+        Url.findOne({ _id: id, isActive: true }, {}).lean().exec(function (err, val) {
             // console.log(val.analytics.length);
             if (err) {
                 reject(err);
@@ -154,7 +161,7 @@ function getById(id) {
             } else if (val && val.analytics.length > 0) {
                 f = val.analytics.length
                 val = val;
-                console.log(val.analytics.length);
+                // console.log(val.analytics.length);
                 async.parallel([
                     function (callback) {
                         Url.aggregate([
@@ -258,7 +265,7 @@ function getById(id) {
                             let res;
 
                             res = val.analytics.filter(y => moment(x.clickDate).isSame(y.clickDate, 'month'));
-                            let date = moment(res[0].clickDate).format('MMMM YYYY');
+                            let date = moment(res.clickDate).format('MMMM YYYY');
                             let count = res.length;
                             // arr[date] = count;
                             arr = {
@@ -283,7 +290,7 @@ function getById(id) {
                         resolve({
                             TotalClicks: f,
                             URL: val,
-                            Region: result[0],
+                            Region: result,
                             country: result[1],
                             Device: result[2],
                             Refferer: result[3],
@@ -312,7 +319,7 @@ function getById(id) {
     });
 };
 async function update(id, UrlParam) {
-    const url = await Url.findById(id);
+    const url = await Url.find({ _id: id, isActive: true });
 
     // copy UrlParam properties to Url
     Object.assign(url, UrlParam);

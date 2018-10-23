@@ -27,7 +27,7 @@ function get(req, res) {
 function user(req, res, next) {
 
   User.findById(req.userId, '-password').exec(function (err, user) {
-    console.log("user id from find user from users", req.userId)
+    // console.log("user id from find user from users", req.userId)
     if (err) {
       res.status(403).json({ msg: "User not found", auth: false });
     } else if (user) {

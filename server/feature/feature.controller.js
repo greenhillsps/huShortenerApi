@@ -24,10 +24,10 @@ function update(id, req) {
                             if (req.body.customExpiryDate !== null && req.body.customExpiryDate.customExpiryDate) {
 
                                 if (url.features.locked == false && url.features.customExpiryDate.locked == false) {
-                                    console.log("customExpiryDate");
+                                    // console.log("customExpiryDate");
                                     url.features.customExpiryDate.customExpiryDate = moment(req.body.customExpiryDate.customExpiryDate);
                                     url.save().then(() => {
-                                        console.log("customExpiryDate success");
+                                        // console.log("customExpiryDate success");
                                         callback(null, "success");
                                     })
                                 }
@@ -43,15 +43,15 @@ function update(id, req) {
                             if (req.body.urlRedirectto !== null && req.body.urlRedirectto.url) {
 
                                 if (url.features.locked == false && url.features.urlRedirectto.locked == false) {
-                                    console.log("urlRedirectto");
+                                    // console.log("urlRedirectto");
                                     url.features.urlRedirectto.url = req.body.urlRedirectto.url;
                                     url.save().then(() => {
-                                        console.log("urlRedirectto success");
+                                        // console.log("urlRedirectto success");
                                         callback(null, "success");
                                     })
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -62,7 +62,7 @@ function update(id, req) {
                             if (req.body.enableToggle !== null && req.body.enableToggle.enable == true || req.body.enableToggle.enable == false) {
 
                                 if (url.features.locked == false && url.features.enableToggle.locked == false) {
-                                    console.log("enableToggle");
+                                    // console.log("enableToggle");
                                     url.features.enableToggle.enable = req.body.enableToggle.enable;
                                     url.save().then(() => {
                                         console.log("enableToggle success");
@@ -70,7 +70,7 @@ function update(id, req) {
                                     });
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -81,7 +81,7 @@ function update(id, req) {
                             if (req.body.blockIps !== null && req.body.blockIps.ips) {
 
                                 if (url.features.locked == false && url.features.blockIps.locked == false) {
-                                    console.log("blockIps");
+                                    // console.log("blockIps");
                                     url.features.blockIps.ips = req.body.blockIps.ips;
                                     url.save().then(() => {
                                         console.log(" blockIps success");
@@ -89,7 +89,7 @@ function update(id, req) {
                                     })
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -100,15 +100,15 @@ function update(id, req) {
                             if (req.body.customReports !== null && req.body.customReports.type) {
 
                                 if (url.features.locked == false && url.features.customReports.locked == false) {
-                                    console.log("customReports");
+                                    // console.log("customReports");
                                     url.features.customReports.type = req.body.customReports.type;
                                     url.save().then(() => {
-                                        console.log("customReports success");
+                                        // console.log("customReports success");
                                         callback(null, "success");
                                     })
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -119,15 +119,15 @@ function update(id, req) {
                             if (req.body.fourOfour !== null && req.body.fourOfour.url) {
 
                                 if (url.features.locked == false && url.features.fourOfour.locked == false) {
-                                    console.log("fourOfour");
+                                    // console.log("fourOfour");
                                     url.features.fourOfour.url = req.body.fourOfour.url;
                                     url.save().then(() => {
-                                        console.log("fourOfour success");
+                                        // console.log("fourOfour success");
                                         callback(null, "success");
                                     });
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -138,7 +138,7 @@ function update(id, req) {
                             if (req.body.customShortUrl !== null && req.body.customShortUrl.shortUrl) {
 
                                 if (url.features.locked == false && url.features.customShortUrl.locked == false) {
-                                    console.log("customShortUrl");
+                                    // console.log("customShortUrl");
 
                                     Url.findOne({ queryKey: req.body.customShortUrl.shortUrl }).lean().exec(function (err, match) {
                                         if (err) {
@@ -150,7 +150,7 @@ function update(id, req) {
                                             url.shortUrl = `https://dotlyapidev.herokuapp.com/${req.body.customShortUrl.shortUrl}`;
 
                                             url.save().then(() => {
-                                                console.log("customShortUrl success");
+                                                // console.log("customShortUrl success");
                                                 callback(null, "success");
                                             });
                                         }
@@ -159,7 +159,7 @@ function update(id, req) {
 
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -168,7 +168,7 @@ function update(id, req) {
                         },
                     ], function (err, result) {
                         if (err) {
-                            console.log(" The Async Error ", err)
+                            // console.log(" The Async Error ", err)
                             reject(err);
                         } else {
                             if (!result) {
@@ -183,7 +183,7 @@ function update(id, req) {
                 }
             })
         } catch (error) {
-            console.log(" Main catch block run ")
+            // console.log(" Main catch block run ")
             reject(error)
         }
     });

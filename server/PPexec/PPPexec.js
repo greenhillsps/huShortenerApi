@@ -10,21 +10,21 @@ router.use('/success', (req, res) => {
 
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
-    console.log("This is the payment iddddddddddddddddddddddddddddddddddddddddddddd", paymentId)
+    // console.log("This is the payment iddddddddddddddddddddddddddddddddddddddddddddd", paymentId)
     // calling the final payment execute method
     paypal.payment.execute(paymentId, payerId, function (error, payment) {
         if (error) {
             console.error(error);
         } else {
             if (payment.state === 'approved') {
-                console.log(payment)
+                // console.log(payment)
                 res.redirect('http://dotlydev.herokuapp.com/success');
                 User.findOne({ paymentId: { $all: [paymentId] } }, function (err, user) {
                     if (err) {
                         res.redirect('http://dotlydev.herokuapp.com/failure');
                         console.log("User could not be updated in payment execution", err)
                     } else {
-                        console.log("This is the payment amount: ", payment.transactions[0].amount.total);
+                        // console.log("This is the payment amount: ", payment.transactions[0].amount.total);
                         // user.wallet += parseInt(payment.transactions[0].amount.total);
                         // user.transactionHistory.push(payment)
                         // console.log("This is the current user: ", user);
@@ -37,10 +37,10 @@ router.use('/success', (req, res) => {
                         }, { new: true }, function (err, newuser) {
                             if (err) {
                                 res.redirect('http://dotlydev.herokuapp.com/failure');
-                                console.log("User could not be updated in payment execution")
+                                // console.log("User could not be updated in payment execution")
                             } else {
-                                console.log("This is the current wallet of  user: ", newuser.wallet);
-                                console.log("This is the payment status: ", payment);
+                                // console.log("This is the current wallet of  user: ", newuser.wallet);
+                                // console.log("This is the payment status: ", payment);
                             }
                         })
                     }
@@ -54,7 +54,7 @@ router.use('/success', (req, res) => {
 
 // error page 
 router.use('/err', (req, res) => {
-    console.log(req.query);
+    // console.log(req.query);
     // res.redirect('https://soundcloud.com/');
     res.redirect('http://dotlydev.herokuapp.com/failure');
 

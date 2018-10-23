@@ -80,7 +80,7 @@ async function register(req, res, next) {
       .then(User => {
         token = jwt.sign({ id: User._id }, config.jwtSecret,
           // { expiresIn: 86400 // expires in 24 hours}
-          console.log(User)
+          // console.log(User)
 
         );
         res.status(200).send({ auth: true, token: token, user: User })

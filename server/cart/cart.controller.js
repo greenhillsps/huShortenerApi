@@ -16,7 +16,7 @@ function update(id, req) {
                 if (err) {
                     reject(err);
                 } else if (user) {
-                    console.log(user.wallet)
+                    // console.log(user.wallet)
                     let total = 0;
 
                     async.parallel([
@@ -35,7 +35,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.customExpiryDate.locked == true && 
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
                                                     customExpiryDate = true;
                                                     x.features.locked = false;
                                                     x.features.customExpiryDate.locked = false;
@@ -46,13 +46,13 @@ function update(id, req) {
                                                     x.features.customExpiryDate.totalSpent += price.price;
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
                                                     })
                                                 }
                                                 else {
-                                                    console.log("customExpiryDate is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("customExpiryDate is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "customExpiryDate is either already unlocked or you don't have sufficient amount in your wallet");
 
                                                 }
@@ -80,7 +80,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.urlRedirectto.locked == true && 
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
 
                                                     urlRedirectto = true;
                                                     x.features.locked = false;
@@ -92,13 +92,13 @@ function update(id, req) {
                                                     x.features.urlRedirectto.totalSpent += price.price;
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
                                                     })
                                                 }
                                                 else {
-                                                    console.log("urlRedirectto is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("urlRedirectto is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "urlRedirectto is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
@@ -125,7 +125,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.enableToggle.locked == true &&
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
 
 
                                                     enableToggle = true;
@@ -139,13 +139,13 @@ function update(id, req) {
                                                     x.features.enableToggle.totalSpent += price.price;
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
                                                     })
                                                 }
                                                 else {
-                                                    console.log("enableToggle is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("enableToggle is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "enableToggle is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         });
@@ -172,7 +172,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.blockIps.locked == true && 
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
 
                                                     blockIps = true;
                                                     x.features.locked = false;
@@ -184,13 +184,13 @@ function update(id, req) {
                                                     x.features.blockIps.totalSpent += price.price;
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success");
                                                     })
                                                 }
                                                 else {
-                                                    console.log("blockIps is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("blockIps is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "blockIps is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
@@ -217,7 +217,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.customReports.locked == true &&
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
 
                                                     customReports = true;
                                                     x.features.locked = false;
@@ -229,13 +229,13 @@ function update(id, req) {
                                                     x.features.customReports.totalSpent += price.price;
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
                                                     })
                                                 }
                                                 else {
-                                                    console.log("customReports is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("customReports is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "customReports is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
@@ -262,7 +262,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.fourOfour.locked == true &&
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
 
                                                     fourOfour = true;
                                                     x.features.locked = false;
@@ -274,13 +274,13 @@ function update(id, req) {
                                                     x.features.fourOfour.totalSpent += price.price;
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
                                                     })
                                                 }
                                                 else {
-                                                    console.log("fourOfour is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("fourOfour is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "fourOfour is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
@@ -307,7 +307,7 @@ function update(id, req) {
                                                 if (
                                                     // x.features.customShortUrl.locked == true && 
                                                     user.wallet >= price.price && user.wallet > total) {
-                                                    console.log("Price list for ", price.name);
+                                                    // console.log("Price list for ", price.name);
 
                                                     customShortUrl = true;
                                                     x.features.locked = false;
@@ -320,13 +320,13 @@ function update(id, req) {
                                                     // x.totalAmountSpent += price.price;
                                                     x.save().then(() => {
 
-                                                        console.log(price.price, "has been cut ");
+                                                        // console.log(price.price, "has been cut ");
                                                         total += price.price;
                                                         callback(null, "success")
                                                     })
                                                 }
                                                 else {
-                                                    console.log("customShortUrl is either already unlocked or you don't have sufficient amount in your wallet");
+                                                    // console.log("customShortUrl is either already unlocked or you don't have sufficient amount in your wallet");
                                                     callback(null, "customShortUrl is either already unlocked or you don't have sufficient amount in your wallet");
                                                 }
                                         })
@@ -342,7 +342,7 @@ function update(id, req) {
 
                     ], function (err, result) {
                         if (err) {
-                            console.log(" final func catch block run ", err)
+                            // console.log(" final func catch block run ", err)
                             reject(err)
                         } else {
                             if (user.wallet < total) {
@@ -362,7 +362,7 @@ function update(id, req) {
                                             }
                                             else {
                                                 // Uurl.totalAmountSpent += total
-                                                console.log("Final amount of user: ", newuser.wallet)
+                                                // console.log("Final amount of user: ", newuser.wallet)
                                                 resolve({
                                                     "TotalAmountCut": total,
                                                     "OrignalAmountInWallet": user.wallet,
@@ -388,7 +388,7 @@ function update(id, req) {
                 }
             });
         } catch (error) {
-            console.log(" Main catch block run ")
+            // console.log(" Main catch block run ")
             reject(error)
         }
     });

@@ -21,15 +21,15 @@ router.use('/buy', (req, res) => {
     finduser(req)
     async function finduser(req) {
 
-        console.log(req.userId);
+        // console.log(req.userId);
         User.findById(req.userId, function (err, user) {
             if (err) {
                 console.log(err)
             } else if (user) {
-                console.log(user.firstName, a)
+                // console.log(user.firstName, a)
                 currentUser = user;
                 amount = a;
-                console.log(currentUser)
+                // console.log(currentUser)
 
                 var create_web_profile_json = {
                     "name": profile_name,
@@ -97,7 +97,7 @@ router.use('/buy', (req, res) => {
                                 })
                                 while (counter--) {
                                     if (links[counter].method == 'REDIRECT') {
-                                        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", transaction)
+                                        // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", transaction)
                                         // redirecting to paypal where user approves the transaction 
                                         return res.send(links[counter].href)
                                     }
@@ -167,7 +167,7 @@ var createPay = (payment) => {
             }
             else {
                 resolve(payment);
-                console.log(payment)
+                // console.log(payment)
             }
         });
     });
