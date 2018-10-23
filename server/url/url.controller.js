@@ -114,7 +114,7 @@ async function getByUserId(req) {
             const { page, limit } = req.query;
             const perPage = (parseInt(limit));
             const currentPage = (parseInt(page)) || 1;
-            Url.findOne({ user: req.userId, isActive: true }, { features: 0, analytics: 0, __v: 0 })
+            Url.find({ user: req.userId, isActive: true }, { features: 0, analytics: 0, __v: 0 })
                 .sort('-_id')
                 .skip((perPage * currentPage) - perPage)
                 .limit(perPage)
@@ -136,9 +136,9 @@ async function getByUserId(req) {
                                     current: currentPage,
                                     pages: Math.ceil(count / perPage),
                                     totalCount: count
-                                })
+                                });
                             }
-                        })
+                        });
                     }
                 });
         } catch (error) {
