@@ -60,6 +60,10 @@ business :
 jawad@business.com
 paypal55
 
+merchant:
+jawad@merchant.com
+paypal55
+
 personal:
 jawad@paypal.com
 paypal55
