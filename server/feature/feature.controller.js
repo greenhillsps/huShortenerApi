@@ -45,7 +45,7 @@ function update(id, req) {
                                 if (url.features.locked == false && url.features.urlRedirectto.locked == false) {
                                     // console.log("urlRedirectto");
                                     if (req.body.urlRedirectto.url == url.shortUrl) {
-                                        callback(null, "null");
+                                        callback(null, "Can't do!");
                                     } else {
                                         url.features.urlRedirectto.url = req.body.urlRedirectto.url;
                                         url.save().then(() => {

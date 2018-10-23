@@ -52,6 +52,12 @@ function search(req, res, next) {
 
 function update(req, res, next) {
     urlController.update(req.params.id)
-        .then((url) => res.json(url))
+        .then((url) => {
+            if (url) {
+                res.json(url)     
+            } else {
+                res.json("Not found").send(404)
+            }
+        })
         .catch(err => next(err));
 }

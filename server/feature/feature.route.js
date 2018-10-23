@@ -17,6 +17,8 @@ function update(req, res, next) {
                 res.json(feature).send(403)
             } else if (feature == "Already exist") {
                 res.json(feature).send(401)
+            } else if (feature == "Can't do!") {
+                res.json(feature).send(401)
             } else {
                 res.json(feature)
             }
