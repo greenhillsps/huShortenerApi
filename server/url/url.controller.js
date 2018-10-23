@@ -290,7 +290,7 @@ function getById(id) {
                         resolve({
                             TotalClicks: f,
                             URL: val,
-                            Region: result,
+                            Region: result[0],
                             country: result[1],
                             Device: result[2],
                             Refferer: result[3],
