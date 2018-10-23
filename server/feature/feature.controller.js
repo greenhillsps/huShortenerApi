@@ -32,7 +32,7 @@ function update(id, req) {
                                     })
                                 }
                                 else {
-                                    console.log(" ");
+                                    // console.log(" ");
                                     callback(null, "Feature locked");
                                 }
                             } else {
@@ -65,7 +65,7 @@ function update(id, req) {
                                     // console.log("enableToggle");
                                     url.features.enableToggle.enable = req.body.enableToggle.enable;
                                     url.save().then(() => {
-                                        console.log("enableToggle success");
+                                        // console.log("enableToggle success");
                                         callback(null, "success");
                                     });
                                 }
@@ -84,7 +84,7 @@ function update(id, req) {
                                     // console.log("blockIps");
                                     url.features.blockIps.ips = req.body.blockIps.ips;
                                     url.save().then(() => {
-                                        console.log(" blockIps success");
+                                        // console.log(" blockIps success");
                                         callback(null, "success");
                                     })
                                 }

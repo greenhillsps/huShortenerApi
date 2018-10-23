@@ -32,7 +32,7 @@ function create(req) {
                         console.log("Meta Extraction Error", err);
                         reject(err);
                     } else {
-                        console.log(("User ID: ", req.userId))
+                        // console.log(("User ID: ", req.userId))
                         if (req.userId) {
                             // console.log("1st cond run", req.userId)
                             id = shortid.generate();
@@ -110,7 +110,7 @@ async function getByUserId(req) {
 
     return new Promise((resolve, reject) => {
         try {
-            console.log("coming from url controller getByUserId", req.userId)
+            // console.log("coming from url controller getByUserId", req.userId)
             const { page, limit } = req.query;
             const perPage = (parseInt(limit));
             const currentPage = (parseInt(page)) || 1;
@@ -123,7 +123,7 @@ async function getByUserId(req) {
                         reject(err);
                     } else {
                         Url.count({ user: req.userId }).exec(function (err, count) {
-                            console.log(count)
+                            // console.log(count)
                             if (err) {
                                 reject(err)
                             }

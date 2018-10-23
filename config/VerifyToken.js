@@ -15,7 +15,7 @@ function verifyToken(req, res, next) {
       } else {
         // if everything is good, save to request for use in other routes
         req.userId = decoded ? decoded.id : null;
-        console.log("userid from verifyToken", req.userId)
+        // console.log("userid from verifyToken", req.userId)
         return next();
       }
 
@@ -33,7 +33,7 @@ function verifyToken(req, res, next) {
         } else {
           // if everything is good, save to request for use in other routes
           req.userId = decoded.id;
-          console.log("userid from verifyToken", req.userId)
+          // console.log("userid from verifyToken", req.userId)
           next();
         }
       });

@@ -40,23 +40,23 @@ function blockIps(req, url) {
         url.features.blockIps.locked === false &&
         moment(url.features.blockIps.expiryDate).isSameOrAfter(now) === false) {
         checker = true;
-        console.log("Link Expired")
+        // console.log("Link Expired")
     } else {
         for (let i = 0; i < url.features.blockIps.ips.length; i++) {
             if (
                 url.features.blockIps.ips[i] === req.clientIp
             ) {
                 checker = true;
-                console.log(" IP match ", url.features.blockIps.ips[i], "==", req.clientIp)
+                // console.log(" IP match ", url.features.blockIps.ips[i], "==", req.clientIp)
                 break;
             } else {
-                console.log("No error and the IP is: ", req.clientIp)
+                // console.log("No error and the IP is: ", req.clientIp)
                 checker = false;
             }
         }
     }
-    console.log("This is Blockip checker function", checker)
-    console.log("Blockip moment checker", moment(url.features.blockIps.expiryDate).isSameOrAfter(now))
+    // console.log("This is Blockip checker function", checker)
+    // console.log("Blockip moment checker", moment(url.features.blockIps.expiryDate).isSameOrAfter(now))
     return checker
 }
 function enableToggle(url) {
@@ -113,7 +113,7 @@ function update(id, req) {
                     console.log("blockip checker ", err);
                     reject(err);
                 } else if (url) {
-                    console.log("blockip checker ", url);
+                    // console.log("blockip checker ", url);
                     if (url.features.locked === false &&
                         url.features.blockIps.locked === false &&
                         blockIps(req, url)) {
@@ -136,8 +136,8 @@ function update(id, req) {
                                 } else {
                                     ref = null;
                                 }
-                                console.log("IpStack response object", ipresponse);
-                                console.log("IpStack lang response object", ipresponse.location.languages);
+                                // console.log("IpStack response object", ipresponse);
+                                // console.log("IpStack lang response object", ipresponse.location.languages);
                                 let obj = {
                                     browser: useragent.parse(req.headers['user-agent']).family ?
                                         useragent.parse(req.headers['user-agent']).family : "Unknown",
@@ -224,7 +224,7 @@ function update(id, req) {
                                             } else if (response.features.locked === false &&
                                                 response.features.urlRedirectto.locked === false &&
                                                 urlRedirectto(url)) {
-                                                console.log("this is the urlRedirectto url: ", response.features.urlRedirectto.url);
+                                                // console.log("this is the urlRedirectto url: ", response.features.urlRedirectto.url);
                                                 request.get(response.features.urlRedirectto.url, function (error, requestResponse, body) {
                                                     if (error) {
                                                         console.log("REQUEST error", error);
@@ -235,7 +235,7 @@ function update(id, req) {
                                                         resolve("This URL is deactivated by the owner!");
                                                     }
                                                     else if (requestResponse.statusCode == 404 && fourOfour(url)) {
-                                                        console.log("REQUEST response", requestResponse.statusCode);
+                                                        // console.log("REQUEST response", requestResponse.statusCode);
                                                         // resolve(response.features.fourOfour.url);
                                                         if (perm) {
                                                             response.rer = response.features.fourOfour.url
@@ -245,7 +245,7 @@ function update(id, req) {
                                                             resolve(response);
                                                         }
                                                     } else {
-                                                        console.log("REQUEST response", requestResponse.statusCode);
+                                                        // console.log("REQUEST response", requestResponse.statusCode);
                                                         // resolve(response.features.urlRedirectto.url, 302);
                                                         if (perm) {
                                                             response.rer = response.features.urlRedirectto.url
@@ -259,7 +259,7 @@ function update(id, req) {
                                             }
 
                                             else {
-                                                console.log("This is the actual url: ", response.actualUrl);
+                                                // console.log("This is the actual url: ", response.actualUrl);
                                                 if (response.features.locked === false &&
                                                     response.features.customExpiryDate.locked === false &&
                                                     customExpiryDate(url) == false) {
@@ -285,7 +285,7 @@ function update(id, req) {
                         })
                     }
                 } else {
-                    console.log("blockip checker ", url);
+                    // console.log("blockip checker ", url);
                     resolve("Error, URL not found");
                 }
             })
