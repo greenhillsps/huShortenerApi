@@ -14,11 +14,11 @@ function update(req, res, next) {
     featureController.update(req.params.id, req)
         .then((feature) => {
             if (feature == "Insufficient funds") {
-                res.json(feature).send(403)
+                res.status(403).json(feature)
             } else if (feature == "Already exist") {
-                res.json(feature).send(401)
+                res.status(401).json(feature)
             } else if (feature == "Can't do!") {
-                res.json(feature).send(401)
+                res.status(401).json(feature)
             } else {
                 res.json(feature)
             }

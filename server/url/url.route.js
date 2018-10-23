@@ -56,7 +56,7 @@ function update(req, res, next) {
             if (url) {
                 res.json(url)
             } else {
-                res.json("Oops! Url not found").send(404)
+                res.status(404).json("Oops! Url not found")
             }
         })
         .catch(err => next(err));
