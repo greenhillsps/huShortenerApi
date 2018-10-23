@@ -45,7 +45,7 @@ function update(id, req) {
                                 if (url.features.locked == false && url.features.urlRedirectto.locked == false) {
                                     // console.log("urlRedirectto");
                                     if (req.body.urlRedirectto.url == url.shortUrl) {
-                                        callback(null, "Can't do!");
+                                        resolve("Can't do!");
                                     } else {
                                         url.features.urlRedirectto.url = req.body.urlRedirectto.url;
                                         url.save().then(() => {
@@ -148,7 +148,7 @@ function update(id, req) {
                                         if (err) {
                                             reject(err);
                                         } else if (match) {
-                                            callback(null, "Already exist");
+                                            resolve("Already exist");
                                         } else {
                                             url.queryKey = req.body.customShortUrl.shortUrl;
                                             url.shortUrl = `https://dotlyapidev.herokuapp.com/${req.body.customShortUrl.shortUrl}`;

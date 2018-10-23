@@ -18,7 +18,7 @@ function update(req, res, next) {
             } else if (feature == "Already exist") {
                 res.status(401).json(feature)
             } else if (feature == "Can't do!") {
-                res.status(401).json(feature)
+                res.status(401).json("Oops! Url not found")
             } else {
                 res.json(feature)
             }
