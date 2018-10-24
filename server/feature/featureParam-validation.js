@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 module.exports = {
   // PUT /api/cart/buy/
-  feature: {
+  update: {
     body: {
       customExpiryDate: Joi
         .object({
@@ -11,7 +11,15 @@ module.exports = {
         .required(),
       urlRedirectto: Joi
         .object({
-          url: Joi.string()
+          url: Joi.string().uri({
+            scheme: [
+              'http',
+              'https',
+              'www',
+              'com'
+              
+            ]
+          })
         })
         .required(),
       enableToggle: Joi
@@ -19,12 +27,16 @@ module.exports = {
           enable: Joi.boolean()
         })
         .required(),
-      blockIps: Joi.object({
-        ips: Joi.array()
-      }).required(),
-      customReports: Joi.object({
-        type: Joi.string()
-      }).required(),
+      blockIps: Joi
+        .object({
+          ips: Joi.array()
+        })
+        .required(),
+      customReports: Joi
+        .object({
+          type: Joi.string()
+        })
+        .required(),
       fourOfour: Joi
         .object({
           url: Joi.string()

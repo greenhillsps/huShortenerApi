@@ -34,5 +34,10 @@ module.exports = {
       email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       password: Joi.string().required()
     }
+  },
+  queryUrl: {
+    params: {
+      // userId: Joi.string().hex().required().example()
+    }
   }
 };

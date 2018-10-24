@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const featureController = require('./cart.controller');
+const paramValidation = require('./cartParam-validation');
+const validate = require('express-validation');
 
 // routes
 router.get('/check', (req, res) => {
     res.sendStatus(200)
 });
-router.put('/buy/:id', update);
+router.put('/buy/:id', [validate(paramValidation.cart), update]);
 
 
 

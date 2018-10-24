@@ -4,7 +4,15 @@ module.exports = {
   // POST /api/url/submit
   createUrl: {
     body: {
-      actualUrl: Joi.string().required().max(500)
+      actualUrl: Joi.string().required().max(100).min(5).uri({
+        scheme: [
+          'http',
+          'https',
+          'www',
+          'com',
+          
+        ]
+      })
     }
   },
   // Get Url by id /api/url/:id
@@ -22,26 +30,20 @@ module.exports = {
   },
   // UPDATE /api/url/:id
   updateUrl: {
-    body: {
-      _id: Joi.string().hex().required(),
-      actualUrl: Joi.string().required(),
-      shortUrl: Joi.string().required(),
-      queryKey: Joi.string().required(),
-      features: Joi.object(),
-      urlRedirectto: Joi.object(),
-      enableToggle: Joi.object(),
-      blockIps: Joi.object(),
-      customReports: Joi.object(),
-      fourOfour: Joi.object(),
-      customShortUrl: Joi.object(),
-      analytics: Joi.array(),
-      totalAmountSpent: Joi.number(),
-      user: Joi.string().hex().required(),
-      createdAt: Joi.date(),
-      show : Joi.boolean()
-    },
     params: {
       id: Joi.string().hex().required()
     }
   },
+
+  queryUrl: {
+    body: {
+      chai: Joi.number().integer().min(1).max(2)
+    },
+    query: {
+      pakora: Joi.number().integer().min(1).max(2)
+    },
+    params: {
+      alu: Joi.number().integer().min(1).max(2)
+    }
+  }
 };

@@ -4,6 +4,8 @@ const router = express.Router();
 var paypal = require('paypal-rest-sdk');
 const User = require('../user/user.model');
 const config = require('../../config/config');
+const paramValidation = require('./ppParam-validation');
+const validate = require('express-validation');
 
 // configure paypal with the credentials you got when you created your paypal app
 paypal.configure({
@@ -15,7 +17,7 @@ paypal.configure({
 let currentUser = null;
 let amount = null;
 // payment process 
-router.use('/buy', (req, res) => {
+router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
     var profile_name = Math.random().toString(36).substring(7);
     const { a } = req.query
     finduser(req)

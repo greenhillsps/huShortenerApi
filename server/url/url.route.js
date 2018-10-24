@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const urlController = require('./url.controller');
+const paramValidation = require('./urlParam-validation');
+const validate = require('express-validation');
 
 // routes
-router.post('/submit', submit);
-router.get('/search/', search);
-router.get('/', getByUserId);
-router.get('/:id', getById);
-router.put('/:id', update);
+router.post('/submit', [validate(paramValidation.createUrl), submit]);
+router.get('/search/', [validate(paramValidation.createUrl), search]);
+router.get('/', [validate(paramValidation.GetUrlByToken), getByUserId]);
+router.get('/:id', [validate(paramValidation.GetUrl), getById]);
+router.put('/:id', [validate(paramValidation.updateUrl), update]);
 // router.put('/analytics/:id', analytics);
-router.put('/:id', update);
+router.put('/:id', [update]);
 
 
 module.exports = router;

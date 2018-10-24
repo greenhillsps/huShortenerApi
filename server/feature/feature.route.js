@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const featureController = require('./feature.controller');
-
+const paramValidation = require('./featureParam-validation');
+const validate = require('express-validation');
 // routes
 router.get('/check', (req, res) => {
     res.sendStatus(200)
 });
-router.put('/buy/:id', update);
+router.put('/buy/:id', [validate(paramValidation.update), update]);
 
 
 

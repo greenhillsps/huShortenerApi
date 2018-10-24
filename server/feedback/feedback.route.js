@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const feedbackService = require('./feedback.controller');
+const paramValidation = require('./feedbackParam-validation');
+const validate = require('express-validation');
 
 // routes
-router.post('/submit', submit);
+router.post('/submit', [validate(paramValidation.submit), submit]);
 router.get('/', getAll);
-router.get('/:id', getById);
-router.put('/:id', update);
+router.get('/:id', [validate(paramValidation.GetFeedback), getById]);
+router.put('/:id', [validate(paramValidation.update), update]);
 
 module.exports = router;
 
@@ -30,6 +32,6 @@ function getAll(req, res, next) {
 
 function update(req, res, next) {
     feedbackService.update(req.params.id, req.body)
-        .then(url => url ? res.json(url).send(200) : res.json({ 'message': ' Request failed please try again' }).send(403))
+        .then(url => url ? res.json(url) : res.status(403).json({ 'message': ' Request failed please try again' }))
         .catch(err => next(err));
 }

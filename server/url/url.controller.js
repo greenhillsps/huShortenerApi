@@ -62,7 +62,7 @@ function create(req) {
                             id = shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
-                                shortUrl: `http://localhost:4040/${id}`,
+                                shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
                                 user: !req.userId ? req.userId : null,
                                 queryKey: id,
                                 title: res.title ? res.title : "No title found",

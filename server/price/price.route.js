@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const priceController = require('./price.controller');
-
+const paramValidation = require('./priceParam-validation');
+const validate = require('express-validation');
 // routes
-router.post('/submit', submit);
+router.post('/submit', [validate(paramValidation.createPrice), submit]);
 router.get('/', getAll);
-router.get('/:id', getById);
-router.put('/:id', update);
+router.get('/:id', [validate(paramValidation.GetPrice), getById]);
+router.put('/:id', [validate(paramValidation.updatePrice), update]);
 
 module.exports = router;
 
@@ -30,6 +31,6 @@ function getAll(req, res, next) {
 
 function update(req, res, next) {
     priceController.update(req.params.id, req.body)
-        .then(url => url ? res.json({"message": "The price has updated"}).send(200) : res.status(403).json({ 'message': ' Request failed please try again' }))
+        .then(url => url ? res.json({ "message": "The price has updated" }).send(200) : res.status(403).json({ 'message': ' Request failed please try again' }))
         .catch(err => next(err));
 }

@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const redirectorController = require('./url.Redirector');
+const paramValidation = require('./urlParam-validation');
+const validate = require('express-validation');
+
+
 
 // routes
-router.get('/:id', update);
+router.get('/:id', [update]);
 
 
 
