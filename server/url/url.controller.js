@@ -122,7 +122,7 @@ async function getByUserId(req) {
                     if (err) {
                         reject(err);
                     } else {
-                        Url.count({ user: req.userId }).exec(function (err, count) {
+                        Url.count({ user: req.userId, isActive: true }).exec(function (err, count) {
                             // console.log(count)
                             if (err) {
                                 reject(err)
