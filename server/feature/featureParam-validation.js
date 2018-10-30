@@ -11,15 +11,14 @@ module.exports = {
         .required(),
       urlRedirectto: Joi
         .object({
-          url: Joi.string().uri({
-            scheme: [
-              'http',
-              'https',
-              'www',
-              'com'
-              
-            ]
-          })
+          // url: Joi.string().uri({
+          //   scheme: [
+          //     'http',
+          //     'https',
+          //     'www',
+          //     'com'
+          //   ]
+          // })
         })
         .required(),
       enableToggle: Joi

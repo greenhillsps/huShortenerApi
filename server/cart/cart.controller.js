@@ -16,7 +16,6 @@ function update(id, req) {
                 if (err) {
                     reject(err);
                 } else if (user) {
-                    // console.log(user.wallet)
                     let total = 0;
 
                     async.parallel([

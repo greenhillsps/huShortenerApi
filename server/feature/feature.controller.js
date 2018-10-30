@@ -40,7 +40,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.urlRedirectto !== null && req.body.urlRedirectto.url) {
+                            if (req.body.urlRedirectto.change) {
 
                                 if (url.features.locked == false && url.features.urlRedirectto.locked == false) {
                                     // console.log("urlRedirectto");
