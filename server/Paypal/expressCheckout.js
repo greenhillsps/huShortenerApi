@@ -18,106 +18,113 @@ let currentUser = null;
 let amount = null;
 // payment process 
 router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
-    var profile_name = Math.random().toString(36).substring(7);
-    const { a } = req.query
-    finduser(req)
-    async function finduser(req) {
 
-        // console.log(req.userId);
-        User.findById(req.userId, function (err, user) {
-            if (err) {
-                console.log(err)
-            } else if (user) {
-                // console.log(user.firstName, a)
-                currentUser = user;
-                amount = a;
-                // console.log(currentUser)
+    try {
+        var profile_name = Math.random().toString(36).substring(7);
+        const { a } = req.query
+        finduser(req)
+        async function finduser(req) {
 
-                var create_web_profile_json = {
-                    "name": profile_name,
-                    "presentation": {
-                        "brand_name": "Dotly",
-                        "logo_image": "https://www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg",
-                        "locale_code": "US"
-                    },
-                    "input_fields": {
-                        "allow_note": true,
-                        "no_shipping": 1,
-                        "address_override": 1
-                    },
-                };
-                // payment object 
-                var payment = {
-                    "intent": "sale",
-                    "payer": {
-                        "payment_method": "paypal"
-                    },
-                    "redirect_urls": {
-                        "return_url": "https://dotlyapidev.herokuapp.com/api/PPexec/success",
-                        "cancel_url": "https://dotlyapidev.herokuapp.com/api/PPexec/err"
-                    },
-                    "transactions": [{
-                        "item_list": {
-                            "items": [{
-                                "name": user.firstName,
-                                "sku": 'Transferring amount to your wallet',
-                                "price": a,
-                                "currency": "USD",
-                                "quantity": 1
-                            }]
+            // console.log(req.userId);
+            User.findById(req.userId, function (err, user) {
+                if (err) {
+                    console.log(err)
+                } else if (user) {
+                    // console.log(user.firstName, a)
+                    currentUser = user;
+                    amount = a;
+                    // console.log(currentUser)
+
+                    var create_web_profile_json = {
+                        "name": profile_name,
+                        "presentation": {
+                            "brand_name": "Dotly",
+                            "logo_image": "https://www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg",
+                            "locale_code": "US"
                         },
-                        "amount": {
-                            "total": a,
-                            "currency": "USD"
+                        "input_fields": {
+                            "allow_note": true,
+                            "no_shipping": 1,
+                            "address_override": 1
                         },
-                        "description": "Transferring amount to Dotly"
-                    }]
-                }
-                //experience    
-                paypal.webProfile.create(create_web_profile_json, function (error, web_profile) {
-                    if (error) {
-                        console.log("This is the webProfile Error: ", error)
-                        // res.send(422).json("paypal not working")
-                        // return null
-                        res.sendStatus(408);
-                    } else {
-                        //Set the id of the created payment experience in payment json
-                        let experience_profile_id = web_profile.id;
-                        let id
-                        payment.experience_profile_id = experience_profile_id;
-                        // calling the create Pay method 
-                        createPay(payment)
-                            .then((transaction) => {
-                                id = transaction.id;
-                                let links = transaction.links;
-                                let counter = links.length;
-                                User.findByIdAndUpdate(req.userId, { $push: { paymentId: transaction.id } }, { new: true }, function (err, user) {
-                                    if (err) {
-                                        reject(err)
-                                    }
-                                    else { }
-                                })
-                                while (counter--) {
-                                    if (links[counter].method == 'REDIRECT') {
-                                        // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", transaction)
-                                        // redirecting to paypal where user approves the transaction 
-                                        return res.send(links[counter].href)
-                                    }
-                                }
-
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                                res.redirect('/err');
-                            });
-
+                    };
+                    // payment object 
+                    var payment = {
+                        "intent": "sale",
+                        "payer": {
+                            "payment_method": "paypal"
+                        },
+                        "redirect_urls": {
+                            "return_url": "https://dotlyapidev.herokuapp.com/api/PPexec/success",
+                            "cancel_url": "https://dotlyapidev.herokuapp.com/api/PPexec/err"
+                        },
+                        "transactions": [{
+                            "item_list": {
+                                "items": [{
+                                    "name": user.firstName,
+                                    "sku": 'Transferring amount to your wallet',
+                                    "price": a,
+                                    "currency": "USD",
+                                    "quantity": 1
+                                }]
+                            },
+                            "amount": {
+                                "total": a,
+                                "currency": "USD"
+                            },
+                            "description": "Transferring amount to Dotly"
+                        }]
                     }
-                });
-            } else {
-                res.send("Invalid user credential, please log in again")
-            }
-        })
+                    //experience    
+                    paypal.webProfile.create(create_web_profile_json, function (error, web_profile) {
+                        if (error) {
+                            console.log("This is the webProfile Error: ", error)
+                            // res.send(422).json("paypal not working")
+                            // return null
+                            res.sendStatus(408);
+                        } else {
+                            //Set the id of the created payment experience in payment json
+                            let experience_profile_id = web_profile.id;
+                            let id
+                            payment.experience_profile_id = experience_profile_id;
+                            // calling the create Pay method 
+                            createPay(payment)
+                                .then((transaction) => {
+                                    id = transaction.id;
+                                    let links = transaction.links;
+                                    let counter = links.length;
+                                    User.findByIdAndUpdate(req.userId, { $push: { paymentId: transaction.id } }, { new: true }, function (err, user) {
+                                        if (err) {
+                                            reject(err)
+                                        }
+                                        else { }
+                                    })
+                                    while (counter--) {
+                                        if (links[counter].method == 'REDIRECT') {
+                                            // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", transaction)
+                                            // redirecting to paypal where user approves the transaction 
+                                            return res.send(links[counter].href)
+                                        }
+                                    }
+
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    res.redirect('/err');
+                                });
+
+                        }
+                    });
+                } else {
+                    res.send("Invalid user credential, please log in again")
+                }
+            })
+        }
+    } catch (error) {
+        return res.json(error)
     }
+
+
 });
 
 // success page 
