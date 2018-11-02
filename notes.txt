@@ -1,37 +1,30 @@
-important links
-    devapi https://dotlyapidev.herokuapp.com/
+Important links
+    devapi: https://dotlyapidev.herokuapp.com/
     
-gmail account
-    dotly6528@gmail.com
-    Dotly123@
-ipstack 
-    dotly6528@gmail.com
-    Dotly123
-    firstname= dotly, lastname= api 
-    api key = 555ffad38e5faadd4df7aaa9b9db8141
-paypal 
-    dotly6528@gmail.com
-    Dotly123@
-postman account 
-    connect using gmail account
-    
-mlab account    
-    dotly
-    Dotly123
+    frontEnd: http://dotlydev.herokuapp.com/account/login
 
-    mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
-    mongodb://localhost/Dotly
+    short_url=https://dotlyapidev.herokuapp.com/
 
+    cdm_token=F5214045-0C7C-443C-857C-0A9C7FFF7159
 
-short_url=https://dotlyapidev.herokuapp.com/
+    LiveAccessToken: CC303A00-05C1-40C8-A67F-11F18A0F0CED
 
-cdm_token=F5214045-0C7C-443C-857C-0A9C7FFF7159
+    cdm_local=http://172.16.9.13:86/api/
 
-cdm_local=http://172.16.9.13:86/api/
+    cdm_live=http://cdm.onlineacademicsolution.com/api/
 
-cdm_live=http://cdm.onlineacademicsolution.com/api/
+    liveDB: mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
 
-Heroku
+    localDB: mongodb://localhost/Dotly
+
+Deployment 
+
+    git checkout devbranch 
+    git add . //for adding files
+    git commit -m "auto" //commit changes
+    git push herokudev devbranch:master
+
+Heroku:
     creds
         dotly6528@gmail.com
         Dotly123@
@@ -40,16 +33,33 @@ Heroku
         heroku login (one time)
             username
             password
+            
+MLab account    
+    dotly
+    Dotly123
+
+Gmail account:
+        dotly6528@gmail.com
+        Dotly123@
+
+ipstack :
+        dotly6528@gmail.com
+        Dotly123
+        firstname= dotly, lastname= api 
+        api key = 555ffad38e5faadd4df7aaa9b9db8141
+paypal 
+    dotly6528@gmail.com
+    Dotly123@
+
+Postman account 
+    connect using gmail account
+    
+
+
+    
+
+
         
-        git checkout devbranch
-        git add . //for adding files
-        git commit -m "auto" //commit changes
-        git push herokudev devbranch:master
-
-
-
-
-        http://dotlydev.herokuapp.com/account/login
 
 
 
