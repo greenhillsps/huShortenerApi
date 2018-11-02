@@ -1,11 +1,12 @@
 Important links
-    devapi: https://dotlyapidev.herokuapp.com/
-    
+
     frontEnd: http://dotlydev.herokuapp.com/account/login
+
+    devapi: https://dotlyapidev.herokuapp.com/
 
     short_url=https://dotlyapidev.herokuapp.com/
 
-    cdm_token=F5214045-0C7C-443C-857C-0A9C7FFF7159
+    cdm_token= F5214045-0C7C-443C-857C-0A9C7FFF7159
 
     LiveAccessToken: CC303A00-05C1-40C8-A67F-11F18A0F0CED
 
