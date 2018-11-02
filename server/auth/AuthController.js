@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
-const APIError = require('../helpers/APIError');
+const request = require('request');
+// const APIError = require('../helpers/APIError');
 
-var VerifyToken = require('../../config/VerifyToken');
+// var VerifyToken = require('../../config/VerifyToken');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -16,25 +17,93 @@ var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 const config = require('../../config/config'); // get config file
 
+
+/**
+ * 
+ */
+
+
+
+
 function login(req, res, next) {
+  let checkBody = {
+    "Email": req.body.email,
+    "AccessToken": config.cdmToken
+  }
+  request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
+    async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
+      let IsEmailTakenObject = JSON.parse(IsEmailAddressTakenBody);
+      if (err) {
+        res.status(500)
+          .json({
+            Status: '500',
+            message: IsEmailTakenObject.Message
+          })
+          .send();
+      } else if (IsEmailAddressTakenResponse.statusCode == 200 && IsEmailTakenObject.Result == false) {
+        // check if the password is valid
+        User.findOne({ uniqueKey: IsEmailTakenObject.Data.UniqueKey.toLowerCase() }, {
+          // firstName: 1, lastName: 1, totalURLS: 1, totalAmountSpent: 1, wallet: 1
+        }, function (err, user) {
+          console.log("user query run, this is the IsEmailTakenObject: ", IsEmailTakenObject,
+            " and this is the user: ", user, " and this is the unique key", IsEmailTakenObject.Data.UniqueKey.toLowerCase())
+          if (err) {
+            res.status(500)
+              .json({
+                Status: '500',
+                message: "Oops! Something went wrong on our end"
+              })
+              .send();
+          }
+          else if (!user) {
+            res.status(404).send(
+              {
+                auth: false,
+                token: null,
+                message: "Sorry! User not found"
+              });
+          } else {
+            var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+            if (!passwordIsValid) {
+              res.status(403)
+                .json({
+                  Status: '403',
+                  auth: false,
+                  message: "Username or password is incorrect",
+                  result: IsEmailTakenObject.Result,
+                  token: null
+                })
+                .send()
+            } else {
 
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) return res.status(500).send('Error on the server.');
-    if (!user) return res.status(404).send({ msg: "Username or password is incorrect", auth: false, token: null });
-
-    // check if the password is valid
-    var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid) return res.status(401).send({ msg: "Username or password is incorrect", auth: false, token: null });
-
-    // if user is found and password is valid
-    // create a token
-    var token = jwt.sign({ id: user._id }, config.jwtSecret,
-      // { expiresIn: 86400 // expires in 24 hours}
-    );
-
-    // return the information including token as JSON
-    res.status(200).send({ auth: true, token: token, user: user });
-  });
+              // if user is found and password is valid
+              // create a token
+              var token = jwt.sign({ id: user._id }, config.jwtSecret,
+                // { expiresIn: 86400 // expires in 24 hours}
+              );
+              user.email = req.body.email;
+              // return the information including token as JSON
+              res.status(200).send({
+                auth: true,
+                token: token,
+                message: IsEmailTakenObject.Message,
+                user: user
+              });
+            }
+          }
+        });
+      } else {
+        res.status(403)
+          .json({
+            Status: '403',
+            auth: false,
+            message: "Username or password is incorrect",
+            result: IsEmailTakenObject.Result,
+            token: null
+          })
+          .send()
+      }
+    })
   return next
 };
 
@@ -50,43 +119,127 @@ function logout(req, res, next) {
  * @property {string} req.body.password
  * @property {string} req.body.email
  * @property {string} req.body.mobileNumber 
+ * @property {string} req.body.countryCode 
  * @returns {User}
  */
 async function register(req, res, next) {
+  let checkBody = {
+    "Email": req.body.email,
+    "AccessToken": config.cdmToken
+  }
+  let insertBody = {
+    "FirstName": req.body.firstName,
+    "LastName": req.body.lastName,
+    "Email": req.body.email,
+    "CountryCode": req.body.countryCode,
+    "PhoneNumber": req.body.mobileNumber,
+    "AccessToken": config.cdmToken
+  }
 
-  if (await User.findOne({ email: req.body.email })) {
+  await request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
+    async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
+      console.log("IsEmailAddressTakenResponse responseeeeeee: ",
+        IsEmailAddressTakenResponse.statusCode, "IsEmailAddressTakenResponse bodyyyyy: ",
+        IsEmailAddressTakenBody);
+      let IsEmailTakenObject = JSON.parse(IsEmailAddressTakenBody);
+      if (err) {
+        res.status(500)
+          .json({
+            Status: '500',
+            message: IsEmailTakenObject.Message
+          })
+          .send()
+      } else if (IsEmailAddressTakenResponse.statusCode == 200 && IsEmailTakenObject.Result == true) {
+        await request.post(`${config.cdmUrl}customer/insertcustomer`, { form: insertBody },
+          async function (error, insertResponse, insertResponseBody) {
+            console.log("insertResponse responseeeeeee: ", insertResponse.statusCode,
+              "insertResponse bodyyyyy: ", insertResponseBody);
+            let insertObject = JSON.parse(insertResponseBody)
+            if (error) {
+              res.status(500)
+                .json({
+                  Status: '500',
+                  message: insertObject.Message,
+                })
+                .send()
+            } else if (insertResponse.statusCode == 200) {
+              var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+              const user = new User({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                password: hashedPassword,
+                uniqueKey: await insertObject.Data.UniqueKey
+              });
 
-    res.status(403)
-      .json({
-        Status: '403',
-        message: ' email ' + req.body.email + ' is already taken'
-      })
-      .send()
-  } else {
-    var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      password: hashedPassword,
-      email: req.body.email,
-      mobileNumber: req.body.mobileNumber
+              var token;
+              // { expiresIn: 86400 // expires in 24 hours}
+
+
+              await user.save()
+                .then(User => {
+                  token = jwt.sign({ id: User._id }, config.jwtSecret,
+                    // { expiresIn: 86400 // expires in 24 hours}
+
+                  );
+                  res.status(200).send({ auth: true, token: token, user: User, message: insertObject.Message });
+                })
+                // .then(User => res.status(200).send({ auth: true, token: token, user: User }))
+                .catch(e => next(e));
+            } else {
+
+              res.status(403)
+                .json({
+                  Status: '403',
+                  message: insertObject.Message
+                })
+                .send()
+            }
+          })
+      } else {
+
+        res.status(403)
+          .json({
+            Status: '403',
+            message: IsEmailTakenObject.Message
+          })
+          .send()
+      }
     });
 
-    var token;
-    // { expiresIn: 86400 // expires in 24 hours}
+
+  // if (await User.findOne({ email: req.body.email })) {
+
+  //   res.status(403)
+  //     .json({
+  //       Status: '403',
+  //       message: ' email ' + req.body.email + ' is already taken'
+  //     })
+  //     .send()
+  // } else {
+  //   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+  //   const user = new User({
+  //     firstName: req.body.firstName,
+  //     lastName: req.body.lastName,
+  //     password: hashedPassword,
+  //     email: req.body.email,
+  //     mobileNumber: req.body.mobileNumber
+  //   });
+
+  //   var token;
+  //   // { expiresIn: 86400 // expires in 24 hours}
 
 
-    await user.save()
-      .then(User => {
-        token = jwt.sign({ id: User._id }, config.jwtSecret,
-          // { expiresIn: 86400 // expires in 24 hours}
+  //   await user.save()
+  //     .then(User => {
+  //       token = jwt.sign({ id: User._id }, config.jwtSecret,
+  //         // { expiresIn: 86400 // expires in 24 hours}
 
-        );
-        res.status(200).send({ auth: true, token: token, user: User })
-      })
-      // .then(User => res.status(200).send({ auth: true, token: token, user: User }))
-      .catch(e => next(e));
-  }
+  //       );
+  //       res.status(200).send({ auth: true, token: token, user: User })
+  //     })
+  //     // .then(User => res.status(200).send({ auth: true, token: token, user: User }))
+  //     .catch(e => next(e));
+  // }
 }
 
 

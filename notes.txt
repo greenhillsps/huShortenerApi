@@ -22,6 +22,15 @@ mlab account
     mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
     mongodb://localhost/Dotly
 
+
+short_url=https://dotlyapidev.herokuapp.com/
+
+cdm_token=F5214045-0C7C-443C-857C-0A9C7FFF7159
+
+cdm_local=http://172.16.9.13:86/api/
+
+cdm_live=http://cdm.onlineacademicsolution.com/api/
+
 Heroku
     creds
         dotly6528@gmail.com

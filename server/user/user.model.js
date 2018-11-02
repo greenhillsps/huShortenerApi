@@ -19,16 +19,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  email: {
+  uniqueKey: {
     type: String,
-    required: true,
-    match: [/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'The value of path {PATH} ({VALUE}) is not a valid email address.'],
-    unique: true
-  },
-  mobileNumber: {
-    type: String,
-    required: true,
-    match: [/([(+]*[0-9]+[()+. -]*)/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
+    required: true
   },
   wallet: {
     type: Number,
@@ -50,6 +43,20 @@ const UserSchema = new mongoose.Schema({
   paymentId: []
 
 });
+
+
+
+// email: {
+//   type: String,
+//   required: true,
+//   match: [/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/, 'The value of path {PATH} ({VALUE}) is not a valid email address.'],
+//   unique: true
+// },
+// mobileNumber: {
+//   type: String,
+//   required: true,
+//   match: [/([(+]*[0-9]+[()+. -]*)/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
+// },
 
 /**
  * Add your

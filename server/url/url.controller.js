@@ -7,7 +7,7 @@ const ObjectId = mongoose.Types.ObjectId;
 var shortid = require('shortid');
 const moment = require('moment');
 const extract = require('meta-extractor');
-
+const config = require('../../config/config');
 module.exports = {
     search,
     getByUserId,
@@ -38,7 +38,7 @@ function create(req) {
                             id = shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
-                                shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
+                                shortUrl: `${config.shortUrl + id}`,
                                 user: req.userId,
                                 queryKey: id,
                                 title: res.title ? res.title : "No title found",
@@ -62,7 +62,7 @@ function create(req) {
                             id = shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
-                                shortUrl: `https://dotlyapidev.herokuapp.com/${id}`,
+                                shortUrl: `${config.shortUrl + id}`,
                                 user: !req.userId ? req.userId : null,
                                 queryKey: id,
                                 title: res.title ? res.title : "No title found",
