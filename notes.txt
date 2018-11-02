@@ -1,6 +1,6 @@
 Important links
 
-    frontEnd: http://dotlydev.herokuapp.com/account/login
+    FrontEnd: http://dotlydev.herokuapp.com/account/login
 
     devapi: https://dotlyapidev.herokuapp.com/
 
@@ -17,6 +17,10 @@ Important links
     liveDB: mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
 
     localDB: mongodb://localhost/Dotly
+
+FrontEnd Account 
+    halalkhana@gmail.com
+    123456
 
 Deployment 
 
