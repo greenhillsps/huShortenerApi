@@ -33,6 +33,7 @@ function login(req, res, next) {
   request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
     async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
       let IsEmailTakenObject = JSON.parse(IsEmailAddressTakenBody);
+      console.log("initial IsEmailTakenObject", IsEmailTakenObject)
       if (err) {
         res.status(500)
           .json({
