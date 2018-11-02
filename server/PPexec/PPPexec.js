@@ -17,8 +17,8 @@ router.use('/success', (req, res) => {
                 console.error(error);
             } else {
                 if (payment.state === 'approved') {
-                    // console.log(payment)
-                    res.redirect('http://dotlydev.herokuapp.com/success');
+                    console.log(payment)
+
                     User.findOne({ paymentId: { $all: [paymentId] } }, function (err, user) {
                         if (err) {
                             res.redirect('http://dotlydev.herokuapp.com/failure');
@@ -45,6 +45,7 @@ router.use('/success', (req, res) => {
                             })
                         }
                     })
+                    res.redirect('http://dotlydev.herokuapp.com/success');
                 } else {
                     res.redirect('http://dotlydev.herokuapp.com/failure');
                 }
