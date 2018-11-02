@@ -121,7 +121,8 @@ router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
             })
         }
     } catch (error) {
-        return res.json(error)
+        console.log(error);
+        res.json(error)
     }
 
 

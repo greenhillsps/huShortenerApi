@@ -51,7 +51,8 @@ router.use('/success', (req, res) => {
             }
         });
     } catch (error) {
-        return res.json(error)
+        console.log(error);
+        res.json(error)
     }
 
 
