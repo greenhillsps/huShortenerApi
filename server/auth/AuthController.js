@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
 const request = require('request');
 // const APIError = require('../helpers/APIError');
 
@@ -13,8 +13,8 @@ const User = require('../user/user.model');
 /**
  * Configure JWT
  */
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-var bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const bcrypt = require('bcryptjs');
 const config = require('../../config/config'); // get config file
 
 

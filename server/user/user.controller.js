@@ -1,7 +1,7 @@
 const User = require('./user.model');
 var bcrypt = require('bcryptjs'); // used to hash passwords
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-
+const request = require('request');
 
 const config = require('../../config/config'); // get config file
 /**
@@ -24,14 +24,39 @@ function get(req, res) {
   return res.json(req.user);
 }
 
-function user(req, res, next) {
+async function user(req, res, next) {
 
-  User.findById(req.userId, '-password').exec(function (err, user) {
+
+  await User.findById(req.userId, '-password').exec(async function (err, user) {
     // console.log("user id from find user from users", req.userId)
     if (err) {
       res.status(403).json({ msg: "User not found", auth: false });
     } else if (user) {
-      res.status(200).json({ auth: true, user: user });
+      let getCustomerInfo = {
+        "UniqueKey": user.uniqueKey
+        ,
+        "AccessToken": config.cdmToken
+      }
+
+      await request.post(`${config.cdmUrl}customer/GetCustomerInfo`, { form: getCustomerInfo },
+        async function (err, getCustomerInfoResponse, getCustomerInfoBody) {
+          if (err) {
+            res.status(403).json({ msg: "User not found", auth: false });
+          } else if (getCustomerInfoResponse.statusCode == 200) {
+
+            let getCustomerInfoObject = JSON.parse(getCustomerInfoBody)
+            res.status(200).json({
+              auth: true,
+              user: user,
+              email: getCustomerInfoObject.Data.Email,
+              countryCode: getCustomerInfoObject.Data.CountryCode,
+              phoneNumber: getCustomerInfoObject.Data.PhoneNumber
+            });
+          } else {
+            res.status(403).json({ msg: "User not found", auth: false });
+          }
+        })
+
     } else {
       res.status(403).json({ msg: "User not found", auth: false });
     }
