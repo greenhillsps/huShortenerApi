@@ -23,6 +23,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  signUpIp: {
+    type: String
+  },
+  ISOCountryCode: {
+    type: String
+  },
+  salespanel: {
+    type: Boolean,
+    default: false
+  },
   wallet: {
     type: Number,
     default: 0

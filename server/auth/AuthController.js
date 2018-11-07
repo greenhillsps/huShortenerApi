@@ -136,7 +136,7 @@ async function register(req, res, next) {
     "PhoneNumber": req.body.mobileNumber,
     "AccessToken": config.cdmToken
   }
-
+  
   await request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
     async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
       console.log("IsEmailAddressTakenResponse responseeeeeee: ",
@@ -169,7 +169,9 @@ async function register(req, res, next) {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 password: hashedPassword,
-                uniqueKey: await insertObject.Data.UniqueKey
+                uniqueKey: await insertObject.Data.UniqueKey,
+                signUpIp: req.clientIp,
+                ISOCountryCode: "PK"
               });
 
               var token;

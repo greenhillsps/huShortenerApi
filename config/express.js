@@ -16,13 +16,12 @@ const apiRoutes = require('../Routes/api.route');
 const indexRoutes = require('../Routes/index.route');
 const requestIp = require('request-ip');
 const device = require('express-device');
-
+const Scheduler = require('../server/salesPanelService/salesPanelService');
 const app = express();
 
 if (config.env === 'development') {
   app.use(logger('dev'));
 }
-
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

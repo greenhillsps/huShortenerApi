@@ -27,7 +27,7 @@ function get(req, res) {
 async function user(req, res, next) {
 
 
-  await User.findById(req.userId, '-password').exec(async function (err, user) {
+  await User.findById(req.userId, { password: 0, paymentId: 0, transactionHistory: 0 }).exec(async function (err, user) {
     // console.log("user id from find user from users", req.userId)
     if (err) {
       res.status(403).json({ msg: "User not found", auth: false });
