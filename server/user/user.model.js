@@ -29,9 +29,16 @@ const UserSchema = new mongoose.Schema({
   ISOCountryCode: {
     type: String
   },
-  salespanel: {
+  ISOCountryName: {
+    type: String
+  },
+  paid: {
     type: Boolean,
     default: false
+  },
+  salespanel: {
+    type: Number,
+    default: 0
   },
   wallet: {
     type: Number,

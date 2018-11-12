@@ -31,6 +31,7 @@ router.use('/success', (req, res) => {
                             // console.log("This is the payment object: ", payment);
                             User.findByIdAndUpdate(user._id, {
                                 $inc: { 'wallet': parseInt(payment.transactions[0].amount.total) },
+                                $set: { 'paid': true },
                                 $push: {
                                     transactionHistory: payment
                                 }

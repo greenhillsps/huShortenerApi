@@ -6,13 +6,21 @@ Important links
 
     short_url=https://dotlyapidev.herokuapp.com/
 
-    cdm_token= F5214045-0C7C-443C-857C-0A9C7FFF7159
+    cdm_localAccessToken= F5214045-0C7C-443C-857C-0A9C7FFF7159
 
-    LiveAccessToken: CC303A00-05C1-40C8-A67F-11F18A0F0CED
+    cdm_LiveAccessToken: CC303A00-05C1-40C8-A67F-11F18A0F0CED
 
-    cdm_local=http://172.16.9.13:86/api/
+    cdm_local= http://172.16.9.13:86/api/
 
-    cdm_live=http://cdm.onlineacademicsolution.com/api/
+    cdm_live= http://cdm.onlineacademicsolution.com/api/
+
+    sales_Panel_local: http://172.16.9.13:8010/api/
+
+    sales_Panel_live: http://SalesApi.24activ.com/api/
+
+    salesLocalToken: 969B52D9-8C7F-4DCE-A8C6-24C39DCC7CE1
+
+    salesLiveToken: cdca7b41-c8c1-446f-93e7-a0f8d99da76c
 
     liveDB: mongodb://admin:admin123@ds137862.mlab.com:37862/dotlydev
 
@@ -38,6 +46,13 @@ Heroku:
         heroku login (one time)
             username
             password
+            
+
+
+
+
+
+
             
 MLab account    
     dotly
