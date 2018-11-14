@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const request = require('request');
 const User = require('../user/user.model');
 const config = require('../../config/config'); // get config file
+const moment = require('moment');
 
 let insertion = true;
 let updation = true;
@@ -71,7 +72,7 @@ function updationProcessApiRequests() {
                             let updatedlead = {
                                 "CDMUniqueKey": user.uniqueKey,
                                 "CustomerStatusCode": 3,
-                                "PaymentDate": new Date(),
+                                "PaymentDate": user.firstPaymentDate ? user.firstPaymentDate : moment(),
                                 "ClientAccessKey": config.salesClientAccessKey
                             }
                             await request.post(`${config.salesUrl}Lead/UpdateLead`, { form: updatedlead },
@@ -100,9 +101,9 @@ function updationProcessApiRequests() {
             })
     })
 }
-console.log('cron systems initiated, looking forward to scheduled tasks', new Date());
+console.log('cron systems initiated, looking forward to scheduled tasks at: ', moment().format("DD MMMM YYYY hh:mm:ss a"));
 cron.schedule('* * * * *', function () {
-    console.log('cron job started', new Date());
+    console.log('cron job started at: ', moment().format("DD MMMM YYYY hh:mm:ss a"));
 
     if (insertion) {
         insertionProcessApiRequests()

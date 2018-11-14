@@ -3,7 +3,7 @@ var express = require('express');
 const router = express.Router();
 var paypal = require('paypal-rest-sdk');
 const User = require('../user/user.model');
-
+const moment = require('moment');
 
 // success page 
 router.use('/success', (req, res) => {
@@ -32,6 +32,7 @@ router.use('/success', (req, res) => {
                             User.findByIdAndUpdate(user._id, {
                                 $inc: { 'wallet': parseInt(payment.transactions[0].amount.total) },
                                 $set: { 'paid': true },
+                                $set: { 'firstPaymentDate': firstPaymentDate ? firstPaymentDate : moment() },
                                 $push: {
                                     transactionHistory: payment
                                 }
