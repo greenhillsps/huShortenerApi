@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  identity: {
+    type: String,
+    required: true
+  },
   signUpIp: {
     type: String
   },
@@ -35,6 +39,9 @@ const UserSchema = new mongoose.Schema({
   paid: {
     type: Boolean,
     default: false
+  },
+  firstPaymentDate: {
+    type: String
   },
   salespanel: {
     type: Number,

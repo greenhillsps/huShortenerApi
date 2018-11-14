@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const request = require('request');
+const shortid = require('shortid');
 // const APIError = require('../helpers/APIError');
 
 // var VerifyToken = require('../../config/VerifyToken');
@@ -164,11 +165,13 @@ async function register(req, res, next) {
                 })
                 .send()
             } else if (insertResponse.statusCode == 200) {
-              var hashedPassword = bcrypt.hashSync(req.body.password, 8);
+              let hashedPassword = bcrypt.hashSync(req.body.password, 8);
+              let id = shortid.generate();
               const user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 password: hashedPassword,
+                identity: `DLY${id}`,
                 uniqueKey: await insertObject.Data.UniqueKey,
                 signUpIp: req.clientIp,
                 ISOCountryCode: req.body.countryCode,

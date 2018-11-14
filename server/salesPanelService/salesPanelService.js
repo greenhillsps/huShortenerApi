@@ -12,7 +12,8 @@ function insertionProcessApiRequests() {
         User.find({ salespanel: 0 })
             .then(arr => {
                 if (arr.length > 0) {
-                    arr.forEach(function (user) {
+                    let resolver = "Sales Panel Leads Adding!";
+                    arr.forEach(function (user, index) {
 
                         if (user) {
                             let lead = {
@@ -34,14 +35,14 @@ function insertionProcessApiRequests() {
                                     if (err) {
                                         console.log(err);
                                         reject(err);
-                                    } else if (leadObject) {
+                                    } else if (leadObject && leadResponse.statusCode == 200) {
                                         user.salespanel = 1;
                                         user.save()
-                                        // .then(() => {
-                                        //     resolve("Sales Panel Lead Added!");
-                                        // })
+                                            .then(() => {
+                                                console.log(`Lead No. ${index} added!`);
+                                            })
                                     } else {
-                                        console.log("Nothing happened");
+                                        console.log("Nothing happened to: ", user, "at index ", index);
                                         console.log("Nothing happened on this lead body from lead: ", leadObject);
                                     }
 
@@ -49,7 +50,7 @@ function insertionProcessApiRequests() {
                         }
 
                     });
-                    resolve("Sales Panel Leads Added!");
+                    resolve(resolver);
                 } else {
                     resolve("No leads found!");
                 }
@@ -63,7 +64,8 @@ function updationProcessApiRequests() {
         User.find({ paid: true, salespanel: 1 })
             .then(arr => {
                 if (arr.length > 0) {
-                    arr.forEach(async function (user) {
+                    let resolver = "Sales Panel Leads updating!";
+                    arr.forEach(async function (user, index) {
 
                         if (user) {
                             let updatedlead = {
@@ -78,20 +80,20 @@ function updationProcessApiRequests() {
                                     if (err) {
                                         console.log(err);
                                         reject(err);
-                                    } else if (leadObject) {
+                                    } else if (leadObject && leadResponse.statusCode == 200) {
                                         user.salespanel = 3;
                                         user.save()
-                                        // .then(() => {
-                                        //     resolve("Sales Panel Lead updated!");
-                                        // })
+                                            .then(() => {
+                                                console.log(`Lead No. ${index} updated!`);
+                                            })
                                     } else {
-                                        console.log("Nothing happened");
+                                        console.log("Nothing happened", user);
                                         console.log("Nothing happened on this lead body from updated lead: ", leadObject);
                                     }
                                 })
                         }
                     });
-                    resolve("Sales Panel Leads updated!");
+                    resolve(resolver);
                 } else {
                     resolve("No paid leads found!");
                 }

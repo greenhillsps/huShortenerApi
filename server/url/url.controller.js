@@ -4,7 +4,7 @@ const Url = db.Url;
 const mongoose = require('mongoose');
 var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
-var shortid = require('shortid');
+const shortid = require('shortid');
 const moment = require('moment');
 const extract = require('meta-extractor');
 const config = require('../../config/config');
@@ -163,7 +163,7 @@ async function getByUserId(req) {
                     }
                 });
         } catch (error) {
-            reject(err)
+            reject(error)
         }
     })
 }

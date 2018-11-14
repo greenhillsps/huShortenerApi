@@ -19,8 +19,8 @@ module.exports = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       password: Joi.string().required(),
-      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-      mobileNumber: Joi.string().regex(/([(+]*[0-9]+[()+. -]*)/).required()
+      // email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      // mobileNumber: Joi.string().regex(/([(+]*[0-9]+[()+. -]*)/).required()
     },
     params: {
       userId: Joi.string().hex().required()

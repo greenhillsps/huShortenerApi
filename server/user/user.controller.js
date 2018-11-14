@@ -64,45 +64,6 @@ async function user(req, res, next) {
   return next
 };
 
-/**
- * Create new user
- * @property {string} req.body.email - The email of user.
- * @property {string} req.body.firstName 
- * @property {string} req.body.lastName 
- * @property {string} req.body.password
- * @property {string} req.body.email
- * @property {string} req.body.mobileNumber 
- * @returns {User}
- */
-// async function create(req, res, next) {
-
-//   if (await User.findOne({ email: req.body.email })) {
-
-//     res.status(403)
-//       .json({
-//         Status: '403',
-//         message: ' email ' + req.body.email + ' is already taken'
-//       })
-//       .send()
-//   } else {
-//     var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-//     const user = new User({
-//       firstName: req.body.firstName,
-//       lastName: req.body.lastName,
-//       password: hashedPassword,
-//       email: req.body.email,
-//       mobileNumber: req.body.mobileNumber
-//     });
-
-//     var token = jwt.sign({ email: req.body.email }, config.jwtSecret, {
-//       // expiresIn: 86400 // expires in 24 hours
-//     });
-
-//     await user.save()
-//       .then(User => res.status(200).send({ auth: true, token: token, User}))
-//       .catch(e => next(e));
-//   }
-// }
 
 /**
  * Update existing user
@@ -115,16 +76,30 @@ async function user(req, res, next) {
  * @returns {User}
  */
 function update(req, res, next) {
-  const user = req.user;
-  user.firstName = req.body.firstName;
-  user.lastName = req.body.lastName;
-  user.password = req.body.password;
-  user.email = req.body.email;
-  user.mobileNumber = req.body.mobileNumber;
+  // const user = req.user;
+  console.log("B!^@H!")
+  User.findOne(req.body.id, function (err, user) {
+    if (err) {
+      res.status(404);
+    } else {
+      console.log("She that B!^@H!", user)
+      let hashedPassword = bcrypt.hashSync(req.body.password, 8);
+      user.firstName = req.body.firstName;
+      user.lastName = req.body.lastName;
+      user.password = hashedPassword;
+      // user.email = req.body.email;
+      // user.mobileNumber = req.body.mobileNumber;
 
-  user.save()
-    .then(savedUser => res.json(savedUser))
-    .catch(e => next(e));
+      user.save()
+        .then((savedUser) => {
+          res.json(savedUser);
+        })
+        .catch(e => next(e));
+    }
+  });
+
+
+
 }
 
 /**
@@ -134,10 +109,47 @@ function update(req, res, next) {
  * @returns {User[]}
  */
 function list(req, res, next) {
-  const { limit, skip } = req.query;
-  User.list({ limit, skip })
-    .then(users => res.json(users))
-    .catch(e => next(e));
+  // const { limit, skip } = req.query;
+  // User.list({ limit, skip })
+  //   .then(users => res.json(users))
+  //   .catch(e => next(e));
+
+  try {
+
+    const { page, limit, userID, userName, paidStatus } = req.query;
+    const perPage = (parseInt(limit));
+    const currentPage = (parseInt(page)) || 1;
+    const userIDRegex = new RegExp(userID, 'i');  // 'i' makes it case insensitive
+    const userNameRegex = new RegExp(userName, 'i');  // 'i' makes it case insensitive
+    const userStatusRegex = new RegExp(paidStatus, 'i');  // 'i' makes it case insensitive
+
+    User.find({ identity: userIDRegex, $or: [{ firstName: userNameRegex }, { lastName: userNameRegex }], paid: userStatusRegex },
+      { features: 0, analytics: 0, __v: 0 })
+      .skip((perPage * currentPage) - perPage)
+      .limit(perPage)
+      .exec(function (err, users) {
+        if (err) {
+          reject(err);
+        } else {
+          if (users == null || users == undefined) {
+            res.json("Error, URL not found")
+          }
+          else {
+            res.json({
+              Users: users,
+              current: currentPage,
+              pages: Math.ceil(users.length / perPage),
+              totalCount: users.length
+            });
+          }
+
+        }
+      });
+  } catch (error) {
+    console.log(error)
+    res.json(error)
+
+  }
 }
 
 /**
