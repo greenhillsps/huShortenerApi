@@ -12,7 +12,7 @@ const extractDomain = require('extract-domain');
 module.exports = {
     search,
     getByUserId,
-    create,
+    create, 
     update,
     getById
 };
