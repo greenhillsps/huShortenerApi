@@ -32,10 +32,8 @@ router.use('/success', (req, res) => {
                             User.findByIdAndUpdate(user._id, {
                                 $inc: { 'wallet': parseInt(payment.transactions[0].amount.total) },
                                 $set: { 'paid': true },
-                                $set: { 'firstPaymentDate': firstPaymentDate ? firstPaymentDate : moment() },
-                                $push: {
-                                    transactionHistory: payment
-                                }
+                                $push: { 'firstPaymentDate': moment() },
+                                $push: { transactionHistory: payment }
                             }, { new: true }, function (err, newuser) {
                                 if (err) {
                                     res.redirect('http://dotlydev.herokuapp.com/failure');

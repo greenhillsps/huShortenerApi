@@ -40,10 +40,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  firstPaymentDate: {
-    type: String,
-    default: null
-  },
+  firstPaymentDate: [],
   salespanel: {
     type: Number,
     default: 0
