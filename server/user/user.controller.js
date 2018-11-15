@@ -109,10 +109,6 @@ function update(req, res, next) {
  * @returns {User[]}
  */
 function list(req, res, next) {
-  // const { limit, skip } = req.query;
-  // User.list({ limit, skip })
-  //   .then(users => res.json(users))
-  //   .catch(e => next(e));
 
   try {
 
@@ -121,9 +117,23 @@ function list(req, res, next) {
     const currentPage = (parseInt(page)) || 1;
     const userIDRegex = new RegExp(userID, 'i');  // 'i' makes it case insensitive
     const userNameRegex = new RegExp(userName, 'i');  // 'i' makes it case insensitive
-    const userStatusRegex = new RegExp(paidStatus, 'i');  // 'i' makes it case insensitive
 
-    User.find({ identity: userIDRegex, $or: [{ firstName: userNameRegex }, { lastName: userNameRegex }], paid: userStatusRegex },
+
+    const query = {
+      $or: [{ firstName: userNameRegex },
+      { lastName: userNameRegex }],
+    }
+
+    if (userID) {
+      console.log(userID);
+      query.identity = userIDRegex;
+    }
+    if (paidStatus) {
+      console.log(paidStatus);
+      query.paid = paidStatus
+    }
+
+    User.find(query,
       { features: 0, analytics: 0, __v: 0 })
       .skip((perPage * currentPage) - perPage)
       .limit(perPage)
