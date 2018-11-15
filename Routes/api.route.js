@@ -1,6 +1,7 @@
 const express = require('express');
 const userRoutes = require('../server/user/user.route');
 const adminUserRoutes = require('../server/adminUser/adminUser.route');
+const adminOpRoutes = require('../server/adminOp/adminOp.route');
 const authRoutes = require('../server/auth/auth.route');
 const urlRoutes = require('../server/url/url.route');
 const priceRoutes = require('../server/price/price.route');
@@ -49,6 +50,7 @@ router.use('/redirect', (req, res) => {
   res.redirect('https://www.google.com.pk');
 })
 
+router.use('/adminpanel', adminUserRoutes);
 
-router.use('/adminpanel/users', adminUserRoutes);
+router.use('/adminOp', [VerifyToken, adminOpRoutes]);
 module.exports = router;

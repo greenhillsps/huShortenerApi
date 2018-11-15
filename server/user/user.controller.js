@@ -75,32 +75,7 @@ async function user(req, res, next) {
  * @property {string} req.body.mobileNumber 
  * @returns {User}
  */
-function update(req, res, next) {
-  // const user = req.user;
-  console.log("B!^@H!")
-  User.findOne(req.body.id, function (err, user) {
-    if (err) {
-      res.status(404);
-    } else {
-      console.log("She that B!^@H!", user)
-      let hashedPassword = bcrypt.hashSync(req.body.password, 8);
-      user.firstName = req.body.firstName;
-      user.lastName = req.body.lastName;
-      user.password = hashedPassword;
-      // user.email = req.body.email;
-      // user.mobileNumber = req.body.mobileNumber;
 
-      user.save()
-        .then((savedUser) => {
-          res.json(savedUser);
-        })
-        .catch(e => next(e));
-    }
-  });
-
-
-
-}
 
 /**
  * Get user list.
@@ -173,4 +148,4 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { load, get, update, list, remove, user };
+module.exports = { load, get, list, remove, user };

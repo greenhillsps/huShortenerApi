@@ -29,7 +29,8 @@ const AdminUserSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  history: []
 
 });
 

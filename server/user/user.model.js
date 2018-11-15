@@ -41,7 +41,8 @@ const UserSchema = new mongoose.Schema({
     default: false
   },
   firstPaymentDate: {
-    type: String
+    type: String,
+    default: null
   },
   salespanel: {
     type: Number,
