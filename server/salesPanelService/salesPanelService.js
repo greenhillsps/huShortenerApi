@@ -103,7 +103,7 @@ function updationProcessApiRequests() {
 }
 console.log('cron systems initiated, looking forward to scheduled tasks at: ', moment().format("DD MMMM YYYY hh:mm:ss a"));
 cron.schedule('* * * * *', function () {
-    console.log('cron job started at: ', moment().format("DD MMMM YYYY hh:mm:ss a"));
+    // console.log('cron job started at: ', moment().format("DD MMMM YYYY hh:mm:ss a"));
 
     if (insertion) {
         insertionProcessApiRequests()
