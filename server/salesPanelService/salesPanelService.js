@@ -108,7 +108,7 @@ cron.schedule('* * * * *', function () {
     if (insertion) {
         insertionProcessApiRequests()
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 insertion = true;
             })
             .catch(err => console.log(err));
@@ -118,7 +118,7 @@ cron.schedule('* * * * *', function () {
     if (updation) {
         updationProcessApiRequests()
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 updation = true;
             })
             .catch(err => console.log(err));

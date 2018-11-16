@@ -100,11 +100,11 @@ function list(req, res, next) {
     }
 
     if (userID) {
-      console.log(userID);
+      // console.log(userID);
       query.identity = userIDRegex;
     }
     if (paidStatus) {
-      console.log(paidStatus);
+      // console.log(paidStatus);
       query.paid = paidStatus
     }
 

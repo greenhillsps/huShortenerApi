@@ -47,8 +47,8 @@ function login(req, res, next) {
         User.findOne({ uniqueKey: IsEmailTakenObject.Data.UniqueKey.toLowerCase() }, {
           // firstName: 1, lastName: 1, totalURLS: 1, totalAmountSpent: 1, wallet: 1
         }, function (err, user) {
-          console.log("user query run, this is the IsEmailTakenObject: ", IsEmailTakenObject,
-            " and this is the user: ", user, " and this is the unique key", IsEmailTakenObject.Data.UniqueKey.toLowerCase())
+          // console.log("user query run, this is the IsEmailTakenObject: ", IsEmailTakenObject,
+          //   " and this is the user: ", user, " and this is the unique key", IsEmailTakenObject.Data.UniqueKey.toLowerCase())
           if (err) {
             res.status(500)
               .json({
@@ -140,9 +140,9 @@ async function register(req, res, next) {
 
   await request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
     async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
-      console.log("IsEmailAddressTakenResponse responseeeeeee: ",
-        IsEmailAddressTakenResponse.statusCode, "IsEmailAddressTakenResponse bodyyyyy: ",
-        IsEmailAddressTakenBody);
+      // console.log("IsEmailAddressTakenResponse responseeeeeee: ",
+      //   IsEmailAddressTakenResponse.statusCode, "IsEmailAddressTakenResponse bodyyyyy: ",
+      //   IsEmailAddressTakenBody);
       let IsEmailTakenObject = JSON.parse(IsEmailAddressTakenBody);
       if (err) {
         res.status(500)
@@ -154,8 +154,8 @@ async function register(req, res, next) {
       } else if (IsEmailAddressTakenResponse.statusCode == 200 && IsEmailTakenObject.Result == true) {
         await request.post(`${config.cdmUrl}customer/insertcustomer`, { form: insertBody },
           async function (error, insertResponse, insertResponseBody) {
-            console.log("insertResponse responseeeeeee: ", insertResponse.statusCode,
-              "insertResponse bodyyyyy: ", insertResponseBody);
+            // console.log("insertResponse responseeeeeee: ", insertResponse.statusCode,
+            //   "insertResponse bodyyyyy: ", insertResponseBody);
             let insertObject = JSON.parse(insertResponseBody)
             if (error) {
               res.status(500)
@@ -171,7 +171,7 @@ async function register(req, res, next) {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 password: hashedPassword,
-                identity: `DLY${id}`,
+                identity: `DLC-${id}`,
                 uniqueKey: await insertObject.Data.UniqueKey,
                 signUpIp: req.clientIp,
                 ISOCountryCode: req.body.countryCode,

@@ -18,7 +18,6 @@ async function update(req, res, next) {
         if (err) {
           res.status(404);
         } else {
-          console.log(req.params.userId)
           let hashedPassword = bcrypt.hashSync(req.body.password, 8);
           user.firstName = req.body.firstName;
           user.lastName = req.body.lastName;
