@@ -37,5 +37,7 @@ if (!module.parent) {
     console.info(`server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
   });
 }
-
+process.on('uncaughtException', function (err) {
+  console.log('error:', err);
+})
 module.exports = app;
