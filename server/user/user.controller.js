@@ -1,6 +1,6 @@
 const User = require('./user.model');
-var bcrypt = require('bcryptjs'); // used to hash passwords
-const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+// var bcrypt = require('bcryptjs'); // used to hash passwords
+// const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const request = require('request');
 
 const config = require('../../config/config'); // get config file

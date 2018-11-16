@@ -1,8 +1,8 @@
 const AdminUser = require('./adminUser.model');
-const User = require('../user/user.model');
+// const User = require('../user/user.model');
 var bcrypt = require('bcryptjs'); // used to hash passwords
 const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-const request = require('request');
+// const request = require('request');
 
 const config = require('../../config/config'); // get config file
 

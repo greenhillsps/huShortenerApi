@@ -5,7 +5,7 @@ const ipstack = require('ipstack')
 const extractDomain = require('extract-domain');
 const request = require('request');
 const moment = require('moment');
-const validator = require('validator');
+// const validator = require('validator');
 now = moment();
 
 function customShortUrl(url) {

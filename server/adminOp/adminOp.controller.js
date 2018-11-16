@@ -1,11 +1,11 @@
 const AdminUser = require('../adminUser/adminUser.model');
 const User = require('../user/user.model');
 var bcrypt = require('bcryptjs'); // used to hash passwords
-const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
-const request = require('request');
+// const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+// const request = require('request');
 const moment = require('moment');
 
-const config = require('../../config/config'); // get config file
+// const config = require('../../config/config'); // get config file
 
 async function update(req, res, next) {
 

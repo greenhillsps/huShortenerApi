@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const db = require('../../config/db');
 const Url = db.Url;
-const Price = db.Price;
-const User = require('../user/user.model');
+// const Price = db.Price;
+// const User = require('../user/user.model');
 var async = require("async");
 const moment = require('moment');
-const ObjectId = mongoose.Types.ObjectId;
-var shortid = require('shortid');
+// const ObjectId = mongoose.Types.ObjectId;
+// var shortid = require('shortid');
 
 function update(id, req) {
     return new Promise((resolve, reject) => {

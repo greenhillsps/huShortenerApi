@@ -14,8 +14,6 @@ paypal.configure({
     'client_secret': config.clientSecret // client secret 
 });
 
-let currentUser = null;
-let amount = null;
 // payment process 
 router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
 
