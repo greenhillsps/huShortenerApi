@@ -11,7 +11,7 @@
     "yarn": ">=1.5.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node --optimize_for_size --max_old_space_size=460 index.js",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "lint": "esw *.js server config --color",
     "lint:watch": "yarn lint -- --watch",
@@ -51,7 +51,6 @@
     "dotenv": "^4.0.0",
     "express": "4.16.3",
     "express-device": "0.4.2",
-    "express-jwt": "5.3.1",
     "express-validation": "1.0.2",
     "express-winston": "2.5.0",
     "extract-domain": "false2.0.4",
@@ -71,7 +70,6 @@
     "request-ip": "2.1.1",
     "shortid": "^2.2.13",
     "useragent": "2.3.0",
-    "validator": "false10.8.0",
     "winston": "2.4.1"
   },
   "devDependencies": {
