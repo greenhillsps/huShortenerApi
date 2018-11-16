@@ -27,7 +27,7 @@ Important links
     localDB: mongodb://localhost/Dotly
 
 FrontEnd Account 
-    halalkhana@gmail.com
+    dotly@gmail.com
     123456
 
 Deployment 

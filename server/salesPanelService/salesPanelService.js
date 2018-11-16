@@ -19,7 +19,7 @@ function insertionProcessApiRequests() {
                         if (user) {
                             let lead = {
                                 "CDMUniqueKey": user.uniqueKey,
-                                "CustomerID": user.id,
+                                "CustomerID": user.identity,
                                 "WebsiteCode": 1,
                                 "FirstName": user.firstName,
                                 "LastName": user.lastName,

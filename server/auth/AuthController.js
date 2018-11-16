@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const request = require('request');
-const shortid = require('shortid');
+// const shortid = require('shortid');
 // const APIError = require('../helpers/APIError');
 
 // var VerifyToken = require('../../config/VerifyToken');
@@ -109,6 +109,9 @@ function login(req, res, next) {
   return next
 };
 
+
+
+
 function logout(req, res, next) {
   res.status(200).send({ auth: false, token: null });
   return next
@@ -124,6 +127,10 @@ function logout(req, res, next) {
  * @property {string} req.body.countryCode 
  * @returns {User}
  */
+
+
+
+
 async function register(req, res, next) {
   let checkBody = {
     "Email": req.body.email,
@@ -165,13 +172,58 @@ async function register(req, res, next) {
                 })
                 .send()
             } else if (insertResponse.statusCode == 200) {
+              let output
+              await User.findOne().sort('-_id')
+                .then(user => {
+                  // console.log(user)
+                  if (user) {
+                    let Identityres = user.identity.split('-')
+                    output = ('DLC-' + (Number(Identityres[1]) + Number(Math.floor(Math.random() * (9 - 1 + 1)) + 1)))
+                    console.log(Identityres)
+                  }
+                  else {
+
+                    output = ('DLC-' + Math.floor(Math.random() * (9 - 1 + 1)) + 1)
+                    // console.log(output)
+                  }
+                })
+                .catch(err => {
+                  res.status(500)
+                    .json({
+                      Status: '500',
+                      message: insertObject.Message,
+                    })
+                    .send()
+                  console.log(err)
+                })
+              function newkey() {
+                output = Math.random().toString(36).substr(2, 4)
+                return
+              }
+
+              await User.findOne({ identity: output }).sort('-_id')
+                .then(key => {
+                  if (key) {
+                    newkey()
+                  }
+                })
+                .catch(err => {
+                  res.status(500)
+                    .json({
+                      Status: '500',
+                      message: insertObject.Message,
+                    })
+                    .send()
+                  console.log(err)
+                })
+
               let hashedPassword = bcrypt.hashSync(req.body.password, 8);
-              let id = shortid.generate();
+              // let id = shortid.generate();
               const user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 password: hashedPassword,
-                identity: `DLC-${id}`,
+                identity: output,
                 uniqueKey: await insertObject.Data.UniqueKey,
                 signUpIp: req.clientIp,
                 ISOCountryCode: req.body.countryCode,
