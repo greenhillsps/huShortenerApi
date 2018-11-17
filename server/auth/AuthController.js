@@ -19,13 +19,6 @@ const bcrypt = require('bcryptjs');
 const config = require('../../config/config'); // get config file
 
 
-/**
- * 
- */
-
-
-
-
 function login(req, res, next) {
   let checkBody = {
     "Email": req.body.email,
@@ -34,7 +27,6 @@ function login(req, res, next) {
   request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
     async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
       let IsEmailTakenObject = JSON.parse(IsEmailAddressTakenBody);
-      // console.log("initial IsEmailTakenObject", IsEmailTakenObject)
       if (err) {
         res.status(500)
           .json({
@@ -47,8 +39,7 @@ function login(req, res, next) {
         User.findOne({ uniqueKey: IsEmailTakenObject.Data.UniqueKey.toLowerCase() }, {
           // firstName: 1, lastName: 1, totalURLS: 1, totalAmountSpent: 1, wallet: 1
         }, function (err, user) {
-          // console.log("user query run, this is the IsEmailTakenObject: ", IsEmailTakenObject,
-          //   " and this is the user: ", user, " and this is the unique key", IsEmailTakenObject.Data.UniqueKey.toLowerCase())
+
           if (err) {
             res.status(500)
               .json({
@@ -147,9 +138,7 @@ async function register(req, res, next) {
 
   await request.post(`${config.cdmUrl}customer/IsEmailAddressTaken`, { form: checkBody },
     async function (err, IsEmailAddressTakenResponse, IsEmailAddressTakenBody) {
-      // console.log("IsEmailAddressTakenResponse responseeeeeee: ",
-      //   IsEmailAddressTakenResponse.statusCode, "IsEmailAddressTakenResponse bodyyyyy: ",
-      //   IsEmailAddressTakenBody);
+
       let IsEmailTakenObject = JSON.parse(IsEmailAddressTakenBody);
       if (err) {
         res.status(500)
@@ -161,8 +150,7 @@ async function register(req, res, next) {
       } else if (IsEmailAddressTakenResponse.statusCode == 200 && IsEmailTakenObject.Result == true) {
         await request.post(`${config.cdmUrl}customer/insertcustomer`, { form: insertBody },
           async function (error, insertResponse, insertResponseBody) {
-            // console.log("insertResponse responseeeeeee: ", insertResponse.statusCode,
-            //   "insertResponse bodyyyyy: ", insertResponseBody);
+
             let insertObject = JSON.parse(insertResponseBody)
             if (error) {
               res.status(500)
@@ -242,7 +230,6 @@ async function register(req, res, next) {
                   );
                   res.status(200).send({ auth: true, token: token, user: User, message: insertObject.Message });
                 })
-                // .then(User => res.status(200).send({ auth: true, token: token, user: User }))
                 .catch(e => next(e));
             } else {
 
@@ -265,51 +252,7 @@ async function register(req, res, next) {
       }
     });
 
-
-  // if (await User.findOne({ email: req.body.email })) {
-
-  //   res.status(403)
-  //     .json({
-  //       Status: '403',
-  //       message: ' email ' + req.body.email + ' is already taken'
-  //     })
-  //     .send()
-  // } else {
-  //   var hashedPassword = bcrypt.hashSync(req.body.password, 8);
-  //   const user = new User({
-  //     firstName: req.body.firstName,
-  //     lastName: req.body.lastName,
-  //     password: hashedPassword,
-  //     email: req.body.email,
-  //     mobileNumber: req.body.mobileNumber
-  //   });
-
-  //   var token;
-  //   // { expiresIn: 86400 // expires in 24 hours}
-
-
-  //   await user.save()
-  //     .then(User => {
-  //       token = jwt.sign({ id: User._id }, config.jwtSecret,
-  //         // { expiresIn: 86400 // expires in 24 hours}
-
-  //       );
-  //       res.status(200).send({ auth: true, token: token, user: User })
-  //     })
-  //     // .then(User => res.status(200).send({ auth: true, token: token, user: User }))
-  //     .catch(e => next(e));
-  // }
 }
 
-
-// router.get('/me', VerifyToken, function (req, res, next) {
-
-//   User.findById(req.userId, { password: 0 }, function (err, user) {
-//     if (err) return res.status(500).send("There was a problem finding the user.");
-//     if (!user) return res.status(404).send("No user found.");
-//     res.status(200).send(user);
-//   });
-
-// });
 
 module.exports = { login, register, logout };

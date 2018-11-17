@@ -114,20 +114,25 @@ function list(req, res, next) {
       .limit(perPage)
       .exec(function (err, users) {
         if (err) {
-          reject(err);
+          res.json("Error, URL not found");
         } else {
-          if (users == null || users == undefined) {
-            res.json("Error, URL not found")
-          }
-          else {
-            res.json({
-              Users: users,
-              current: currentPage,
-              pages: Math.ceil(users.length / perPage),
-              totalCount: users.length
-            });
-          }
-
+          User.find(query).exec(function (err, count) {
+            if (err) {
+              res.json("Error, URL not found");
+            }
+            else if (users == null || users == undefined) {
+              res.json("Error, URL not found")
+            }
+            else {
+              console.log(users.length)
+              res.json({
+                Users: users,
+                current: currentPage,
+                pages: Math.ceil(count.length / perPage),
+                totalCount: count.length
+              });
+            }
+          })
         }
       });
   } catch (error) {
@@ -135,6 +140,43 @@ function list(req, res, next) {
     res.json(error)
 
   }
+}
+function userdetail(req, res, next) {
+
+  let checkBody = {
+    "UniqueKey": req.body.UniqueKey,
+    "AccessToken": config.cdmToken
+  }
+  request.post(`${config.cdmUrl}customer/GetCustomerInfo`, { form: checkBody },
+    async function (err, GetCustomerInfoTakenResponse, GetCustomerInfoBody) {
+      let GetCustomerInfoObject = JSON.parse(GetCustomerInfoBody);
+      if (err) {
+        res.status(500)
+          .json({
+            Status: '500',
+            message: GetCustomerInfoObject.Message
+          })
+          .send();
+      }
+      else if (GetCustomerInfoTakenResponse.statusCode == 200 && GetCustomerInfoObject.Result == true) {
+        res.status(200).send({
+          result: GetCustomerInfoObject.Result,
+          message: GetCustomerInfoObject.Message,
+          user: GetCustomerInfoObject.Data,
+
+        });
+      }
+      else {
+        res.status(403)
+          .json({
+            Status: '403',
+            message: "Username or password is incorrect",
+            result: GetCustomerInfoObject.Result,
+            token: null
+          })
+          .send()
+      }
+    })
 }
 
 /**
@@ -148,4 +190,4 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { load, get, list, remove, user };
+module.exports = { load, get, list, remove, user, userdetail };

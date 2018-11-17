@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   uniqueKey: {
     type: String,
+    unique : true,
     required: true
   },
   identity: {
