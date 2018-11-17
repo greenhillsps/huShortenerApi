@@ -22,6 +22,12 @@ async function update(req, res, next) {
           user.firstName = req.body.firstName;
           user.lastName = req.body.lastName;
           user.password = hashedPassword;
+
+
+          // request.post(`${config.cdmUrl}customer/GetCustomerInfo`, { form: checkBody },
+          //   async function (err, GetCustomerInfoTakenResponse, GetCustomerInfoBody) { 
+          //   })
+          
           user.save()
             .then((savedUser) => {
               res.json(savedUser);

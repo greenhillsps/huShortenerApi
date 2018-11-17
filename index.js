@@ -15,8 +15,21 @@ mongoose.Promise = Promise;
 
 // connect to mongo db
 const mongoUri = config.mongo.host;
-mongoose.connect(mongoUri, { server: { socketOptions: { keepAlive: 1 } } })
-.then(() => console.log('Connected to MongoDB...'))
+// mongoose.connect(mongoUri, { server: { socketOptions: { keepAlive: 1 } } })
+// .then(() => console.log('Connected to MongoDB...'))
+// .catch(err => console.error('Could not connect to MongoDB...'));
+// mongoose.connection.on('error', () => {
+//   throw new Error(`unable to connect to database: ${mongoUri}`);
+// });
+
+mongoose.connect(mongoUri,
+  {
+    // useMongoClient: true,
+    // poolSize: 2,
+    // promiseLibrary: global.Promise
+  }
+)
+.then(() => console.log('Server connected to MongoDB...'))
 .catch(err => console.error('Could not connect to MongoDB...'));
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database: ${mongoUri}`);
@@ -34,7 +47,7 @@ if (config.mongooseDebug) {
 if (!module.parent) {
   // listen on port config.port
   app.listen(config.port, () => {
-    console.info(`server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
+    console.info(`Server started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
   });
 }
 process.on('uncaughtException', function (err) {
