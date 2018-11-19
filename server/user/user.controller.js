@@ -110,6 +110,7 @@ function list(req, res, next) {
 
     User.find(query,
       { features: 0, analytics: 0, __v: 0 })
+      .sort('-_id')
       .skip((perPage * currentPage) - perPage)
       .limit(perPage)
       .exec(function (err, users) {

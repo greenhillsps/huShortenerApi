@@ -61,7 +61,7 @@ async function update(req, res, next) {
                       .exec((err, x) => {
                         if (err) { res.status(400) }
                         else {
-                          res.json({ User: savedUser, CdmUpdate: UpdateCustomerInfoObject.Result, Data: UpdateCustomerInfoObject });
+                          res.json({ username: `${savedUser.firstName} ${savedUser.lastName}`, CdmUpdate: UpdateCustomerInfoObject.Result, Data: UpdateCustomerInfoObject });
                         }
                       })
                     // .then((savedUser) => {
