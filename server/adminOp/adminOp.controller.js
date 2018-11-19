@@ -15,7 +15,6 @@ async function update(req, res, next) {
     } else if (admin) {
 
       await User.findById(req.params.userId, async function (err, user) {
-        console.log(user)
         if (err) {
           res.status(404);
         } else {
@@ -47,10 +46,8 @@ async function update(req, res, next) {
                 user.firstName = req.body.FirstName;
                 user.lastName = req.body.LastName;
                 user.password = hashedPassword;
-                console.log("1")
                 user.save()
                   .then((savedUser) => {
-                    console.log("2")
                     AdminUser.findByIdAndUpdate(req.userId, {
                       $push: {
                         history: {
@@ -62,10 +59,8 @@ async function update(req, res, next) {
                     },
                       { new: true })
                       .exec((err, x) => {
-                        console.log("3")
                         if (err) { res.status(400) }
                         else {
-                          console.log("4")
                           res.json({ User: savedUser, CdmUpdate: UpdateCustomerInfoObject.Result, Data: UpdateCustomerInfoObject });
                         }
                       })
@@ -78,7 +73,6 @@ async function update(req, res, next) {
                   .catch(e => next(e));
               }
               else {
-                console.log("5")
                 res.status(403)
                   .json({
                     Status: '403',
@@ -95,7 +89,6 @@ async function update(req, res, next) {
       })
 
     } else {
-      console.log("6")
       res.send(403);
     }
   })
