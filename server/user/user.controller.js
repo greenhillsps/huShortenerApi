@@ -124,7 +124,6 @@ function list(req, res, next) {
               res.json("Error, URL not found")
             }
             else {
-              console.log(users.length)
               res.json({
                 Users: users,
                 current: currentPage,
