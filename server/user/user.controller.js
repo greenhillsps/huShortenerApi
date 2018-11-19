@@ -143,7 +143,7 @@ function list(req, res, next) {
 function userdetail(req, res, next) {
 
   let checkBody = {
-    "UniqueKey": req.body.UniqueKey,
+    "UniqueKey": req.query.UniqueKey,
     "AccessToken": config.cdmToken
   }
   request.post(`${config.cdmUrl}customer/GetCustomerInfo`, { form: checkBody },
