@@ -4,7 +4,7 @@ var bcrypt = require("bcryptjs"); // used to hash passwords
 // const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const request = require("request");
 const moment = require("moment");
-
+const Url = require('../url/url.model')
 const config = require("../../config/config"); // get config file
 
 async function update(req, res, next) {
@@ -159,4 +159,43 @@ async function updatePassword(req, res, next) {
   });
 }
 
-module.exports = { update, updatePassword };
+async function getUrlByUser(req, res) {
+  await AdminUser.findById(req.userId, async function (err, admin) {
+    if (err) {
+      res.status(400);
+    } else if (admin) {
+      if (!req.params.userId) {
+        res.status(400).json("UserId not found!");
+      } else {
+        Url.find({ user: req.params.userId, isActive: true })
+          .select('_id title shortUrl actualUrl createdAt')
+          .lean()
+          .exec(async function (err, url) {
+            if (err)
+              res.status(400).json(err)
+            else {
+              return res.status(200).json(url)
+            }
+          })
+      }
+    }
+  })
+}
+
+async function urlAnalytics(req, res) {
+  // if (!req.params.urlId) {
+  //   return res.status(400).json("Url id not found!");
+  // }
+  // else {
+  //   await Url.findById(req.params.urlId).select('_id title analytics').lean().exec(async function (err, urls) {
+  //     if (err)
+  //       return res.status(400).json(err);
+  //     else {
+  //       return res.status(200).json(urls)
+  //     }
+  //   })
+  // }
+}
+
+
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics };

@@ -8,5 +8,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 
 router.put("/:userId", AdminController.update);
 router.put("/updatePassword/:userId", AdminController.updatePassword);
+router.get('/getUrlByUser/:userId', AdminController.getUrlByUser);
+router.get('/urlAnalytics/:urlId', AdminController.urlAnalytics)
 
 module.exports = router;
