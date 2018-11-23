@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
 module.exports = {
   // POST /api/users
@@ -8,8 +8,12 @@ module.exports = {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       password: Joi.string().required(),
-      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-      mobileNumber: Joi.string().regex(/([(+]*[0-9]+[()+. -]*)/).required()
+      email: Joi.string()
+        .email({ minDomainAtoms: 2 })
+        .required(),
+      mobileNumber: Joi.string()
+        .regex(/([(+]*[0-9]+[()+. -]*)/)
+        .required()
     }
   },
 
@@ -18,12 +22,14 @@ module.exports = {
     body: {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
-      password: Joi.string().required(),
+      password: Joi.string().required()
       // email: Joi.string().email({ minDomainAtoms: 2 }).required(),
       // mobileNumber: Joi.string().regex(/([(+]*[0-9]+[()+. -]*)/).required()
     },
     params: {
-      userId: Joi.string().hex().required()
+      userId: Joi.string()
+        .hex()
+        .required()
     }
   },
 
@@ -31,7 +37,9 @@ module.exports = {
   login: {
     body: {
       //username: Joi.string().required(),
-      email: Joi.string().email({ minDomainAtoms: 2 }).required(),
+      email: Joi.string()
+        .email({ minDomainAtoms: 2 })
+        .required(),
       password: Joi.string().required()
     }
   },

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 // const Schema = mongoose.Schema;
 
 /**
@@ -7,21 +7,17 @@ const mongoose = require('mongoose');
 const PriceSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   price: {
     type: Number,
-    required: true,
+    required: true
   },
   activeFor: {
     type: Number,
-    required: true,
+    required: true
   },
-  utilityArray: [],
-
-
-
-
+  utilityArray: []
 
   // 'customExpiryDate': new Schema ({
   //   price: {
@@ -93,9 +89,6 @@ const PriceSchema = new mongoose.Schema({
   //     required: true
   //   }
   // })
-
-
-
 });
 
 /**
@@ -113,8 +106,7 @@ const PriceSchema = new mongoose.Schema({
  * Statics
  */
 
-
 /**
  * @typedef Price
  */
-module.exports = mongoose.model('Price', PriceSchema);
+module.exports = mongoose.model("Price", PriceSchema);
