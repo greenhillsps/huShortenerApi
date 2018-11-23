@@ -15,6 +15,8 @@ async function update(req, res, next) {
       await User.findById(req.params.userId, async function(err, user) {
         if (err) {
           res.status(404);
+        } else if (!user) {
+          res.status(404);
         } else {
           let updateBody = {
             FirstName: req.body.FirstName,
@@ -119,6 +121,8 @@ async function updatePassword(req, res, next) {
         { new: false },
         async function(err, user) {
           if (err) {
+            res.status(400);
+          } else if (!user) {
             res.status(404);
           } else {
             AdminUser.findByIdAndUpdate(
