@@ -8,11 +8,11 @@ const moment = require("moment");
 const config = require("../../config/config"); // get config file
 
 async function update(req, res, next) {
-  await AdminUser.findById(req.userId, async function(err, admin) {
+  await AdminUser.findById(req.userId, async function (err, admin) {
     if (err) {
       res.status(404);
     } else if (admin) {
-      await User.findById(req.params.userId, async function(err, user) {
+      await User.findById(req.params.userId, async function (err, user) {
         if (err) {
           res.status(404);
         } else if (!user) {
@@ -31,7 +31,7 @@ async function update(req, res, next) {
           request.post(
             `${config.cdmUrl}customer/UpdateCustomerInfo`,
             { form: updateBody },
-            async function(
+            async function (
               err,
               UpdateCustomerInfoResponse,
               UpdateCustomerInfoBody
@@ -75,7 +75,7 @@ async function update(req, res, next) {
                         res.json({
                           username: `${savedUser.firstName} ${
                             savedUser.lastName
-                          }`,
+                            }`,
                           CdmUpdate: UpdateCustomerInfoObject.Result,
                           Data: UpdateCustomerInfoObject
                         });
@@ -110,20 +110,20 @@ async function update(req, res, next) {
 }
 
 async function updatePassword(req, res, next) {
-  await AdminUser.findById(req.userId, async function(err, admin) {
+  await AdminUser.findById(req.userId, async function (err, admin) {
     if (err || !req.body.password) return res.status(400);
     else if (admin) {
       let hashedPassword = bcrypt.hashSync(req.body.password, 8);
 
       await User.findByIdAndUpdate(
-        req.params.userId,
+        { _id: req.params.userId },
         { password: hashedPassword },
         { new: false },
-        async function(err, user) {
+        async function (err, user) {
           if (err) {
-            res.status(400);
+            res.status(400).send();
           } else if (!user) {
-            res.status(404);
+            res.status(404).send();
           } else {
             AdminUser.findByIdAndUpdate(
               req.userId,
@@ -144,7 +144,7 @@ async function updatePassword(req, res, next) {
               { new: true }
             ).exec((err, x) => {
               if (err) {
-                res.status(400);
+                res.status(400).send();
               } else {
                 res.json({
                   username: `${user.firstName} ${user.lastName}`,
