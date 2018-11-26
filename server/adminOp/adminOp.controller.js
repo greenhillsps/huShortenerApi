@@ -198,7 +198,7 @@ async function urlAnalytics(req, res) {
       else {
         let analytics = urls.analytics
         let totalClicks = analytics.length
-        let lastClick = analytics[analytics.length - 1].clickDate, count = 0
+        let lastClick = analytics.length ? analytics[analytics.length - 1].clickDate : null, count = 0
         for (let x in analytics) {
           let clickDate = analytics[x].clickDate
           let today = moment().format('DD-MM-YYYY')
