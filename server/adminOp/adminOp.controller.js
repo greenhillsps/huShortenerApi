@@ -6,6 +6,7 @@ const request = require("request");
 const moment = require("moment");
 const Url = require('../url/url.model')
 const config = require("../../config/config"); // get config file
+var _ = require('lodash');
 
 async function update(req, res, next) {
   await AdminUser.findById(req.userId, async function (err, admin) {
@@ -183,18 +184,62 @@ async function getUrlByUser(req, res) {
 }
 
 async function urlAnalytics(req, res) {
-  // if (!req.params.urlId) {
-  //   return res.status(400).json("Url id not found!");
-  // }
-  // else {
-  //   await Url.findById(req.params.urlId).select('_id title analytics').lean().exec(async function (err, urls) {
-  //     if (err)
-  //       return res.status(400).json(err);
-  //     else {
-  //       return res.status(200).json(urls)
-  //     }
-  //   })
-  // }
+  if (!req.params.urlId) {
+    return res.status(400).json("Url id not found!");
+  }
+  else if (!req.query.time) {
+    return res.status(400).json("Please specify time!")
+  }
+  else {
+    let urlId = req.params.urlId, time = req.query.time
+    await Url.findById(urlId).select('_id title analytics').lean().exec(async function (err, urls) {
+      if (err)
+        return res.status(400).json(err);
+      else {
+        let analytics = urls.analytics
+        let totalClicks = analytics.length
+        let lastClick = analytics[analytics.length - 1].clickDate, count = 0
+        for (let x in analytics) {
+          let clickDate = analytics[x].clickDate
+          let today = moment().format('DD-MM-YYYY')
+          let date = moment(clickDate).format('DD-MM-YYYY')
+          let month = moment(clickDate).format('MM-YYYY')
+          analytics[x].date = date
+          analytics[x].month = month
+          if (today == date) {
+            count++
+          }
+        }
+
+        if (time == 'daily') {
+          var groups = _(analytics)
+            .groupBy(x => x.date)
+            .map((value, key) => ({ Date: key, clicks: value.length }))
+            .value();
+          let obj = {
+            totalClicks: totalClicks,
+            lastClick: lastClick,
+            todayClicks: count,
+            graph: groups
+          }
+          return res.status(200).json(obj);
+        }
+        else if (time == 'monthly') {
+          var groups = _(analytics)
+            .groupBy(x => x.month)
+            .map((value, key) => ({ Date: key, clicks: value.length }))
+            .value();
+          let obj = {
+            totalClicks: totalClicks,
+            lastClick: lastClick,
+            todayClicks: count,
+            graph: groups
+          }
+          return res.status(200).json(obj)
+        }
+      }
+    })
+  }
 }
 
 
