@@ -34,4 +34,6 @@ router.route('/:userId')
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 
+router.get('/customLinkUsers', userCtrl.customLinkUsers);
+
 module.exports = router;

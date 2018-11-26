@@ -190,4 +190,25 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { load, get, list, remove, user, userdetail };
+function customLinkUsers() {
+  // try {
+  //   User.find({ totalUrls: { $gt: 0 }, isActive: true, paid: true }).lean().exec(function (err, users) {
+  //     if (err) {
+  //       return res.status(400).json(err)
+  //     }
+  //     else if(!users) {
+  //       return res.status(200).json(users)
+  //     }
+  //     else {
+  //       for(let x in users){
+  //         URL.find()
+  //       }
+  //     }
+  //   })
+  // }
+  // catch (e) {
+  //   return res.status(400).json(e)
+  // }
+}
+
+module.exports = { load, get, list, remove, user, userdetail, customLinkUsers };

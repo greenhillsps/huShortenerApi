@@ -214,26 +214,26 @@ async function urlAnalytics(req, res) {
         if (time == 'daily') {
           var groups = _(analytics)
             .groupBy(x => x.date)
-            .map((value, key) => ({ Date: key, clicks: value.length }))
+            .map((value, key) => ({ label: key, value: value.length }))
             .value();
           let obj = {
             totalClicks: totalClicks,
             lastClick: lastClick,
             todayClicks: count,
-            graph: groups
+            data: groups
           }
           return res.status(200).json(obj);
         }
         else if (time == 'monthly') {
           var groups = _(analytics)
             .groupBy(x => x.month)
-            .map((value, key) => ({ Date: key, clicks: value.length }))
+            .map((value, key) => ({ label: key, value: value.length }))
             .value();
           let obj = {
             totalClicks: totalClicks,
             lastClick: lastClick,
             todayClicks: count,
-            graph: groups
+            data: groups
           }
           return res.status(200).json(obj)
         }
@@ -242,5 +242,14 @@ async function urlAnalytics(req, res) {
   }
 }
 
+async function customLinkUser(req, res) {
+  try {
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics };
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customLinkUser };
