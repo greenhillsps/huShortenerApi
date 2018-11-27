@@ -259,7 +259,15 @@ async function customExpiryUrls(req, res) {
 
 async function updateCustomExpiry(req, res) {
   try {
-    await Url.findByIdAndUpdate({}, {}, {}).lean().exec()
+    let { urlId } = req.params
+    let { expiryDate } = req.body
+    if (!urlId) { return res.status(400).json("Invalid Id") }
+    await Url.findByIdAndUpdate({ _id: urlId }, { 'features.customExpiryDate.expiryDate': expiryDate }, { safe: true, new: true }).lean().exec(async function (err, url) {
+      if (err)
+        return res.status(400).json(err)
+      else
+        return res.status(200).json(url)
+    })
   }
   catch (e) {
     return res.status(400).json(e)

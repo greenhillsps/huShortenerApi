@@ -217,7 +217,7 @@ async function paidUsers(req, res) {
     query['paid'] = true
 
     await User.find(query)
-      .select('_id identity firstName lastName paid totalURLS')
+      .select('_id identity firstName lastName paid totalURLS ISOCountryName')
       .limit(limit)
       .skip((page * limit) - limit)
       .lean()
