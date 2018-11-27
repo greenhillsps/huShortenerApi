@@ -192,27 +192,57 @@ function remove(req, res, next) {
 
 async function paidUsers(req, res) {
   try {
-    let page = 1, limit = 10;
+    let { userId, username } = req.query
+    let page = 1, limit = 10, query = {};
     if (req.query.page) {
       page = parseInt(req.query.page)
     }
     if (req.query.limit) {
       limit = parseInt(req.query.limit)
     }
-    User.find({ totalURLS: { $gt: 0 }, paid: true })
+    const userIDRegex = new RegExp(userId, 'i');  // 'i' makes it case insensitive
+    const userNameRegex = new RegExp(username, 'i');  // 'i' makes it case insensitive
+
+    if (userId) {
+      query.identity = userIDRegex;
+    }
+    if (username) {
+      query = {
+        $or: [{ firstName: userNameRegex },
+        { lastName: userNameRegex }],
+      }
+    }
+
+    query['totalURLS'] = { $gt: 0 }
+    query['paid'] = true
+
+    await User.find(query)
       .select('_id identity firstName lastName paid totalURLS')
       .limit(limit)
       .skip((page * limit) - limit)
       .lean()
-      .exec(function (err, users) {
+      .exec(async function (err, users) {
         if (err) {
           return res.status(400).json(err)
         }
         else if (!users) {
-          return res.status(200).json(users)
+          let obj = {
+            users: users,
+            current: page,
+            pages: 0,
+            totalCount: 0
+          }
+          return res.status(200).json(obj)
         }
         else {
-          return res.status(200).json(users)
+          let count = await User.count({ totalURLS: { $gt: 0 }, paid: true })
+          let obj = {
+            users: users,
+            current: page,
+            pages: Math.floor(count / limit + 1),
+            totalCount: count
+          }
+          return res.status(200).json(obj)
         }
       })
   }

@@ -242,9 +242,9 @@ async function urlAnalytics(req, res) {
   }
 }
 
-async function customExpiryUser(req, res) {
+async function customExpiryUrls(req, res) {
   try {
-    URL.find({ user: req.params.userId }).lean().exec(function (err, urls) {
+    Url.find({ user: req.params.userId, "features.customExpiryDate.locked": false }).lean().exec(function (err, urls) {
       if (err)
         return res.status(400).json(err)
       else {
@@ -257,5 +257,13 @@ async function customExpiryUser(req, res) {
   }
 }
 
+async function updateCustomExpiry(req, res) {
+  try {
+    await Url.findByIdAndUpdate({}, {}, {}).lean().exec()
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUser };
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry };
