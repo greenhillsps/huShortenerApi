@@ -194,9 +194,11 @@ async function paidUsers(req, res) {
   try {
     let page = 1, limit = 10;
     if (req.query.page) {
-      page = req.query.page
+      page = parseInt(req.query.page)
     }
-    req.query.limit ? limit = req.query.limit : null
+    if (req.query.limit) {
+      limit = parseInt(req.query.limit)
+    }
     User.find({ totalURLS: { $gt: 0 }, paid: true })
       .select('_id identity firstName lastName paid totalURLS')
       .limit(limit)
