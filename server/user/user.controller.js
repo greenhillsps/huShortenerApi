@@ -190,10 +190,17 @@ function remove(req, res, next) {
     .catch(e => next(e));
 }
 
-async function customExpiryUsers(req, res) {
+async function paidUsers(req, res) {
   try {
+    let page = 1, limit = 10;
+    if (req.query.page) {
+      page = req.query.page
+    }
+    req.query.limit ? limit = req.query.limit : null
     User.find({ totalURLS: { $gt: 0 }, paid: true })
       .select('_id identity firstName lastName paid totalURLS')
+      .limit(limit)
+      .skip((page * limit) - limit)
       .lean()
       .exec(function (err, users) {
         if (err) {
@@ -212,4 +219,4 @@ async function customExpiryUsers(req, res) {
   }
 }
 
-module.exports = { load, get, list, remove, user, userdetail, customExpiryUsers };
+module.exports = { load, get, list, remove, user, userdetail, paidUsers };

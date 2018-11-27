@@ -17,7 +17,7 @@ router.route('/')
 //   .post(validate(paramValidation.createUser), userCtrl.create); 
 
 router.get('/userdetail', userCtrl.userdetail);
-router.get('/customExpiryUsers', userCtrl.customExpiryUsers);
+router.get('/paidUsers', userCtrl.paidUsers);
 
 router.route('/:userId')
   /** GET /api/users/:userId - Get user */
