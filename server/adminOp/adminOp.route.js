@@ -10,6 +10,6 @@ router.put("/:userId", AdminController.update);
 router.put("/updatePassword/:userId", AdminController.updatePassword);
 router.get('/getUrlByUser/:userId', AdminController.getUrlByUser);
 router.get('/urlAnalytics/:urlId', AdminController.urlAnalytics);
-router.get('/customLinkUser', AdminController.customLinkUser);
+router.get('/customExpiryUser/:userId', AdminController.customExpiryUser);
 
 module.exports = router;

@@ -242,9 +242,15 @@ async function urlAnalytics(req, res) {
   }
 }
 
-async function customLinkUser(req, res) {
+async function customExpiryUser(req, res) {
   try {
-
+    URL.find({ user: req.params.userId }).lean().exec(function (err, urls) {
+      if (err)
+        return res.status(400).json(err)
+      else {
+        return res.status(200).json(urls)
+      }
+    })
   }
   catch (e) {
     return res.status(400).json(e)
@@ -252,4 +258,4 @@ async function customLinkUser(req, res) {
 }
 
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customLinkUser };
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUser };

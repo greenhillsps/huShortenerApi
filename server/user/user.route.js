@@ -17,6 +17,7 @@ router.route('/')
 //   .post(validate(paramValidation.createUser), userCtrl.create); 
 
 router.get('/userdetail', userCtrl.userdetail);
+router.get('/customExpiryUsers', userCtrl.customExpiryUsers);
 
 router.route('/:userId')
   /** GET /api/users/:userId - Get user */
@@ -29,11 +30,9 @@ router.route('/:userId')
   .delete(userCtrl.remove);
 
 
-
-
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 
-router.get('/customLinkUsers', userCtrl.customLinkUsers);
+
 
 module.exports = router;
