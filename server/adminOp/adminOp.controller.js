@@ -274,4 +274,21 @@ async function updateCustomExpiry(req, res) {
   }
 }
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry };
+async function updateUrlRedirect(req, res) {
+  try {
+    let { urlId } = req.params
+    let { urlRedirectTo } = req.body
+    if (!urlId) { return res.status(400).json("Invalid Id") }
+    await Url.findByIdAndUpdate({ _id: urlId }, { 'features.urlRedirectto.url': urlRedirectTo }, { safe: true, new: true }).lean().exec(async function (err, url) {
+      if (err)
+        return res.status(400).json(err)
+      else
+        return res.status(200).json(url)
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, updateUrlRedirect };

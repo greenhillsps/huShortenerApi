@@ -12,5 +12,6 @@ router.get('/getUrlByUser/:userId', AdminController.getUrlByUser);
 router.get('/urlAnalytics/:urlId', AdminController.urlAnalytics);
 router.get('/customExpiryUrls/:userId', AdminController.customExpiryUrls);
 router.put('/updateCustomExpiry/:urlId', AdminController.updateCustomExpiry);
+router.put('/updateUrlRedirect/:urlId', AdminController.updateUrlRedirect);
 
 module.exports = router;
