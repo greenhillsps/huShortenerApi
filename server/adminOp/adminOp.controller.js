@@ -244,7 +244,7 @@ async function urlAnalytics(req, res) {
 
 async function customExpiryUrls(req, res) {
   try {
-    Url.find({ user: req.params.userId, "features.customExpiryDate.locked": false }).lean().exec(function (err, urls) {
+    Url.find({ user: req.params.userId, "features.customExpiryDate.locked": false, isActive: true }).lean().exec(function (err, urls) {
       if (err)
         return res.status(400).json(err)
       else {
