@@ -242,7 +242,8 @@ async function urlAnalytics(req, res) {
   }
 }
 
-async function customExpiryUrls(req, res) {
+/**********Custom Expiry feature Methods***********/
+async function customExpiryUrls(req, res) {   // Get all urls of a user with set custom expiry date feature enabled
   try {
     Url.find({ user: req.params.userId, "features.customExpiryDate.locked": false, isActive: true }).lean().exec(function (err, urls) {
       if (err)
@@ -257,7 +258,7 @@ async function customExpiryUrls(req, res) {
   }
 }
 
-async function updateCustomExpiry(req, res) {
+async function updateCustomExpiry(req, res) {   // Update expiry date of a url
   try {
     let { urlId } = req.params
     let { expiryDate } = req.body
@@ -274,7 +275,8 @@ async function updateCustomExpiry(req, res) {
   }
 }
 
-async function redirectToUrls(req, res) {
+/**********Destination Link (aka) URL Redirect To  Methods***********/
+async function redirectToUrls(req, res) {   // Get all urls of a user with Redirect To feature enabled
   try {
     Url.find({ user: req.params.userId, "features.urlRedirectto.locked": false, isActive: true }).lean().exec(function (err, urls) {
       if (err)
@@ -289,7 +291,7 @@ async function redirectToUrls(req, res) {
   }
 }
 
-async function updateUrlRedirect(req, res) {
+async function updateUrlRedirect(req, res) {    // Update url to redirect from actual url
   try {
     let { urlId } = req.params
     let { urlRedirectTo } = req.body
@@ -306,4 +308,105 @@ async function updateUrlRedirect(req, res) {
   }
 }
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, redirectToUrls, updateUrlRedirect };
+/**********404 Management Methods***********/
+async function fourOFourUrls(req, res) {  // Get all urls of a user with 404 management feature enabled
+  try {
+    Url.find({ user: req.params.userId, "features.fourOfour.locked": false, isActive: true }).lean().exec(function (err, urls) {
+      if (err)
+        return res.status(400).json(err)
+      else {
+        return res.status(200).json(urls)
+      }
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+async function updateFourOFourUrls(req, res) {    // Update URL to redirect on, if an actual url page is not found
+  try {
+    let { urlId } = req.params
+    let { urlRedirectTo } = req.body
+    if (!urlId) { return res.status(400).json("Invalid Id") }
+    await Url.findByIdAndUpdate({ _id: urlId }, { 'features.fourOfour.url': urlRedirectTo }, { safe: true, new: true }).lean().exec(async function (err, url) {
+      if (err)
+        return res.status(400).json(err)
+      else
+        return res.status(200).json(url)
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+
+/**********Black List Protection Methods***********/
+async function blackListProtectedUrls(req, res) {       // Get all urls of a user with blacklist protection feature enabled
+  try {
+    Url.find({ user: req.params.userId, "features.blockIps.locked": false, isActive: true }).lean().exec(function (err, urls) {
+      if (err)
+        return res.status(400).json(err)
+      else {
+        return res.status(200).json(urls)
+      }
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+async function updateBlackListIPs(req, res) {     // Update blacklisted IPs of a url
+  try {
+    let { urlId } = req.params
+    let { ips } = req.body
+    if (!urlId) { return res.status(400).json("Invalid Id") }
+    await Url.findByIdAndUpdate({ _id: urlId }, { 'features.blockIps.ips': ips }, { safe: true, new: true }).lean().exec(async function (err, url) {
+      if (err)
+        return res.status(400).json(err)
+      else
+        return res.status(200).json(url)
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+/**********Activate / Deactivate URLs Methods***********/
+async function toggleActivationUrls(req, res) {       // Get all urls of a user with active/inactive feature enabled
+  try {
+    Url.find({ user: req.params.userId, "features.enableToggle.locked": false, isActive: true }).lean().exec(function (err, urls) {
+      if (err)
+        return res.status(400).json(err)
+      else {
+        return res.status(200).json(urls)
+      }
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+async function toggleActivationOfUrl(req, res) {     // Update blacklisted IPs of a url
+  try {
+    let { urlId } = req.params
+    let { enable } = req.body
+    if (!urlId) { return res.status(400).json("Invalid Id") }
+    await Url.findByIdAndUpdate({ _id: urlId }, { 'features.enableToggle.enable': enable }, { safe: true, new: true }).lean().exec(async function (err, url) {
+      if (err)
+        return res.status(400).json(err)
+      else
+        return res.status(200).json(url)
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, redirectToUrls, updateUrlRedirect, fourOFourUrls, updateFourOFourUrls, blackListProtectedUrls, updateBlackListIPs, toggleActivationUrls, toggleActivationOfUrl };
