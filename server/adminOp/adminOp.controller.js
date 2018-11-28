@@ -274,6 +274,21 @@ async function updateCustomExpiry(req, res) {
   }
 }
 
+async function redirectToUrls(req, res) {
+  try {
+    Url.find({ user: req.params.userId, "features.urlRedirectto.locked": false, isActive: true }).lean().exec(function (err, urls) {
+      if (err)
+        return res.status(400).json(err)
+      else {
+        return res.status(200).json(urls)
+      }
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
 async function updateUrlRedirect(req, res) {
   try {
     let { urlId } = req.params
@@ -291,4 +306,4 @@ async function updateUrlRedirect(req, res) {
   }
 }
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, updateUrlRedirect };
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, redirectToUrls, updateUrlRedirect };
