@@ -25,7 +25,7 @@ function fourOfour(url) {
     if (url.features.locked === false &&
         url.features.fourOfour.locked === false &&
         moment(url.features.fourOfour.expiryDate).isSameOrAfter(now) === false
-        || url.features.urlRedirectto.url === null
+        || url.features.fourOfour.url === null
         //  ||  validator.isURL(url.features.fourOfour.url) === false
     ) {
         return false;
@@ -198,7 +198,8 @@ function update(id, req) {
                                                         resolve("This URL is deactivated by the owner!");
                                                     }
                                                     else if (requestResponse.statusCode == 404) {
-                                                        resolve(response.features.fourOfour.url);
+                                                        response.rer = response.features.fourOfour.url
+                                                        resolve(response);
                                                     } else if (response.features.locked === false &&
                                                         response.features.urlRedirectto.locked === false &&
                                                         urlRedirectto(url)) {
