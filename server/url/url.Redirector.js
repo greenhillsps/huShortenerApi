@@ -79,14 +79,19 @@ function urlRedirectto(url) {
     if (url.features.locked === false &&
         url.features.urlRedirectto.locked === false &&
         moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false
+        || url.features.urlRedirectto.url === null || url.features.urlRedirectto.url === ''
         // || validator.isURL(url.features.urlRedirectto.url) === false
     ) {
+
         return false;
     } else {
+
         return true;
+
     }
 }
 function customExpiryDate(url) {
+
     //yahan true pe masla hae
     if (url.features.locked === false &&
         url.features.customExpiryDate.locked === false &&
@@ -97,9 +102,11 @@ function customExpiryDate(url) {
         url.features.customExpiryDate.locked === false &&
         moment(url.features.customExpiryDate.expiryDate).isSameOrAfter(now) === true &&
         moment(url.features.customExpiryDate.customExpiryDate).isSameOrAfter(now) === false) {
+
         return false;
     }
     else {
+
         return true;
     }
 }
