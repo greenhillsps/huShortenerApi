@@ -79,7 +79,6 @@ function urlRedirectto(url) {
     if (url.features.locked === false &&
         url.features.urlRedirectto.locked === false &&
         moment(url.features.urlRedirectto.expiryDate).isSameOrAfter(now) === false
-        || url.features.urlRedirectto.url === null
         // || validator.isURL(url.features.urlRedirectto.url) === false
     ) {
         return false;
