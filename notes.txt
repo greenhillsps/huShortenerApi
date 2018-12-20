@@ -1,10 +1,10 @@
 Important links
 
-    FrontEnd: http://dotlydev.herokuapp.com/account/login
+    FrontEnd: www.tickws.com
 
-    devapi: https://dotlyapidev.herokuapp.com/
+    api: tick.ws
 
-    short_url=https://dotlyapidev.herokuapp.com/
+    short_url=tick.ws/
 
     cdm_localAccessToken= F5214045-0C7C-443C-857C-0A9C7FFF7159
 
@@ -31,7 +31,6 @@ FrontEnd Account
     123456
 
 Deployment 
-
     git checkout devbranch 
     git add . //for adding files
     git commit -m "auto" //commit changes
@@ -47,16 +46,9 @@ Heroku:
             username
             password
             
-
-
-
-
-
-
-            
 MLab account    
     dotly
-    Dotly123@
+    Dotly1995@
 
 Gmail account:
         dotly6528@gmail.com
@@ -69,7 +61,7 @@ ipstack :
         api key = 555ffad38e5faadd4df7aaa9b9db8141
 paypal 
     dotly6528@gmail.com
-    Dotly123@
+    Dotly1995@
 
 Postman account 
     connect using gmail account
@@ -77,11 +69,4 @@ Postman account
 
 
 old mongoose config: "mongoose": "4.13.15",
-
-    
-
-
-        
-
-
-
+5.0.4

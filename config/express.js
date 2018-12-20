@@ -19,6 +19,9 @@ const device = require('express-device');
 const Scheduler = require('../server/salesPanelService/salesPanelService');
 const app = express();
 
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors());
+
 if (config.env === 'development') {
   app.use(logger('dev'));
 }
@@ -33,8 +36,6 @@ app.use(methodOverride());
 // secure apps by setting various HTTP headers
 app.use(helmet());
 
-// enable CORS - Cross Origin Resource Sharing
-app.use(cors());
 
 //append ip addresses to req object
 app.use(requestIp.mw())

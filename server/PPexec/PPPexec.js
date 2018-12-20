@@ -19,7 +19,7 @@ router.use('/success', (req, res) => {
                 if (payment.state === 'approved') {
                     User.findOne({ paymentId: { $all: [paymentId] } }, function (err, user) {
                         if (err) {
-                            res.redirect('http://dotlydev.herokuapp.com/failure');
+                            res.redirect('http://www.tickws.com/failure');
                             console.log("User could not be updated in payment execution", err)
                         } else {
                             // console.log("This is the payment amount: ", payment.transactions[0].amount.total);
@@ -34,7 +34,7 @@ router.use('/success', (req, res) => {
                                 $push: { transactionHistory: payment }
                             }, { new: true }, function (err, newuser) {
                                 if (err) {
-                                    res.redirect('http://dotlydev.herokuapp.com/failure');
+                                    res.redirect('http://www.tickws.com/failure');
                                     // console.log("User could not be updated in payment execution")
                                 } else {
                                     // console.log("This is the current wallet of  user: ", newuser.wallet);
@@ -43,9 +43,9 @@ router.use('/success', (req, res) => {
                             })
                         }
                     })
-                    res.redirect('http://dotlydev.herokuapp.com/success');
+                    res.redirect('http://www.tickws.com/success');
                 } else {
-                    res.redirect('http://dotlydev.herokuapp.com/failure');
+                    res.redirect('http://www.tickws.com/failure');
                 }
             }
         });
@@ -61,7 +61,7 @@ router.use('/success', (req, res) => {
 router.use('/err', (req, res) => {
     // console.log(req.query);
     // res.redirect('https://soundcloud.com/');
-    res.redirect('http://dotlydev.herokuapp.com/failure');
+    res.redirect('http://www.tickws.com/failure');
 
 })
 
