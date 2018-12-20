@@ -70,7 +70,7 @@ router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
                                 "total": a,
                                 "currency": "USD"
                             },
-                            "description": "Transferring amount to Dotly"
+                            "description": "Transferring amount to tickws"
                         }]
                     }
                     //experience    
