@@ -143,24 +143,27 @@ function update(id, req) {
 
                                 if (url.features.locked == false && url.features.customShortUrl.locked == false) {
                                     // console.log("customShortUrl");
+                                    if (req.body.customShortUrl.shortUrl.length >= 3) {
+                                        Url.findOne({ queryKey: req.body.customShortUrl.shortUrl }).lean().exec(function (err, match) {
+                                            if (err) {
+                                                reject(err);
+                                            } else if (match) {
+                                                resolve("Already exist");
+                                            } else {
+                                                url.queryKey = req.body.customShortUrl.shortUrl;
+                                                url.shortUrl = `http://www.tick.ws/${req.body.customShortUrl.shortUrl}`;
 
-                                    Url.findOne({ queryKey: req.body.customShortUrl.shortUrl }).lean().exec(function (err, match) {
-                                        if (err) {
-                                            reject(err);
-                                        } else if (match) {
-                                            resolve("Already exist");
-                                        } else {
-                                            url.queryKey = req.body.customShortUrl.shortUrl;
-                                            url.shortUrl = `http://www.tick.ws/${req.body.customShortUrl.shortUrl}`;
-
-                                            url.save().then(() => {
-                                                // console.log("customShortUrl success");
-                                                callback(null, "success");
-                                            });
-                                        }
-                                    });
-                                    // url.features.customShortUrl.shortUrl = req.body.customShortUrl.shortUrl;
-
+                                                url.save().then(() => {
+                                                    // console.log("customShortUrl success");
+                                                    callback(null, "success");
+                                                });
+                                            }
+                                        });
+                                        // url.features.customShortUrl.shortUrl = req.body.customShortUrl.shortUrl;
+                                    }
+                                    else {
+                                        resolve("Custom Url length must be greater than 2!");
+                                    }
                                 }
                                 else {
                                     // console.log(" ");
