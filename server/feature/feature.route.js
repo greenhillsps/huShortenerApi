@@ -18,7 +18,11 @@ function update(req, res, next) {
                 res.status(403).json(feature)
             } else if (feature == "Already exist") {
                 res.status(401).json(feature)
-            } else if (feature == "Can't do!") {
+            }
+            else if (feature == "Custom Url length must be greater than 2!") {
+                res.status(400).json(feature)
+            }
+            else if (feature == "Can't do!") {
                 res.status(401).json("Oops! Url not found")
             } else {
                 res.json(feature)
