@@ -1,4 +1,4 @@
-export const append = (url) => {
+export function append(url){
 
     if (!url.match(/^[a-zA-Z]+:\/\//))
 {
