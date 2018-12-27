@@ -4,7 +4,9 @@ module.exports = {
   // POST /api/url/submit
   createUrl: {
     body: {
-      actualUrl: Joi.string().required().max(2083).min(2).regex(/.com/).uri({
+      actualUrl: Joi.string().required().max(2083).min(2).regex(
+        /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+      ).uri({
         allowRelative : true
       })
     }
