@@ -3,7 +3,7 @@ const router = express.Router();
 const urlController = require('./url.controller');
 const paramValidation = require('./urlParam-validation');
 const validate = require('express-validation');
-const helper =require('../helpers/helper');
+const {append} =require('../helpers/helper');
 // routes
 router.post('/submit', [validate(paramValidation.createUrl), submit]);
 router.get('/search/', [validate(paramValidation.createUrl), search]);
@@ -18,7 +18,7 @@ module.exports = router;
 
 function submit(req, res, next) {
 
-helper.append(req.body.actualUrl).then(res=>{
+append(req.body.actualUrl).then(res=>{
     req.body.actualUrl=res;
     urlController.create(req)
         .then(url => url ? res.json({ "url": url }) : res.status(403).json({ 'message': ' the request was not processed' }).send(403))
