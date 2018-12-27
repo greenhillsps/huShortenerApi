@@ -18,14 +18,14 @@ module.exports = router;
 
 function submit(req, res, next) {
 
-append(req.body.actualUrl).then(res=>{
-    req.body.actualUrl=res;
+// append(req.body.actualUrl).then(res=>{
+//     req.body.actualUrl=res;
     urlController.create(req)
         .then(url => url ? res.json({ "url": url }) : res.status(403).json({ 'message': ' the request was not processed' }).send(403))
         .catch(err => next(err));
-}).catch(err=>{
-    next(err)
-})
+// }).catch(err=>{
+//     next(err)
+// })
     
     
 }
