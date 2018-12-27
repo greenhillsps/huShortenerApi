@@ -1,4 +1,4 @@
-export default function append(url){
+function append(url){
 
     if (!url.match(/^[a-zA-Z]+:\/\//))
 {
@@ -6,4 +6,8 @@ export default function append(url){
 }
 return url;
 
+}
+
+module.exports={
+append
 }
