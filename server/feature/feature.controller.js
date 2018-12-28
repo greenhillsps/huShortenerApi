@@ -1,6 +1,7 @@
 // const mongoose = require('mongoose');
 const db = require('../../config/db');
 const Url = db.Url;
+const { append } = require('../helpers/helper');
 // const Price = db.Price;
 // const User = require('../user/user.model');
 var async = require("async");
@@ -47,7 +48,8 @@ function update(id, req) {
                                     if (req.body.urlRedirectto.url == url.shortUrl) {
                                         resolve("Can't do!");
                                     } else {
-                                        url.features.urlRedirectto.url = req.body.urlRedirectto.url;
+                                            
+                                        url.features.urlRedirectto.url = append(req.body.urlRedirectto.url);
                                         url.save().then(() => {
                                             // console.log("urlRedirectto success");
                                             callback(null, "success");
@@ -126,12 +128,12 @@ function update(id, req) {
                                     // console.log("fourOfour");
                                     url.features.fourOfour.url = req.body.fourOfour.url;
                                     url.save().then(() => {
-                                        // console.log("fourOfour success");
+                                        console.log("fourOfour success");
                                         callback(null, "success");
                                     });
                                 }
                                 else {
-                                    // console.log(" ");
+                                    console.log("Failed");
                                     callback(null, "Feature locked");
                                 }
                             } else {
