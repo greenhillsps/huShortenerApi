@@ -17,6 +17,10 @@ module.exports = {
     getById
 };
 function create(req) {
+    if (!req.body.actualUrl.match(/^[a-zA-Z]+:\/\//))
+{
+    req.body.actualUrl = 'http://' +req.body.actualUrl;
+}
     return new Promise((resolve, reject) => {
         Url.findOne({ actualUrl: req.body.actualUrl }, function (err, existing) {
             if (err) {
