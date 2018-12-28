@@ -49,7 +49,7 @@ function update(id, req) {
                                         resolve("Can't do!");
                                     } else {
                                             
-                                        url.features.urlRedirectto.url = req.body.urlRedirectto.url;
+                                        url.features.urlRedirectto.url = append(req.body.urlRedirectto.url);
                                         url.save().then(() => {
                                             // console.log("urlRedirectto success");
                                             callback(null, "success");
@@ -126,7 +126,7 @@ function update(id, req) {
 
                                 if (url.features.locked == false && url.features.fourOfour.locked == false) {
                                     // console.log("fourOfour");
-                                    url.features.fourOfour.url = req.body.fourOfour.url;
+                                    url.features.fourOfour.url = append(req.body.fourOfour.url);
                                     url.save().then(() => {
                                         console.log("fourOfour success");
                                         callback(null, "success");

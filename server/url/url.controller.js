@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
 const shortid = require('shortid');
+const { append } = require('../helpers/helper');
 const moment = require('moment');
 const extract = require('meta-extractor');
 const config = require('../../config/config');
@@ -17,6 +18,8 @@ module.exports = {
     getById
 };
 function create(req) {
+    
+ req.body.actualUrl = append(req.body.actualUrl);
     return new Promise((resolve, reject) => {
         Url.findOne({ actualUrl: req.body.actualUrl }, function (err, existing) {
             if (err) {
