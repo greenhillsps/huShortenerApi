@@ -6,7 +6,12 @@ module.exports = {
     
     body: {
       actualUrl: Joi.string().required().max(2083).min(2).uri({
-        allowRelative : false
+        scheme: [
+          'http',
+          'https',
+          'www',
+          'com',
+        ]
       })
     }
   },

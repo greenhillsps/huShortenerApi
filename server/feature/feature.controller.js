@@ -49,7 +49,7 @@ function update(id, req) {
                                         resolve("Can't do!");
                                     } else {
                                             
-                                        url.features.urlRedirectto.url = append(req.body.urlRedirectto.url);
+                                        url.features.urlRedirectto.url = req.body.urlRedirectto.url;
                                         url.save().then(() => {
                                             // console.log("urlRedirectto success");
                                             callback(null, "success");
