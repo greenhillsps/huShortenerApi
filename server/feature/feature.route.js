@@ -12,6 +12,7 @@ router.put('/buy/:id', [validate(paramValidation.update), update]);
 
 
 function update(req, res, next) {
+    
     featureController.update(req.params.id, req)
         .then((feature) => {
             if (feature == "Insufficient funds") {
@@ -28,8 +29,7 @@ function update(req, res, next) {
                 res.json(feature)
             }
         })
-        .catch(err => {
-            next(err)});
+        .catch(err => next(err));
 }
 
 
