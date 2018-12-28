@@ -11,11 +11,14 @@ module.exports = {
         .required(),
       urlRedirectto: Joi
         .object({
-        url:  Joi.string().required().max(2083).min(2).regex(
-          /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
-        ).uri({
-          allowRelative : true
-        }) 
+          // url: Joi.string().uri({
+          //   scheme: [
+          //     'http',
+          //     'https',
+          //     'www',
+          //     'com'
+          //   ]
+          // })
         })
         .required(),
       enableToggle: Joi
