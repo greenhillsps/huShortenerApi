@@ -28,7 +28,8 @@ function update(req, res, next) {
                 res.json(feature)
             }
         })
-        .catch(err => next(err));
+        .catch(err => {
+            next(err)});
 }
 
 

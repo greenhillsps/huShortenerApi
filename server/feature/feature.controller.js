@@ -48,7 +48,6 @@ function update(id, req) {
                                     if (req.body.urlRedirectto.url == url.shortUrl) {
                                         resolve("Can't do!");
                                     } else {
-                                            
                                         url.features.urlRedirectto.url = append(req.body.urlRedirectto.url);
                                         url.save().then(() => {
                                             // console.log("urlRedirectto success");
@@ -122,11 +121,11 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.fourOfour !== null && req.body.fourOfour.url) {
+                            if (req.body.fourOfour !== null) {
 
                                 if (url.features.locked == false && url.features.fourOfour.locked == false) {
                                     // console.log("fourOfour");
-                                    url.features.fourOfour.url = append(req.body.fourOfour.url);
+                                  url.features.fourOfour.url = append(req.body.fourOfour.url);
                                     url.save().then(() => {
                                         console.log("fourOfour success");
                                         callback(null, "success");

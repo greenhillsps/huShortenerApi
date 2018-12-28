@@ -11,13 +11,10 @@ module.exports = {
         .required(),
       urlRedirectto: Joi
         .object({
-          url: Joi.string().regex(
+          url: Joi.string().allow("").regex(
             /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
-          ).uri({
-            allowRelative : true
-          }) 
-        })
-        .required(),
+          )
+        }),
       enableToggle: Joi
         .object({
           enable: Joi.boolean()
@@ -35,9 +32,8 @@ module.exports = {
         .required(),
       fourOfour: Joi
         .object({
-          url: Joi.string()
-        })
-        .required(),
+          url: Joi.string().allow("")
+        }),
       customShortUrl: Joi
         .object({
           shortUrl: Joi.string()
