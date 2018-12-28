@@ -122,7 +122,7 @@ function update(id, req) {
                             }
                         },
                         function (callback) {
-                            if (req.body.fourOfour !== null&&req.body.fourOfour.url) {
+                            if (req.body.fourOfour !== null&&req.body.fourOfour.url || req.body.fourOfour.allow) {
 
                                 if (url.features.locked == false && url.features.fourOfour.locked == false) {
                                     // console.log("fourOfour");
