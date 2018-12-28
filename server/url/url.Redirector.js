@@ -30,7 +30,7 @@ function fourOfour(url) {
     ) {
         return false;
     } else {
-        return true;
+        return true;//test
     }
 }
 function blockIps(req, url) {
