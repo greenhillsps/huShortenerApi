@@ -19,7 +19,7 @@ router.use('/success', (req, res) => {
                 if (payment.state === 'approved') {
                     User.findOne({ paymentId: { $all: [paymentId] } }, function (err, user) {
                         if (err) {
-                            res.redirect('http://www.app.tickws.com/failure');
+                            res.redirect('http://app.tickws.com/failure');
                             console.log("User could not be updated in payment execution", err)
                         } else {
                             // console.log("This is the payment amount: ", payment.transactions[0].amount.total);
