@@ -9,7 +9,7 @@ const validate = require('express-validation');
 
 // configure paypal with the credentials you got when you created your paypal app
 paypal.configure({
-    'mode': 'sandbox', //sandbox or live 
+    'mode': 'live', //sandbox or live 
     'client_id': config.clientId, // client id
     'client_secret': config.clientSecret // client secret 
 });
@@ -36,7 +36,7 @@ router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
                     var create_web_profile_json = {
                         "name": profile_name,
                         "presentation": {
-                            "brand_name": "Dotly",
+                            "brand_name": "TickWs",
                             "logo_image": "https://www.paypalobjects.com/webstatic/mktg/logo/AM_SbyPP_mc_vs_dc_ae.jpg",
                             "locale_code": "US"
                         },
@@ -53,8 +53,8 @@ router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
                             "payment_method": "paypal"
                         },
                         "redirect_urls": {
-                            "return_url": "http://www.tick.ws/api/PPexec/success",
-                            "cancel_url": "http://www.tick.ws/api/PPexec/err"
+                            "return_url": "http://app.tickws.com/success",
+                            "cancel_url": "http://app.tickws.com/failure"
                         },
                         "transactions": [{
                             "item_list": {

@@ -4,7 +4,7 @@ https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-g
 
 https://developer.paypal.com/docs/checkout/how-to/server-integration/#how-a-server-integration-works
 
-https://www.sandbox.paypal.com
+https://www.paypal.com
 
 
 
