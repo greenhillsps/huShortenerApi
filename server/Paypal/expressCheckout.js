@@ -9,7 +9,7 @@ const validate = require('express-validation');
 
 // configure paypal with the credentials you got when you created your paypal app
 paypal.configure({
-    'mode': 'live', //sandbox or live 
+    'mode': 'sandbox', //sandbox or live 
     'client_id': config.clientId, // client id
     'client_secret': config.clientSecret // client secret 
 });
