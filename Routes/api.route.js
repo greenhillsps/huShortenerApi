@@ -38,7 +38,7 @@ router.use('/url', [VerifyToken, urlRoutes]);
 router.use('/price', [VerifyToken, priceRoutes]);
 
 // mount feedback routes at /feedback
-router.use('/feedback', [VerifyToken, feedbackRoutes]);
+router.use('/feedback',feedbackRoutes);
 
 // mount cart routes at /cart
 router.use('/cart', [VerifyToken, cartRoutes]);
