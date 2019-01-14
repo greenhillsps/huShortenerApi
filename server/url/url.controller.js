@@ -4,12 +4,14 @@ const Url = db.Url;
 const mongoose = require('mongoose');
 var async = require("async");
 const ObjectId = mongoose.Types.ObjectId;
-const shortid = require('shortid');
+//const shortid = require('shortid');
+const uid=require('uid');
 const { append } = require('../helpers/helper');
 const moment = require('moment');
 const extract = require('meta-extractor');
 const config = require('../../config/config');
 const extractDomain = require('extract-domain');
+
 module.exports = {
     search,
     getByUserId,
@@ -32,7 +34,7 @@ function create(req) {
                 extract({ uri: req.body.actualUrl }, (err, res) => {
                     if (err) {
                         if (req.userId) {
-                            id = shortid.generate();
+                            id =uid()// shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
                                 shortUrl: `${config.shortUrl + id}`,
@@ -54,7 +56,7 @@ function create(req) {
                             url.shortUrl = existing.shortUrl
 
                         } else {
-                            id = shortid.generate();
+                            id =uid()// shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
                                 shortUrl: `${config.shortUrl + id}`,
@@ -68,7 +70,7 @@ function create(req) {
                         resolve(url = { _id: url._id, actualUrl: url.actualUrl, shortUrl: url.shortUrl, user: url.user })
                     } else {
                         if (req.userId) {
-                            id = shortid.generate();
+                            id = uid()//shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
                                 shortUrl: `${config.shortUrl + id}`,
@@ -90,7 +92,7 @@ function create(req) {
                             url.shortUrl = existing.shortUrl
 
                         } else {
-                            id = shortid.generate();
+                            id = uid()//shortid.generate();
                             url = new Url({
                                 actualUrl: req.body.actualUrl,
                                 shortUrl: `${config.shortUrl + id}`,
