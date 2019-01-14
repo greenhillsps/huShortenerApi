@@ -70,6 +70,7 @@
     "request": "^2.88.0",
     "request-ip": "2.1.1",
     "shortid": "^2.2.13",
+    "uid": "0.0.2",
     "useragent": "2.3.0",
     "winston": "2.4.1"
   },
