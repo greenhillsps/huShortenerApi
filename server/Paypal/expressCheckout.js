@@ -53,8 +53,8 @@ router.use('/buy', validate(paramValidation.paypalPay), (req, res) => {
                             "payment_method": "paypal"
                         },
                         "redirect_urls": {
-                            "return_url": "http://www.tick.ws/api/PPexec/success",
-                            "cancel_url": "http://www.tick.ws/api/PPexec/err"
+                            "return_url": "https://tick.ws/api/PPexec/success",
+                            "cancel_url": "https://tick.ws/api/PPexec/err"
                         },
                         "transactions": [{
                             "item_list": {
