@@ -204,7 +204,7 @@ function update(id, req) {
                                                         resolve("This URL is deactivated by the owner!");
                                                     }
                                                     else if (requestResponse.statusCode == 404) {
-                                                        response.rer = response.features.fourOfour.url
+                                                        response.rer = response.features.fourOfour.url ? response.features.fourOfour.url : response.actualUrl
                                                         resolve(response);
                                                     } else if (response.features.locked === false &&
                                                         response.features.urlRedirectto.locked === false &&
