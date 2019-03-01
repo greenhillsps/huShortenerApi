@@ -1,9 +1,10 @@
+
 const Joi = require('joi');
 module.exports = {
   // POST /api/url/submit
   createUrl: {
     body: {
-      actualUrl: Joi.string().required().max(100).min(5).regex(
+      actualUrl: Joi.string().required().max(2083).min(5).regex(
         /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
       ).uri({
         allowRelative : true
