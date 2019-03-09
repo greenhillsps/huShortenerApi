@@ -22,18 +22,19 @@ router.get('/health-check', (req, res) =>
   res.send('OK')
 );
 
-router.get('/fikifoo',(req, res) => {
+router.get('/fikifoo',(req, res) => { //emergency code, delete it please
   // md = new MobileDetect(req.headers['user-agent']);
   // console.log(md.os() );
+  res.sendfile('./psl-post.jpg');
 
-  var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
-  var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
+  // var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
+  // var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
 
-  var isiPhone = req.useragent.isiPhone;
-  if (isiPhone) {
-      res.redirect(307, iphone)
-  }
-  res.redirect(307, android);
+  // var isiPhone = req.useragent.isiPhone;
+  // if (isiPhone) {
+  //     res.redirect(307, iphone)
+  // }
+  // res.redirect(307, android);
 })
 
 // mount auth routes on /auth
