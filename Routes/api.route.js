@@ -12,13 +12,30 @@ const paypalRoutes = require('../server/Paypal/expressCheckout');
 const PPPexec = require('../server/PPexec/PPPexec');
 const VerifyToken = require('../config/VerifyToken');
 const router = express.Router(); // eslint-disable-line new-cap
+var useragent = require('express-useragent');
 
+router.use(useragent.express()); //remove this code, temporary for fikifoo
 // TODO: use glob to match *.route files
 
 /** GET /health-check - Check service health */
 router.get('/health-check', (req, res) =>
   res.send('OK')
 );
+
+router.get('/fikifoo',(req, res) => {
+  // md = new MobileDetect(req.headers['user-agent']);
+  // console.log(md.os() );
+
+  var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
+  var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
+
+  var isiPhone = req.useragent.isiPhone;
+  if (isiPhone) {
+      res.redirect(307, iphone)
+  }
+  res.redirect(307, android);
+})
+
 // mount auth routes on /auth
 router.use('/auth', authRoutes);
 

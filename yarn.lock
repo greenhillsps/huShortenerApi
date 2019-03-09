@@ -1271,6 +1271,10 @@ express-partials@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/express-partials/-/express-partials-0.3.0.tgz#88b9c40164afd9a55278629b2948e6ace7bff45f"
 
+express-useragent@false1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/express-useragent/-/express-useragent-1.0.12.tgz#5bae0109a925ec9b35417f31a4e8ad13f191253a"
+
 express-validation@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/express-validation/-/express-validation-1.0.2.tgz#7d589dd3b257c55b3e004665b6c69cb12cc2b142"
