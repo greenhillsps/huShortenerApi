@@ -26,14 +26,16 @@ router.get('/fikifoo',(req, res) => {
     // md = new MobileDetect(req.headers['user-agent']);
     // console.log(md.os() );
 
-    var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
-    var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
+    res.sendfile('psl-post.jpg');
 
-    var isiPhone = req.useragent.isiPhone;
-    if (isiPhone) {
-        res.redirect(307, iphone)
-    }
-    res.redirect(307, android);
+    // var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
+    // var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
+
+    // var isiPhone = req.useragent.isiPhone;
+    // if (isiPhone) {
+    //     res.redirect(307, iphone)
+    // }
+    // res.redirect(307, android);
 })
 
 // mount auth routes on /auth
