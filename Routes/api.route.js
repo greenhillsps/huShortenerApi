@@ -15,6 +15,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 var useragent = require('express-useragent');
 
 router.use(useragent.express()); //remove this code, temporary for fikifoo
+
 // TODO: use glob to match *.route files
 
 /** GET /health-check - Check service health */
@@ -22,20 +23,20 @@ router.get('/health-check', (req, res) =>
   res.send('OK')
 );
 
-router.get('/fikifoo',(req, res) => {
-    // md = new MobileDetect(req.headers['user-agent']);
-    // console.log(md.os() );
+router.get('/fikifoo', (req, res) => {
 
-    res.sendfile('psl-post.jpg');
 
-    // var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
-    // var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
 
-    // var isiPhone = req.useragent.isiPhone;
-    // if (isiPhone) {
-    //     res.redirect(307, iphone)
-    // }
-    // res.redirect(307, android);
+  // var iphone = 'https://itunes.apple.com/pk/app/fikifoo-local-food-delivery/id1442856469?mt=8';
+  // var android = 'https://play.google.com/store/apps/details?id=com.tekgenisys.fikifoo&hl=en';
+  var banner = 'https://scontent.fisb7-1.fna.fbcdn.net/v/t1.0-9/53496337_103795494120185_9187533309318529024_n.jpg?_nc_cat=106&_nc_ht=scontent.fisb7-1.fna&oh=00f165b71c3b74515d953e84ce39c787&oe=5D19DBA7';
+
+  res.redirect(307, banner);
+  // var isiPhone = req.useragent.isiPhone;
+  // if (isiPhone) {
+  //     res.redirect(307, iphone)
+  // }
+  // res.redirect(307, android);
 })
 
 // mount auth routes on /auth
@@ -57,7 +58,7 @@ router.use('/url', [VerifyToken, urlRoutes]);
 router.use('/price', [VerifyToken, priceRoutes]);
 
 // mount feedback routes at /feedback
-router.use('/feedback',feedbackRoutes);
+router.use('/feedback', feedbackRoutes);
 
 // mount cart routes at /cart
 router.use('/cart', [VerifyToken, cartRoutes]);
