@@ -31,4 +31,8 @@ router.put('/updateBlackListIPs/:urlId', AdminController.updateBlackListIPs);
 router.get('/toggleActivationUrls/:userId', AdminController.toggleActivationUrls);
 router.put('/toggleActivationOfUrl/:urlId', AdminController.toggleActivationOfUrl);
 
+/////****************ALL Active URLs*****************///////////
+router.get('/getAllUrls', AdminController.getAllUrls);
+router.get('/getUrlByid/:id', AdminController.getUrlByid);
+
 module.exports = router;
