@@ -51,7 +51,7 @@
     "dotenv": "^4.0.0",
     "express": "4.16.3",
     "express-device": "0.4.2",
-    "express-useragent": "false1.0.12",
+    "express-useragent": "^1.0.12",
     "express-validation": "1.0.2",
     "express-winston": "2.5.0",
     "extract-domain": "2.0.4",
