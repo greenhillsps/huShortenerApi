@@ -408,5 +408,91 @@ async function toggleActivationOfUrl(req, res) {     // Update blacklisted IPs o
   }
 }
 
+async function getAllUrls(req, res) {
 
-module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, redirectToUrls, updateUrlRedirect, fourOFourUrls, updateFourOFourUrls, blackListProtectedUrls, updateBlackListIPs, toggleActivationUrls, toggleActivationOfUrl };
+  try {
+    let sorts = -1;
+    let page = 1, limit = 10, query = {};
+    let Title = req.query.title;
+    let ShortUrl = req.query.shortUrl;
+    let ActualUrl = req.query.actualUrl;
+    if (req.query.sorts === "false") {
+      sorts = 1;
+    }
+    else {
+      sorts = -1;
+    }
+    if (req.query.page) {
+      page = parseInt(req.query.page)
+    }
+    if (req.query.limit) {
+      limit = parseInt(req.query.limit)
+    }
+
+    Url.aggregate([{
+      $match: {
+        isActive: true, title: new RegExp(req.query.title, "i"), shortUrl: new RegExp(req.query.shortUrl, "i")
+        , actualUrl: new RegExp(req.query.actualUrl, "i")
+      }
+    }, { $sort: { createdAt: sorts } }
+      , {
+        $project: {
+          user: '$user', title: '$title', shortUrl: '$shortUrl', actualUrl: '$actualUrl', createdAt: '$createdAt',
+          analytics: { $size: '$analytics' },
+        }
+    }
+      , {
+        $lookup: {
+          from: "users",
+          localField: "user",   
+          foreignField: "_id",  
+          as: "custid"
+        }
+    } 
+      , { $skip: (page * limit) - limit }
+      , { $limit: limit }
+
+    ]).exec(async function (err, url) {
+   
+      if (err) {
+        return res.status(400).json(err)
+      }
+      else {
+        let count = await Url.count({ isActive: true })
+        let obj = {
+          url: url,
+          current: page,
+          pages: Math.floor(count / limit + 1),
+          totalCount: count
+        }
+
+        return res.status(200).json(obj)
+      }
+    })
+  }
+  catch (e) {
+    return res.status(400).json(e)
+  }
+}
+
+
+
+async function getUrlByid(req, res) {
+
+  await Url.find({ _id: req.params.id })
+    .select('_id title shortUrl actualUrl createdAt')
+    .lean()
+    .exec(async function (err, url) {
+      if (err)
+        res.status(400).json(err)
+      else {
+
+        return res.status(200).json(url)
+
+      }
+    })
+
+}
+
+
+module.exports = { update, updatePassword, getUrlByUser, urlAnalytics, customExpiryUrls, updateCustomExpiry, redirectToUrls, updateUrlRedirect, fourOFourUrls, updateFourOFourUrls, blackListProtectedUrls, updateBlackListIPs, toggleActivationUrls, toggleActivationOfUrl, getAllUrls, getUrlByid };
