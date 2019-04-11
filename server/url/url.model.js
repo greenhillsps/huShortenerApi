@@ -27,11 +27,6 @@ const UrlSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 50 
   },
-  createdAt: {
-    type: Date,
-    required: true,
-    default: moment()
-  },
   isActive: {
     type: Boolean,
     default: true
@@ -285,7 +280,7 @@ const UrlSchema = new mongoose.Schema({
   }
 
 
-});
+},{timestamps: true});
 
 /**
  * Add your
