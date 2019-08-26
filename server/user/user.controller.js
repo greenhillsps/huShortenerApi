@@ -32,35 +32,15 @@ async function user(req, res, next) {
     if (err) {
       res.status(403).json({ msg: "User not found", auth: false });
     } else if (user) {
-      let getCustomerInfo = {
-        "UniqueKey": user.uniqueKey
-        ,
-        "AccessToken": config.cdmToken
-      }
-
-      await request.post(`${config.cdmUrl}customer/GetCustomerInfo`, { form: getCustomerInfo },
-        async function (err, getCustomerInfoResponse, getCustomerInfoBody) {
-          if (err) {
-            res.status(403).json({ msg: "User not found", auth: false });
-          } else if (getCustomerInfoResponse.statusCode == 200) {
-
+     
+      
             let getCustomerInfoObject = JSON.parse(getCustomerInfoBody)
             res.status(200).json({
               auth: true,
               user: user,
-              email: getCustomerInfoObject.Data.Email,
-              countryCode: getCustomerInfoObject.Data.CountryCode,
-              phoneNumber: getCustomerInfoObject.Data.PhoneNumber
             });
-          } else {
-            res.status(403).json({ msg: "User not found", auth: false });
           }
         })
-
-    } else {
-      res.status(403).json({ msg: "User not found", auth: false });
-    }
-  });
   return next
 };
 
@@ -142,41 +122,7 @@ function list(req, res, next) {
   }
 }
 function userdetail(req, res, next) {
-
-  let checkBody = {
-    "UniqueKey": req.query.UniqueKey,
-    "AccessToken": config.cdmToken
-  }
-  request.post(`${config.cdmUrl}customer/GetCustomerInfo`, { form: checkBody },
-    async function (err, GetCustomerInfoTakenResponse, GetCustomerInfoBody) {
-      let GetCustomerInfoObject = JSON.parse(GetCustomerInfoBody);
-      if (err) {
-        res.status(500)
-          .json({
-            Status: '500',
-            message: GetCustomerInfoObject.Message
-          })
-          .send();
-      }
-      else if (GetCustomerInfoTakenResponse.statusCode == 200 && GetCustomerInfoObject.Result == true) {
-        res.status(200).send({
-          result: GetCustomerInfoObject.Result,
-          message: GetCustomerInfoObject.Message,
-          user: GetCustomerInfoObject.Data,
-
-        });
-      }
-      else {
-        res.status(403)
-          .json({
-            Status: '403',
-            message: "Username or password is incorrect",
-            result: GetCustomerInfoObject.Result,
-            token: null
-          })
-          .send()
-      }
-    })
+res.status(400).json({message:"empty"})
 }
 
 /**

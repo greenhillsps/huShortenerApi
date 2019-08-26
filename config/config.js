@@ -39,8 +39,6 @@ const config = {
   clientSecret: envVars.client_secret,
   shortUrl: envVars.short_url,
   cdmToken: envVars.cdm_token,
-  cdmUrl: envVars.cdm_url,
-  salesUrl:envVars.sales_url,
   salesClientAccessKey:envVars.sales_ClientAccessKey,
   mongo: {
     host: envVars.MONGO_HOST,

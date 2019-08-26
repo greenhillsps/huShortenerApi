@@ -1,7 +1,7 @@
-const Promise = require('bluebird');
-const mongoose = require('mongoose');
-const httpStatus = require('http-status');
-const APIError = require('../helpers/APIError');
+const Promise = require("bluebird");
+const mongoose = require("mongoose");
+const httpStatus = require("http-status");
+const APIError = require("../helpers/APIError");
 
 /**
  * User Schema
@@ -19,17 +19,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  uniqueKey: {
-    type: String,
-    unique : true,
-    required: true
-  },
-  identity: {
-    type: String,
-    required: true
-  },
-  signUpIp: {
+  phoneNumber: {
     type: String
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
   },
   ISOCountryCode: {
     type: String
@@ -64,10 +60,7 @@ const UserSchema = new mongoose.Schema({
     default: Date.now
   },
   paymentId: []
-
 });
-
-
 
 // email: {
 //   type: String,
@@ -91,8 +84,7 @@ const UserSchema = new mongoose.Schema({
 /**
  * Methods
  */
-UserSchema.method({
-});
+UserSchema.method({});
 
 /**
  * Statics
@@ -106,11 +98,11 @@ UserSchema.statics = {
   get(id) {
     return this.findById(id)
       .exec()
-      .then((user) => {
+      .then(user => {
         if (user) {
           return user;
         }
-        const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
+        const err = new APIError("No such user exists!", httpStatus.NOT_FOUND);
         return Promise.reject(err);
       });
   },
@@ -133,4 +125,4 @@ UserSchema.statics = {
 /**
  * @typedef User
  */
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
