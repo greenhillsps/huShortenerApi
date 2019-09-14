@@ -153,7 +153,7 @@ function update(id, req) {
                                                 resolve("Already exist");
                                             } else {
                                                 url.queryKey = req.body.customShortUrl.shortUrl;
-                                                url.shortUrl = `https://hushortener.herokuapp.com/${req.body.customShortUrl.shortUrl}`;
+                                                url.shortUrl = `https://shortenerapi.herokuapp.com/${req.body.customShortUrl.shortUrl}`;
 
                                                 url.save().then(() => {
                                                     // console.log("customShortUrl success");
