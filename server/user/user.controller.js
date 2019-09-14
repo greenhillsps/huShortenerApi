@@ -33,8 +33,7 @@ async function user(req, res, next) {
       res.status(403).json({ msg: "User not found", auth: false });
     } else if (user) {
      
-      
-            let getCustomerInfoObject = JSON.parse(getCustomerInfoBody)
+            // let getCustomerInfoObject = JSON.parse(getCustomerInfoBody)
             res.status(200).json({
               auth: true,
               user: user,
