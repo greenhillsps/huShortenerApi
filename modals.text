@@ -1,0 +1,256 @@
+///////////////////////user schema//////////////////
+firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  phoneNumber: {
+    type: String
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+
+  paid: {
+    type: Boolean,
+    default: false
+  },
+  wallet: {
+    type: Number,
+    default: 100
+  },
+  totalAmountSpent: {
+    type: Number,
+    default: 0
+  },
+  totalURLS: {
+    type: Number,
+    default: 0
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+
+//////////////////url schema/////////////
+actualUrl: {
+    type: String,
+    required: true
+  },
+  shortUrl: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  queryKey: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 50 
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  totalAmountSpent: {
+    type: Number,
+    default: 0
+  },
+
+
+
+/////////////////////analytics////////////////
+ analytics: [{
+    clickDate: {
+      type: Date,
+      default: moment()
+    },
+    ip: String,
+    device: String,
+    browser: String,
+    language: String,
+    refferer: String,
+    country: String,
+    Region: String,
+  }]
+
+
+  /////////////features////////////////////
+
+  ///////////////(1)customExpiryDate/////////
+  locked: {
+        type: Boolean,
+        default: true
+      },
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
+      currentPrice: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Price',
+        default: null
+      },
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      customExpiryDate: {
+        type: Date,
+        default: null
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
+    
+
+    /////////////////(2)urlRedirectto//////////
+    locked: {
+        type: Boolean,
+        default: true
+      },
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
+      currentPrice: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Price',
+        default: null
+      },
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      url: {
+        type: String,
+        default: null
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
+    
+
+
+    /////////////////(3)enableToggle////////////
+    locked: {
+        type: Boolean,
+        default: true
+      },
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
+      currentPrice: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Price',
+        default: null
+      },
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      enable: {
+        type: Boolean,
+        default: false
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
+    
+
+
+    //////////////////(4)blockIps/////////////
+ locked: {
+        type: Boolean,
+        default: true
+      },
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
+      currentPrice: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Price',
+        default: null
+      },
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      ips: [],
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
+
+      //////////(5)customShortUrl///////
+      locked: {
+        type: Boolean,
+        default: true
+      },
+      puchaseDate: {
+        type: Date,
+        default: null
+      },
+      currentPrice: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Price',
+        default: null
+      },
+      boughtPrice: {
+        type: Number,
+        default: null
+      },
+      expiryDate: {
+        type: Date,
+        default: null
+      },
+      originalUrl: {
+        type: String,
+        default: null
+      },
+      shortUrl: {
+        type: String,
+        default: null
+      },
+      totalSpent: {
+        type: Number,
+        default: 0
+      },
+
