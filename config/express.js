@@ -16,7 +16,6 @@ const apiRoutes = require('../Routes/api.route');
 const indexRoutes = require('../Routes/index.route');
 const requestIp = require('request-ip');
 const device = require('express-device');
-const Scheduler = require('../server/salesPanelService/salesPanelService');
 const app = express();
 
 // enable CORS - Cross Origin Resource Sharing

@@ -84,7 +84,7 @@ function logout(req, res, next) {
     lastName: req.body.lastName,
     password: hashedPassword,
     email: req.body.email,
-    phoneNumber: req.body.mobileNumber,
+    phoneNumber: req.body.mobileNum,
     ISOCountryCode: req.body.countryCode,
     ISOCountryName: req.body.countryName
   });
