@@ -7,7 +7,7 @@ const moment = require("moment");
 const Url = require('../url/url.model')
 const config = require("../../config/config"); // get config file
 var _ = require('lodash');
-
+//all
 async function update(req, res, next) {
  
   res.json({message:"empty"})
