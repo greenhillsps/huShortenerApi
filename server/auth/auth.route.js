@@ -17,6 +17,8 @@ router.post('/logout', AuthController.logout);
 
 router.post('/', AuthController.register)
 
+
+
 router.route('/test')
   .get((req, res) => { res.send('working')});
 

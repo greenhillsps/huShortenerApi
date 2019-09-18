@@ -2,6 +2,7 @@ const express = require('express');
 // const validate = require('express-validation');
 // const paramValidation = require('../../config/param-validation');
 const userCtrl = require('./user.controller');
+
 // const expressJwt = require('express-jwt');
 // const config = require('../../config/config');
 
@@ -17,11 +18,15 @@ router.route('/')
 //   .post(validate(paramValidation.createUser), userCtrl.create); 
 
 router.get('/userdetail', userCtrl.userdetail);
+
+router.put('/update', userCtrl.updateUser)
+
 router.get('/paidUsers', userCtrl.paidUsers);
 
 router.route('/:userId')
   /** GET /api/users/:userId - Get user */
   .get(userCtrl.get)
+
 
   /** PUT /api/users/:userId - Update user */
   // .put(validate(paramValidation.updateUser), userCtrl.update)

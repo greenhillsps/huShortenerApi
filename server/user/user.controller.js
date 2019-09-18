@@ -1,4 +1,6 @@
 const User = require('./user.model');
+const bcrypt = require("bcryptjs");
+
 // var bcrypt = require('bcryptjs'); // used to hash passwords
 // const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const request = require('request');
@@ -195,5 +197,19 @@ async function paidUsers(req, res) {
     return res.status(400).json(e)
   }
 }
+async function updateUser(req, res, next){
+  const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+  const user={
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    password: hashedPassword,
+    email: req.body.email,
+    phoneNumber: req.body.mobileNum,
+  };
+  User.findByIdAndUpdate(req.userId,{...user}, { new: true }, (err, data) => {
+    if (err) res.status(400).json(err)
+    else res.status(200).json(data)
+})
+};
 
-module.exports = { load, get, list, remove, user, userdetail, paidUsers };
+module.exports = { load, get, list, remove, user, userdetail, paidUsers,updateUser };
