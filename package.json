@@ -62,7 +62,7 @@
     "ipstack": "0.1.1",
     "joi": "14.0.1",
     "jsonwebtoken": "7.1.9",
-    "lodash": "4.17.11",
+    "lodash": "4.17.21",
     "meta-extractor": "1.4.0",
     "method-override": "^2.3.10",
     "moment": "2.22.2",
