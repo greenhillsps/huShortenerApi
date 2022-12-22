@@ -61,7 +61,7 @@
     "http-status": "1.0.1",
     "ipstack": "0.1.1",
     "joi": "14.0.1",
-    "jsonwebtoken": "7.1.9",
+    "jsonwebtoken": "9.0.0",
     "lodash": "4.17.11",
     "meta-extractor": "1.4.0",
     "method-override": "^2.3.10",
